@@ -43,6 +43,8 @@
     @case('article') <script src="{{asset('custom/js/article.js')}}"></script> @break
     @case('unit') <script src="{{asset('custom/js/unit.js')}}"></script> @break
     @case('product-list') <script src="{{asset('custom/js/product.js')}}"></script> @break
+    @case('vendor-product-list') <script src="{{asset('custom/js/vendor_product.js')}}"></script> @break
+    @case('my-product-list') <script src="{{asset('custom/js/my_product.js')}}"></script> @break
 @endswitch
 
 @switch(Request::segment(1))
@@ -151,5 +153,26 @@
             });
         });
     </script> @break
+
+    @case('vendor-product-list') <script>
+        $(function () {
+            $("#vendor-product").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('vendor.product.list.index') }}",
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'photo', name: 'photo'},
+                    {data: 'name', name: 'name'},
+                    {data: 'unit.name', name: 'unit.name'},
+                    {data: 'category.title', name: 'category.title'},
+                    {data: 'brand.title', name: 'brand.title'},
+                    {data: 'short_detail', name: 'short_detail'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        });
+    </script> @break
+
 @endswitch
 

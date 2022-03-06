@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isUser;
+use App\Http\Middleware\isVendor;
 use App\Http\Middleware\LoginCheck;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -71,5 +72,6 @@ class Kernel extends HttpKernel
         'login-check' => LoginCheck::class,
         'admin' => isAdmin::class,
         'user' => isUser::class,
+        'vendor' => isVendor::class,
     ];
 }

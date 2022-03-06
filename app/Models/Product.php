@@ -9,6 +9,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
     public function unit () {
         return $this->hasOne(Unit::class, 'id', 'unit');
     }

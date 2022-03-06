@@ -6,21 +6,19 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class isAdmin
+class isVendor
 {
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()){
-            if (Auth::user()->role == CONST_ROLE_ADMIN) {
-              return $next($request);
-            }
+        if (Auth::user()->role == CONST_ROLE_VENDOR){
+            return $next($request);
         }
         Auth::logout();
         session()->flush();

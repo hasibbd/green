@@ -59,8 +59,8 @@
                         </form>
                     </div>
                 </div>
-                <div class="user-form-remind"><p>Already Have An Account?<a href="login.html">login here</a></p></div>
-                <div class="user-form-footer"><p>Greeny | &COPY; Copyright by <a href="#">Mironcoder</a></p></div>
+                <div class="user-form-remind"><p>Already Have An Account?<a href="{{url('/')}}">login here</a></p></div>
+                <div class="user-form-footer"><p>Green | &COPY; Copyright by <a href="#">Green</a></p></div>
             </div>
         </div>
     </div>

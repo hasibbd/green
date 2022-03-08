@@ -314,7 +314,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6">
-                            <div class="banner-img"><img src="{{asset('/storage/slider/'.$s->photo)}}" alt="index"></div>
+                            <div class="banner-img"><img style="width: 636px; height: 570px" src="{{asset('/storage/slider/'.$s->photo)}}" alt="index"></div>
                         </div>
                     </div>
                 </div>
@@ -324,7 +324,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-md-6 col-lg-6">
-                            <div class="banner-img"><img src="{{asset('/storage/slider/'.$s->photo)}}" alt="index"></div>
+                            <div class="banner-img"><img style="width: 636px; height: 570px" src="{{asset('/storage/slider/'.$s->photo)}}" alt="index"></div>
                         </div>
                         <div class="col-md-6 col-lg-6">
                             <div class="banner-content"><h1>{{$s->title}}</h1>

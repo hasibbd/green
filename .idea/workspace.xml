@@ -20,19 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f8e5c3b-f1c9-44cd-b878-7a3354afcef6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/pages/login_old.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/pages/register_old.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VendorProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VendorProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/pages/vendor/my_product/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pages/vendor/my_product/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/partial/mainsidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/partial/mainsidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/partial/script.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/partial/script.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/partial/v-menu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/partial/v-menu.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/pages/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/pages/login.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/pages/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/pages/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/partial/css.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/partial/css.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/partial/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/partial/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/partial/script.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/partial/script.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/home/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/home/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +193,7 @@
       <workItem from="1646589018366" duration="8656000" />
       <workItem from="1646634451951" duration="36000" />
       <workItem from="1646763832623" duration="543000" />
-      <workItem from="1646765417191" duration="2543000" />
+      <workItem from="1646765417191" duration="3336000" />
     </task>
     <servers />
   </component>

@@ -1,6 +1,6 @@
-
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -37,18 +37,27 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{asset('custom/js/admin.js')}}"></script>
 @switch(Request::segment(1))
-    @case('sliders') <script src="{{asset('custom/js/slider.js')}}"></script> @break
-    @case('category') <script src="{{asset('custom/js/category.js')}}"></script> @break
-    @case('brand') <script src="{{asset('custom/js/brand.js')}}"></script> @break
-    @case('article') <script src="{{asset('custom/js/article.js')}}"></script> @break
-    @case('unit') <script src="{{asset('custom/js/unit.js')}}"></script> @break
-    @case('product-list') <script src="{{asset('custom/js/product.js')}}"></script> @break
-    @case('vendor-product-list') <script src="{{asset('custom/js/vendor_product.js')}}"></script> @break
-    @case('my-product-list') <script src="{{asset('custom/js/my_product.js')}}"></script> @break
+    @case('sliders')
+    <script src="{{asset('custom/js/slider.js')}}"></script> @break
+    @case('category')
+    <script src="{{asset('custom/js/category.js')}}"></script> @break
+    @case('brand')
+    <script src="{{asset('custom/js/brand.js')}}"></script> @break
+    @case('article')
+    <script src="{{asset('custom/js/article.js')}}"></script> @break
+    @case('unit')
+    <script src="{{asset('custom/js/unit.js')}}"></script> @break
+    @case('product-list')
+    <script src="{{asset('custom/js/product.js')}}"></script> @break
+    @case('vendor-product-list')
+    <script src="{{asset('custom/js/vendor_product.js')}}"></script> @break
+    @case('my-product-list')
+    <script src="{{asset('custom/js/my_product.js')}}"></script> @break
 @endswitch
 
 @switch(Request::segment(1))
-    @case('sliders') <script>
+    @case('sliders')
+    <script>
         $(function () {
             $("#slider").DataTable({
                 processing: true,
@@ -66,7 +75,8 @@
             });
         });
     </script> @break
-    @case('category') <script>
+    @case('category')
+    <script>
         $(function () {
             $("#category").DataTable({
                 processing: true,
@@ -83,7 +93,8 @@
             });
         })
     </script> @break
-    @case('brand') <script>
+    @case('brand')
+    <script>
         $(function () {
             $("#brand").DataTable({
                 processing: true,
@@ -100,7 +111,8 @@
             });
         })
     </script> @break
-    @case('article') <script>
+    @case('article')
+    <script>
         $(function () {
             $("#article").DataTable({
                 processing: true,
@@ -118,7 +130,8 @@
             });
         });
     </script> @break
-    @case('unit') <script>
+    @case('unit')
+    <script>
         $(function () {
             $("#unit").DataTable({
                 processing: true,
@@ -133,7 +146,8 @@
             });
         });
     </script> @break
-    @case('product-list') <script>
+    @case('product-list')
+    <script>
         $(function () {
             $("#product").DataTable({
                 processing: true,
@@ -154,7 +168,8 @@
         });
     </script> @break
 
-    @case('vendor-product-list') <script>
+    @case('vendor-product-list')
+    <script>
         $(function () {
             $("#vendor-product").DataTable({
                 processing: true,

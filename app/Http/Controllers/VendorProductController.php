@@ -22,7 +22,7 @@ class VendorProductController extends Controller
                 return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function ($row) {
-                        return '<button class="btn btn-primary btn-sm" onclick="addProductForVendor(' . $row->id . ')"><i class="fas fa-sync-alt"></i></button>';
+                        return '<button class="btn btn-primary btn-sm" onclick="addProductForVendor(' . $row->id . ')"><i class="fas fa-plus-circle"></i></button>';
                     })
                     ->addColumn('photo', function ($row) {
                         return '<img style="width: 50px" src="storage/product/' . $row->photo . '">';
@@ -37,11 +37,14 @@ class VendorProductController extends Controller
 
     public function myProductShow(Request $request)
     {
+        $vendor_id = Auth::user()->id;
+
         $query = "SELECT c.title AS category_name, d.title AS brand_name, e.name AS unit_name, b.name AS p_name, b.photo as p_photo, b.short_detail AS p_detail, a.vendor_price, a.sell_price FROM `vendor_products` a
                     LEFT JOIN `products` b ON a.product = b.id
                     LEFT JOIN `categories` c ON b.category = c.id
                     LEFT JOIN `brands` d ON b.brand = d.id
-                    LEFT JOIN `units` e ON b.unit = e.id";
+                    LEFT JOIN `units` e ON b.unit = e.id
+                    WHERE a.created_by =" . $vendor_id;
 
         $my_products = DB::select($query);
 

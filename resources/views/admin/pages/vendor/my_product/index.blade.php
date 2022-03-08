@@ -53,7 +53,8 @@
                                     @foreach($my_products as $my_product)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$my_product->p_photo}}</td>
+                                            <td><img style="width: 80px; height: 80px; border-radius: 50%"
+                                                     src="{{url('storage/product/'.$my_product->p_photo)}}" alt=""></td>
                                             <td>{{$my_product->p_name}}</td>
                                             <td>{{$my_product->unit_name}}</td>
                                             <td>{{$my_product->category_name}}</td>
@@ -72,4 +73,5 @@
         </section>
         <!-- /.content -->
     </div>
+
 @endsection

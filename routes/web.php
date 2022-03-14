@@ -12,6 +12,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +31,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('user-list', [ListController::class, 'index'])->name('user-list.index');
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('profile-info-change', [ProfileController::class, 'update']);
-
 
     Route::get('sliders', [SliderController::class, 'index'])->name('sliders.index');
     Route::post('slider-store', [SliderController::class, 'store']);
@@ -68,6 +68,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('product-status/{id}', [ProductController::class, 'status']);
     Route::delete('product-delete/{id}', [ProductController::class, 'destroy']);
 });
+
 Route::middleware(['user'])->group(function () {
 
 });
@@ -83,7 +84,30 @@ Route::post('reset-user-pass', [UserController::class, 'reset']);
 Route::post('login-check', [DashboardController::class, 'index'])->middleware('login-check');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-
-
 Route::get('/', [HomeController::class, 'index']);
 Route::get('product/{id}', [HomeController::class, 'product']);
+Route::get('product-data', [HomeController::class, 'productData'])->name('product.index');
+Route::get('brand-products/{id}', [HomeController::class, 'brand']);
+Route::get('brand-data', [HomeController::class, 'brandData'])->name('brand-product.index');
+Route::get('product-view/{id}', [HomeController::class, 'productDetails']);
+
+
+
+// vendor product routes
+Route::middleware(['vendor'])->group(function () {
+    // vendor dashboard
+    Route::get('vendor-dashboard', [DashboardController::class, 'vendorIndex'])->name('vendor-dashboard');
+
+    Route::get('vendor-product-list', [VendorProductController::class, 'index'])->name('vendor.product.list.index');
+
+    // my product list
+    Route::get('my-product-list', [VendorProductController::class, 'myProductShow'])->name('my.product.list.index');
+    Route::get('my-product-show/{id}', [VendorProductController::class, 'pedit']);
+    Route::get('my-product-status/{id}', [VendorProductController::class, 'pstatus']);
+    Route::delete('my-product-delete/{id}', [VendorProductController::class, 'pdestroy']);
+
+    Route::post('vendor-product-store', [VendorProductController::class, 'store']);
+    Route::get('vendor-product-show/{id}', [VendorProductController::class, 'edit']);
+    Route::get('vendor-product-status/{id}', [VendorProductController::class, 'status']);
+    Route::delete('vendor-product-delete/{id}', [VendorProductController::class, 'destroy']);
+});

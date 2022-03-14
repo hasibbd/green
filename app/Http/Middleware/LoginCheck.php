@@ -25,11 +25,15 @@ class LoginCheck
             if (Auth::attempt($credentials)){
                 if ($target->status == CONST_STATUS_ENABLED){
                     switch ($target->role){
+
                         case CONST_ROLE_ADMIN:  return redirect()->route('dashboard'); break;
+                        case CONST_ROLE_VENDOR:  return redirect()->route('vendor-dashboard'); break;
+
                         default: redirect()->route('/')->withErrors(['msg'=>'<div class="alert alert-danger" id="alert">
                             <button type="button" class="close" data-dismiss="alert">x</button>
                             <strong>Sorry! </strong> Unknown user!
                         </div>']);
+
                     }
                 }else{
                     return redirect()->route('/')->withErrors(['msg'=>'<div class="alert alert-warning" id="alert">

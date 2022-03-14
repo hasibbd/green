@@ -1,74 +1,88 @@
-
-@extends('auth.app.layout')
-@section('content')
-    <div class="card card-outline card-primary">
-        <div class="card-header text-center">
-            <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="mironcoder">
+    <meta name="email" content="mironcoder@gmail.com">
+    <meta name="profile" content="https://themeforest.net/user/mironcoder">
+    <meta name="template" content="greeny">
+    <meta name="title" content="greeny - Ecommerce Food Store HTML Template">
+    <meta name="keywords"
+          content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online">
+    <title>Greeny - Register</title>
+    <link rel="icon" href="{{asset('frontend/images/favicon.png')}}">
+    <link rel="stylesheet" href="{{asset('frontend/fonts/flaticon/flaticon.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/fonts/icofont/icofont.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/fonts/fontawesome/fontawesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/venobox/venobox.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/slickslider/slick.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/niceselect/nice-select.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/bootstrap/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/css/user-auth.css')}}">
+</head>
+<body>
+<section class="user-form-part">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-12 col-lg-12 col-xl-10">
+                <div class="user-form-logo"><a href="{{url('/')}}"><img src="{{asset('frontend/images/logo.png')}}" alt="logo"></a></div>
+                <div class="user-form-card">
+                    <div class="user-form-title"><h2>Join Now!</h2>
+                        <p>Setup A New Account In A Minute</p></div>
+                    <div class="user-form-group">
+                        <div class="user-form-social">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter your name">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="Enter your phone number">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter your NID no">
+                            </div>
+                        </div>
+                        <div class="user-form-divider">{{--<p>or</p>--}}</div>
+                        <form class="user-form">
+                            <div class="form-group"><input type="text" class="form-control"
+                                                           placeholder="Enter your user name"></div>
+                            <div class="form-group"><input type="text" class="form-control"
+                                                           placeholder="Enter your referral user name"></div>
+                            <div class="form-group"><input type="password" class="form-control"
+                                                           placeholder="Enter your password"></div>
+                            <div class="form-group"><input type="password" class="form-control"
+                                                           placeholder="Enter repeat password"></div>
+                            <div class="form-check mb-3"><input class="form-check-input" type="checkbox" value=""
+                                                                id="check"><label class="form-check-label" for="check">Accept
+                                    all the <a href="#">Terms & Conditions</a></label></div>
+                            <div class="form-button">
+                                <button type="submit">register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="user-form-remind"><p>Already Have An Account?<a href="{{url('/')}}">login here</a></p></div>
+                <div class="user-form-footer"><p>Green | &COPY; Copyright by <a href="#">Green</a></p></div>
+            </div>
         </div>
-        <div class="card-body">
-            <p class="login-box-msg">Register a new membership</p>
-
-            <form id="user_submit">
-                @csrf
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="name" placeholder="Full name" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-user"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="email" class="form-control" name="email" placeholder="Email" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
-               {{-- <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="phone" placeholder="Phone" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-phone-square"></span>
-                        </div>
-                    </div>
-                </div>--}}
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="c_password" id="c_password" placeholder="Retype password" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-8">
-                        {{--  <div class="icheck-primary">
-                              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                              <label for="agreeTerms">
-                                  I agree to the <a href="#">terms</a>
-                              </label>
-                          </div>--}}
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block load" value="add" id="sub_btn">Register</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
-
-            <a href="{{url('/')}}" class="text-center">I already have a membership</a>
-        </div>
-        <!-- /.form-box -->
     </div>
-@endsection
+</section>
+<script src="{{asset('frontend/vendor/bootstrap/jquery-1.12.4.min.js')}}"></script>
+<script src="{{asset('frontend/vendor/bootstrap/popper.min.js')}}"></script>
+<script src="{{asset('frontend/vendor/bootstrap/bootstrap.min.js')}}"></script>
+<script src="{{asset('frontend/vendor/countdown/countdown.min.js')}}"></script>
+<script src="{{asset('frontend/vendor/niceselect/nice-select.min.js')}}"></script>
+<script src="{{asset('frontend/vendor/slickslider/slick.min.js')}}"></script>
+<script src="{{asset('frontend/vendor/venobox/venobox.min.js')}}"></script>
+<script src="{{asset('frontend/js/nice-select.js')}}"></script>
+<script src="{{asset('frontend/js/countdown.js')}}"></script>
+<script src="{{asset('frontend/js/accordion.js')}}"></script>
+<script src="{{asset('frontend/js/venobox.js')}}"></script>
+<script src="{{asset('frontend/js/slick.js')}}"></script>
+<script src="{{asset('frontend/js/main.js')}}"></script>
+</body>
+</html>

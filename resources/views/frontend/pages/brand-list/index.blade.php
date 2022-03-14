@@ -392,7 +392,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-scroll">
-                    <table class="table-list" id="product_list">
+                    <table class="table-list" id="brand_list">
                         <thead>
                         <tr>
                             <th scope="col">Serial</th>
@@ -400,9 +400,6 @@
                             <th scope="col">Name</th>
                             <th scope="col">Category</th>
                             <th scope="col">Brand</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Point</th>
-                            <th scope="col">vendor</th>
                             <th scope="col">action</th>
                         </tr>
                         </thead>

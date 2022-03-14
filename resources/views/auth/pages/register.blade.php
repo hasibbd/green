@@ -32,20 +32,26 @@
                     <div class="user-form-title"><h2>Join Now!</h2>
                         <p>Setup A New Account In A Minute</p></div>
                     <div class="user-form-group">
-                        <ul class="user-form-social">
-                            <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i>Join with facebook</a>
-                            </li>
-                            <li><a href="#" class="twitter"><i class="fab fa-twitter"></i>Join with twitter</a></li>
-                            <li><a href="#" class="google"><i class="fab fa-google"></i>Join with google</a></li>
-                            <li><a href="#" class="instagram"><i class="fab fa-instagram"></i>Join with instagram</a>
-                            </li>
-                        </ul>
-                        <div class="user-form-divider"><p>or</p></div>
+                        <div class="user-form-social">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter your name">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" placeholder="Enter your phone number">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter your NID no">
+                            </div>
+                        </div>
+                        <div class="user-form-divider">{{--<p>or</p>--}}</div>
                         <form class="user-form">
                             <div class="form-group"><input type="text" class="form-control"
-                                                           placeholder="Enter your name"></div>
-                            <div class="form-group"><input type="email" class="form-control"
-                                                           placeholder="Enter your email"></div>
+                                                           placeholder="Enter your user name"></div>
+                            <div class="form-group"><input type="text" class="form-control"
+                                                           placeholder="Enter your referral user name"></div>
                             <div class="form-group"><input type="password" class="form-control"
                                                            placeholder="Enter your password"></div>
                             <div class="form-group"><input type="password" class="form-control"

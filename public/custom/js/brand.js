@@ -130,7 +130,6 @@ function Show(id) {
     });
 }
 function previewFile(input){
-    console.log(input)
     var file = $("input[type=file]").get(0).files[0];
 
     if(file){

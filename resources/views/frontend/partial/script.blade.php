@@ -1,4 +1,6 @@
-<script src="{{asset('frontend/vendor/bootstrap/jquery-1.12.4.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 <script src="{{asset('frontend/vendor/bootstrap/popper.min.js')}}"></script>
 <script src="{{asset('frontend/vendor/bootstrap/bootstrap.min.js')}}"></script>
 <script src="{{asset('frontend/vendor/countdown/countdown.min.js')}}"></script>
@@ -11,3 +13,52 @@
 <script src="{{asset('frontend/js/venobox.js')}}"></script>
 <script src="{{asset('frontend/js/slick.js')}}"></script>
 <script src="{{asset('frontend/js/main.js')}}"></script>
+<!-- Datatables -->
+<script src="{{asset('plugins/dt/datatables/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/dt/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('custom/front/js/product.js')}}"></script>
+<script>
+    $(function () {
+        $("#product_list").DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('product.index') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
+                {data: 'photo', name: 'photo', class: 'table-image'},
+                {data: 'product_details.name', name: 'product_details.name', class: 'table-name'},
+                {data: 'product_details.category_details.title', name: 'product_details.category_details.title', class: 'table-shop'},
+                {data: 'brand', name: 'brand', class: 'table-shop'},
+                {data: 'price', name: 'price', class: 'table-price'},
+                {data: 'points', name: 'points', class: 'table-serial'},
+                {data: 'vendor', name: 'vendor', class: 'table-vendor'},
+                {data: 'action', name: 'action', class: 'table-action'},
+            ],
+            "language": {
+                "paginate": {
+                    "next": ">",
+                    "previous": "<"
+                }
+            }
+        });
+        $("#brand_list").DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('brand-product.index') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
+                {data: 'photo', name: 'photo', class: 'table-image'},
+                {data: 'name', name: 'name', class: 'table-name'},
+                {data: 'category_details.title', name: 'category_details.title', class: 'table-shop'},
+                {data: 'brand_details.title', name: 'brand_details.title', class: 'table-shop'},
+                {data: 'action', name: 'action', class: 'table-action'},
+            ],
+            "language": {
+                "paginate": {
+                    "next": ">",
+                    "previous": "<"
+                }
+            }
+        });
+    });
+</script>

@@ -86,6 +86,12 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('product/{id}', [HomeController::class, 'product']);
+Route::get('product-data', [HomeController::class, 'productData'])->name('product.index');
+Route::get('brand-products/{id}', [HomeController::class, 'brand']);
+Route::get('brand-data', [HomeController::class, 'brandData'])->name('brand-product.index');
+Route::get('product-view/{id}', [HomeController::class, 'productDetails']);
+
+
 
 // vendor product routes
 Route::middleware(['vendor'])->group(function () {
@@ -96,6 +102,9 @@ Route::middleware(['vendor'])->group(function () {
 
     // my product list
     Route::get('my-product-list', [VendorProductController::class, 'myProductShow'])->name('my.product.list.index');
+    Route::get('my-product-show/{id}', [VendorProductController::class, 'pedit']);
+    Route::get('my-product-status/{id}', [VendorProductController::class, 'pstatus']);
+    Route::delete('my-product-delete/{id}', [VendorProductController::class, 'pdestroy']);
 
     Route::post('vendor-product-store', [VendorProductController::class, 'store']);
     Route::get('vendor-product-show/{id}', [VendorProductController::class, 'edit']);

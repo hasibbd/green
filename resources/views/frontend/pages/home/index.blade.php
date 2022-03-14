@@ -346,8 +346,8 @@
         <ul class="suggest-slider slider-arrow">
             @foreach($categories as $c)
             <li>
-                <a class="suggest-card" href="{{url('product/'.base64_encode($c->id))}}">
-                    <img src="{{asset('/storage/category/'.$c->photo)}}" alt="suggest">
+                <a class="suggest-card" href="{{url('product/'.$c->id)}}">
+                    <img style="width: 212px; height: 120px" src="{{asset('/storage/category/'.$c->photo)}}" alt="suggest">
                     <h5>{{$c->title}} <span>{{$c->product->count()}} items</span></h5>
                 </a>
             </li>

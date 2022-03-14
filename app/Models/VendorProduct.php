@@ -11,22 +11,15 @@ class VendorProduct extends Model
 
     protected $guarded = [];
 
-    public function unit()
+    public function vendor()
     {
-        return $this->hasOne(Unit::class, 'id', 'unit');
+        return $this->hasOne(User::class, 'id', 'created_by');
     }
-
-    public function brand()
-    {
-        return $this->hasOne(Brand::class, 'id', 'brand');
-    }
-
     public function category()
     {
         return $this->hasOne(Category::class, 'id', 'category');
     }
-
-    public function product()
+    public function product_details()
     {
         return $this->hasOne(Product::class, 'id', 'product');
     }

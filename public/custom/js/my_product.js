@@ -48,8 +48,63 @@ $(document).ready(function () {
         });
     });
 });
-
+var base = window.location.origin;
 function addProductForVendor(product_id) {
-    $('#product_id').val(product_id);
-    $('#add_modal').modal('show');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    let  my_url = base + "/my-product-show/" + product_id;
+    $.ajax({
+        type: 'get',
+        url: my_url,
+        success: (data) => {
+            console.log(data)
+            $('form').trigger("reset");
+            $('#id').val(data.data.id);
+            $('#vendor_price').val(data.data.vendor_price);
+            $('#sell_price').val(data.data.sell_price);
+            $('#add_modal').modal('show');
+        },
+        error: function (data) {
+            toastr.error(data.responseJSON.message)
+        }
+    });
+}
+function RemoveProductForVendor(product_id) {
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                let  my_url = base + "/my-product-delete/" + product_id;
+                $.ajax({
+                    type: 'delete',
+                    url: my_url,
+                    success: (data) => {
+                        $('.table').DataTable().ajax.reload();
+                        swal("Poof! Your imaginary file has been deleted!", {
+                            icon: "success",
+                        });
+                    },
+                    error: function (data) {
+                        toastr.error(data.responseJSON.message)
+
+                    }
+                });
+
+            } else {
+                swal("Your imaginary file is safe!");
+            }
+        });
 }

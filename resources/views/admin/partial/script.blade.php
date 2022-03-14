@@ -64,7 +64,7 @@
                 serverSide: true,
                 ajax: "{{ route('sliders.index') }}",
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'photo', name: 'photo'},
                     {data: 'title', name: 'title'},
                     {data: 'sort', name: 'sort'},
@@ -83,7 +83,7 @@
                 serverSide: true,
                 ajax: "{{ route('category.index') }}",
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'photo', name: 'photo'},
                     {data: 'title', name: 'title'},
                     {data: 'sort', name: 'sort'},
@@ -101,7 +101,7 @@
                 serverSide: true,
                 ajax: "{{ route('brand.index') }}",
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'photo', name: 'photo'},
                     {data: 'title', name: 'title'},
                     {data: 'sort', name: 'sort'},
@@ -119,7 +119,7 @@
                 serverSide: true,
                 ajax: "{{ route('article.index') }}",
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'photo', name: 'photo'},
                     {data: 'title', name: 'title'},
                     {data: 'sort', name: 'sort'},
@@ -138,7 +138,7 @@
                 serverSide: true,
                 ajax: "{{ route('unit.index') }}",
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -154,7 +154,7 @@
                 serverSide: true,
                 ajax: "{{ route('product-list.index') }}",
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'photo', name: 'photo'},
                     {data: 'name', name: 'name'},
                     {data: 'unit.name', name: 'unit.name'},
@@ -176,7 +176,7 @@
                 serverSide: true,
                 ajax: "{{ route('vendor.product.list.index') }}",
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'photo', name: 'photo'},
                     {data: 'name', name: 'name'},
                     {data: 'unit.name', name: 'unit.name'},
@@ -184,6 +184,27 @@
                     {data: 'brand.title', name: 'brand.title'},
                     {data: 'short_detail', name: 'short_detail'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        });
+    </script> @break
+    @case('my-product-list')
+    <script>
+        $(function () {
+            $("#my-product-list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('my.product.list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'photo', name: 'photo'},
+                    {data: 'p_name', name: 'p_name'},
+                    {data: 'unit_name', name: 'unit_name'},
+                    {data: 'category_name', name: 'category_name'},
+                    {data: 'brand_name', name: 'brand_name'},
+                    {data: 'vendor_price', name: 'vendor_price'},
+                    {data: 'sell_price', name: 'sell_price'},
+                    {data: 'action', name: 'action'},
                 ]
             });
         });

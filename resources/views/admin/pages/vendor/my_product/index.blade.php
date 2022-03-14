@@ -47,10 +47,11 @@
                                         <th>Brand</th>
                                         <th>Vendor Price</th>
                                         <th>Sell Price</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($my_products as $my_product)
+                                  {{--  @foreach($my_products as $my_product)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td><img style="width: 80px; height: 80px; border-radius: 50%"
@@ -62,7 +63,7 @@
                                             <td>{{$my_product->vendor_price}}</td>
                                             <td>{{$my_product->sell_price}}</td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach--}}
                                     </tbody>
                                 </table>
                             </div>
@@ -73,5 +74,5 @@
         </section>
         <!-- /.content -->
     </div>
-
+    @include('admin.pages.vendor.product.modal')
 @endsection

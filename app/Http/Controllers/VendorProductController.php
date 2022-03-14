@@ -18,19 +18,16 @@ class VendorProductController extends Controller
     {
         if ($request->ajax()) {
             $data = Product::with('category', 'brand', 'unit')->where('status', '=', 1)->get();
-            try {
-                return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function ($row) {
-                        return '<button class="btn btn-primary btn-sm" onclick="addProductForVendor(' . $row->id . ')"><i class="fas fa-plus-circle"></i></button>';
-                    })
-                    ->addColumn('photo', function ($row) {
-                        return '<img style="width: 50px" src="storage/product/' . $row->photo . '">';
-                    })
-                    ->rawColumns(['action', 'photo'])
-                    ->make(true);
-            } catch (\Exception $e) {
-            }
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-primary btn-sm" onclick="addProductForVendor(' . $row->id . ')"><i class="fas fa-plus-circle"></i></button>';
+                })
+                ->addColumn('photo', function ($row) {
+                    return '<img style="width: 50px" src="storage/product/' . $row->photo . '">';
+                })
+                ->rawColumns(['action', 'photo'])
+                ->make(true);
         }
         return view('admin.pages.vendor.product.index');
     }
@@ -38,17 +35,28 @@ class VendorProductController extends Controller
     public function myProductShow(Request $request)
     {
         $vendor_id = Auth::user()->id;
-
-        $query = "SELECT c.title AS category_name, d.title AS brand_name, e.name AS unit_name, b.name AS p_name, b.photo as p_photo, b.short_detail AS p_detail, a.vendor_price, a.sell_price FROM `vendor_products` a
+        if ($request->ajax()) {
+            $query = "SELECT c.title AS category_name, d.title AS brand_name, e.name AS unit_name, b.name AS p_name, b.photo as p_photo, b.short_detail AS p_detail, a.vendor_price, a.sell_price, a.id FROM `vendor_products` a
                     LEFT JOIN `products` b ON a.product = b.id
                     LEFT JOIN `categories` c ON b.category = c.id
                     LEFT JOIN `brands` d ON b.brand = d.id
                     LEFT JOIN `units` e ON b.unit = e.id
                     WHERE a.created_by =" . $vendor_id;
 
-        $my_products = DB::select($query);
-
-        return view('admin.pages.vendor.my_product.index', compact('my_products'));
+            $data = DB::select($query);
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('photo', function ($row) {
+                    return '<img style="width: 50px" src="storage/product/' . $row->p_photo . '">';
+                })
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-warning btn-sm" onclick="addProductForVendor(' . $row->id . ')"><i class="fas fa-file-invoice-dollar"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="RemoveProductForVendor(' . $row->id . ')"><i class="fas fa-trash"></i></button>';
+                })
+                ->rawColumns(['photo','action'])
+                ->make(true);
+        }
+        return view('admin.pages.vendor.my_product.index');
     }
 
     public function store(Request $request)
@@ -72,5 +80,19 @@ class VendorProductController extends Controller
                 'message' => 'Something Error Found, Please try again.',
             ], 500);
         }
+    }
+    public function pedit($id){
+        $target = VendorProduct::find($id);
+        return response()->json([
+           'data' => $target,
+            'message' => 'Product Price Updated'
+        ], 200);
+    }
+    public function pdestroy($id){
+        $target = VendorProduct::destroy($id);
+        return response()->json([
+           'data' => $target,
+            'message' => 'Product Deleted'
+        ], 200);
     }
 }

@@ -22,7 +22,12 @@
         $("#product_list").DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('product.index') }}",
+            ajax: {
+                url: "{{ route('product.index') }}",
+                data: function (d) {
+                    d.param = window.location.href.replace(/.*\/(\w+)\/?$/, '$1')
+                }
+            },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
                 {data: 'photo', name: 'photo', class: 'table-image'},
@@ -44,7 +49,12 @@
         $("#brand_list").DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('brand-product.index') }}",
+            ajax: {
+                url: "{{ route('brand-product.index') }}",
+                data: function (d) {
+                    d.param = window.location.href.replace(/.*\/(\w+)\/?$/, '$1')
+                }
+            },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
                 {data: 'photo', name: 'photo', class: 'table-image'},

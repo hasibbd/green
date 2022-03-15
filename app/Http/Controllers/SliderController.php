@@ -18,7 +18,7 @@ class SliderController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Slider::select('*');
+            $data = Slider::all();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

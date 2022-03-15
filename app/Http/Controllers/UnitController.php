@@ -16,7 +16,7 @@ class UnitController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Unit::select('*');
+            $data = Unit::all();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
@@ -71,14 +73,8 @@ class CategoryController extends Controller
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().Str::random(5).'.'.$extension;
-
-
-            $filePath = 'public/category';
-            $file->storeAs($filePath, $filename);
-
-            /*   $path = storage_path('category');
-               $file->move($path, $filename);*/
-
+            $resize = Image::make($file)->resize(212, 120)->encode($extension);
+            $save = Storage::put("public/category/".$filename, $resize->__toString());
             Category::updateOrCreate([
                     'id' => $request->id
                 ]

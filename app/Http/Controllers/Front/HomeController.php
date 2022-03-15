@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function productData(Request $request)
     {
         if ($request->ajax()) {
-            $search =   session('target_category');
+            $search = $request->param;
             $data = VendorProduct::with('product_details','product_details.brand_details','product_details.category_details')
                 ->whereHas('product_details', function($q) use($search){
                 $q->where('category', '=', $search);
@@ -40,7 +40,8 @@ class HomeController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
 
-                    $btn = '<div style="width: 140px"><button class="view" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></button>
+                    $btn = '<div style="width: 140px">
+                            <a class="view" href="javascript:void(0)" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
                              <a class="view" href="/product-list/'.$row->product.'" title="Similar Product" ><i class="fas fa-angle-double-right"></i></a>
                             <a class="view" href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#product-view"><i class="fas fa-cart-plus"></i></a>
                             </div>';
@@ -48,7 +49,7 @@ class HomeController extends Controller
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img style="width: 50px" src="/storage/product/'.$row->product_details->photo .'">';
+                    return '<img href="javascript:void(0)" style="width: 50px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
                 })
                 ->addColumn('brand', function($row){
                     return $row->product_details->brand_details->title;
@@ -62,7 +63,7 @@ class HomeController extends Controller
                 })
                 ->addColumn('price', function($row){
                     $t = VendorProduct::with('vendor')->where('product', $row->id)->orderBy('point', 'desc')->first();
-                    return $t->sell_price;
+                    return $t->sell_price.' Tk';
                 })
                 ->rawColumns(['action', 'photo', 'vendor', 'brand', 'points', 'price'])
                 ->make(true);
@@ -72,26 +73,26 @@ class HomeController extends Controller
 
     public function product($id)
     {
-        session(['target_category'=> $id]);
         return view('frontend.pages.product-list.index');
     }
     public function brandData(Request $request)
     {
         if ($request->ajax()) {
-            $search =   session('target_brand');
+            $search = $request->param;
             $data = Product::with('unit_details','category_details','brand_details')->where('brand', $search)->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
 
-                    $btn = '<div style="width: 140px"><button class="view" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></button>
+                    $btn = '<div style="width: 140px">
+                             <a class="view" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
                              <a class="view" href="/product-list/'.$row->product.'" title="Similar Product" ><i class="fas fa-angle-double-right"></i></a>
                               </div>';
 
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img style="width: 50px" src="/storage/product/'.$row->photo .'">';
+                    return '<img style="width: 50px; border-radius: 50%" src="/storage/product/'.$row->photo .'">';
                 })
                 ->rawColumns(['action', 'photo'])
                 ->make(true);
@@ -101,7 +102,6 @@ class HomeController extends Controller
 
     public function brand($id)
     {
-        session(['target_brand'=> $id]);
         return view('frontend.pages.brand-list.index');
     }
     public function productDetails($id){

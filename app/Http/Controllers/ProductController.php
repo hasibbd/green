@@ -7,7 +7,9 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
@@ -42,7 +44,7 @@ class ProductController extends Controller
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img style="width: 50px" src="storage/product/'.$row->photo.'">';
+                    return '<img style="width: 40px; border-radius: 50%" src="storage/product/'.$row->photo.'">';
                 })
                 ->rawColumns(['action', 'status', 'photo'])
                 ->make(true);
@@ -77,11 +79,8 @@ class ProductController extends Controller
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().Str::random(5).'.'.$extension;
-            $filePath = 'public/product';
-            $file->storeAs($filePath, $filename);
-
-            /*   $path = storage_path('slider');
-               $file->move($path, $filename);*/
+            $resize = Image::make($file)->resize(450, 450)->encode($extension);
+            $save = Storage::put("public/product/".$filename, $resize->__toString());
 
             Product::updateOrCreate([
                     'id' => $request->id

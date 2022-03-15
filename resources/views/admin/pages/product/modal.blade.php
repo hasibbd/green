@@ -10,8 +10,11 @@
             </div>
             <form id="form_submit" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <img id="previewImg" class="img-thumbnail" src="{{asset('/storage/brand/default.png')}}" alt="photo" style="width: 150px; height: 100px">
-                        <input type="hidden" name="id" id="id">
+                    <div class="text-center">
+                        <img id="previewImg" class="img-thumbnail" src="{{asset('/storage/brand/default.png')}}" alt="photo" style="width: 200px; height: 200px">
+
+                    </div>
+                    <input type="hidden" name="id" id="id">
                         <div class="form-group ">
                             <label for="photo">Photo</label> <br>
                             <input type="file" id="photo" name="photo" onchange="previewFile(this);">

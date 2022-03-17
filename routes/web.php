@@ -91,7 +91,8 @@ Route::get('brand-products/{id}', [HomeController::class, 'brand']);
 Route::get('brand-data', [HomeController::class, 'brandData'])->name('brand-product.index');
 Route::get('product-view/{id}', [HomeController::class, 'productDetails']);
 
-
+Route::get('product-list/{id}', [HomeController::class, 'SimProduct']);
+Route::get('product-list-data', [HomeController::class, 'SimProductData'])->name('productData.index');
 
 // vendor product routes
 Route::middleware(['vendor'])->group(function () {

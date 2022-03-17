@@ -39,11 +39,11 @@ class HomeController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-
+                    $t = VendorProduct::with('vendor')->where('product', $row->id)->orderBy('point', 'desc')->first();
                     $btn = '<div style="width: 140px">
                             <a class="view" href="javascript:void(0)" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
                              <a class="view" href="/product-list/'.$row->product.'" title="Similar Product" ><i class="fas fa-angle-double-right"></i></a>
-                            <a class="view" href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#product-view"><i class="fas fa-cart-plus"></i></a>
+                            <a class="view" href="javascript:void(0)" title="Add To Cart" onclick="AddToCart('.$t->id.')"><i class="fas fa-cart-plus"></i></a>
                             </div>';
 
                     return $btn;
@@ -82,8 +82,8 @@ class HomeController extends Controller
 
                     $btn = '<div style="width: 140px">
                             <a class="view" href="javascript:void(0)" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
-                          <a class="view" href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#product-view"><i class="fas fa-cart-plus"></i></a>
-                            </div>';
+                          <a class="view" href="javascript:void(0)" title="Add To Cart" onclick="AddToCart('.$row->id.')"><i class="fas fa-cart-plus"></i></a>
+                             </div>';
 
                     return $btn;
                 })
@@ -125,7 +125,7 @@ class HomeController extends Controller
                 ->addColumn('action', function($row){
 
                     $btn = '<div style="width: 140px">
-                             <a class="view" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
+                             <a class="view" href="javascript:void(0)" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
                              <a class="view" href="/product-list/'.$row->id.'" title="Similar Product" ><i class="fas fa-angle-double-right"></i></a>
                               </div>';
 
@@ -216,4 +216,5 @@ class HomeController extends Controller
     {
         //
     }
+
 }

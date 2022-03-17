@@ -23,7 +23,7 @@
                         class="fas fa-random"></i><sup>0</sup></a>
                 <a href="#" class="header-widget" title="Wishlist"><i class="fas fa-heart"></i><sup>0</sup></a>--}}
                 <button class="header-widget header-cart" title="Cartlist"><i
-                        class="fas fa-shopping-basket"></i><sup>9+</sup><span>total price<small>$345.00</small></span>
+                        class="fas fa-shopping-basket"></i><sup class="t_cart_item">0</sup><span>total price<small id="t_cart_price">00.00</small></span>
                 </button>
             </div>
         </div>

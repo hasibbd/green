@@ -16,6 +16,12 @@
 <!-- Datatables -->
 <script src="{{asset('plugins/dt/datatables/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/dt/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
+
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--Toaster-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script src="{{asset('custom/front/js/product.js')}}"></script>
 
 @switch(Request::segment(1))

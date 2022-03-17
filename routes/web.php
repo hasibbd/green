@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\ProductController;
@@ -92,6 +93,13 @@ Route::get('brand-data', [HomeController::class, 'brandData'])->name('brand-prod
 Route::get('product-view/{id}', [HomeController::class, 'productDetails']);
 
 
+Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
+Route::get('decrease/{id}', [CartController::class, 'decreseCart'])->name('decrease.to.cart');
+Route::get('get-cart', [CartController::class, 'getCart'])->name('get.cart');
+Route::get('remove/{id}', [CartController::class, 'remove'])->name('remove.cart');
+
+Route::get('product-list/{id}', [HomeController::class, 'SimProduct']);
+Route::get('product-list-data', [HomeController::class, 'SimProductData'])->name('productData.index');
 
 // vendor product routes
 Route::middleware(['vendor'])->group(function () {

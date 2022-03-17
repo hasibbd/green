@@ -39,11 +39,11 @@ class HomeController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-
+                    $t = VendorProduct::with('vendor')->where('product', $row->id)->orderBy('point', 'desc')->first();
                     $btn = '<div style="width: 140px">
                             <a class="view" href="javascript:void(0)" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
                              <a class="view" href="/product-list/'.$row->product.'" title="Similar Product" ><i class="fas fa-angle-double-right"></i></a>
-                            <a class="view" href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#product-view"><i class="fas fa-cart-plus"></i></a>
+                            <a class="view" href="javascript:void(0)" title="Add To Cart" onclick="AddToCart('.$t->id.')"><i class="fas fa-cart-plus"></i></a>
                             </div>';
 
                     return $btn;
@@ -70,10 +70,50 @@ class HomeController extends Controller
         }
         return view('frontend.pages.product-list.index');
     }
+    public function SimProductData(Request $request)
+    {
+        if ($request->ajax()) {
+            $search = $request->param;
+            $data = VendorProduct::with('vendor','product_details','product_details.brand_details','product_details.category_details')
+                ->where('product', $search)->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    $btn = '<div style="width: 140px">
+                            <a class="view" href="javascript:void(0)" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
+                          <a class="view" href="javascript:void(0)" title="Add To Cart" onclick="AddToCart('.$row->id.')"><i class="fas fa-cart-plus"></i></a>
+                             </div>';
+
+                    return $btn;
+                })
+                ->addColumn('photo', function($row){
+                    return '<img href="javascript:void(0)" style="width: 50px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
+                })
+                ->addColumn('brand', function($row){
+                    return $row->product_details->brand_details->title;
+                })
+                ->addColumn('vendor', function($row){
+                    return $row->vendor->name;
+                })->addColumn('points', function($row){
+                    return $row->point;
+                })
+                ->addColumn('price', function($row){
+                    return $row->sell_price;
+                })
+                ->rawColumns(['action', 'photo', 'vendor', 'brand', 'points', 'price'])
+                ->make(true);
+        }
+        return view('frontend.pages.sim-product-list.index');
+    }
 
     public function product($id)
     {
         return view('frontend.pages.product-list.index');
+    }
+    public function SimProduct($id)
+    {
+        return view('frontend.pages.sim-product-list.index');
     }
     public function brandData(Request $request)
     {
@@ -85,8 +125,8 @@ class HomeController extends Controller
                 ->addColumn('action', function($row){
 
                     $btn = '<div style="width: 140px">
-                             <a class="view" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
-                             <a class="view" href="/product-list/'.$row->product.'" title="Similar Product" ><i class="fas fa-angle-double-right"></i></a>
+                             <a class="view" href="javascript:void(0)" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
+                             <a class="view" href="/product-list/'.$row->id.'" title="Similar Product" ><i class="fas fa-angle-double-right"></i></a>
                               </div>';
 
                     return $btn;
@@ -176,4 +216,5 @@ class HomeController extends Controller
     {
         //
     }
+
 }

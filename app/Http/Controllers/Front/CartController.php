@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    public function checkOut(){
+        if (auth()->user()){
+              return view('frontend.pages.checkout.checkout');
+        }else{
+            return redirect()->route('/');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -145,21 +152,23 @@ class CartController extends Controller
     public function getCart()
     {
         $allCart = [];
-        foreach (session('cart') as $c){
-            array_push($allCart,[
-                "id" => $c['id'],
-                "name" => $c['name'],
-                "quantity" => $c['quantity'],
-                "price" => $c['price'],
-                "point" => $c['point'],
-                "vendor" => $c['vendor'],
-                "image" => "/storage/product/".$c['image']
+        if (session('cart')){
+            foreach (session('cart') as $c){
+                array_push($allCart,[
+                    "id" => $c['id'],
+                    "name" => $c['name'],
+                    "quantity" => $c['quantity'],
+                    "price" => $c['price'],
+                    "point" => $c['point'],
+                    "vendor" => $c['vendor'],
+                    "image" => "/storage/product/".$c['image']
+                ]);
+            }
+            return response()->json([
+                'data' =>  $allCart,
+                'message' => 'Product Added'
             ]);
         }
-        return response()->json([
-            'data' =>  $allCart,
-            'message' => 'Product Added'
-        ]);
     }
 
     /**

@@ -85,7 +85,7 @@ Route::post('reset-user-pass', [UserController::class, 'reset']);
 Route::post('login-check', [DashboardController::class, 'index'])->middleware('login-check');
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('product/{id}', [HomeController::class, 'product']);
 Route::get('product-data', [HomeController::class, 'productData'])->name('product.index');
 Route::get('brand-products/{id}', [HomeController::class, 'brand']);
@@ -97,6 +97,7 @@ Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.
 Route::get('decrease/{id}', [CartController::class, 'decreseCart'])->name('decrease.to.cart');
 Route::get('get-cart', [CartController::class, 'getCart'])->name('get.cart');
 Route::get('remove/{id}', [CartController::class, 'remove'])->name('remove.cart');
+Route::get('check-out', [CartController::class, 'checkOut'])->name('check-out');
 
 Route::get('product-list/{id}', [HomeController::class, 'SimProduct']);
 Route::get('product-list-data', [HomeController::class, 'SimProductData'])->name('productData.index');
@@ -115,7 +116,11 @@ Route::middleware(['vendor'])->group(function () {
     Route::delete('my-product-delete/{id}', [VendorProductController::class, 'pdestroy']);
 
     Route::post('vendor-product-store', [VendorProductController::class, 'store']);
+    Route::post('vendor-product-stock', [VendorProductController::class, 'stock']);
+    Route::post('vendor-product-edit', [VendorProductController::class, 'price']);
     Route::get('vendor-product-show/{id}', [VendorProductController::class, 'edit']);
+    Route::get('get-edit-product/{id}', [VendorProductController::class, 'show']);
     Route::get('vendor-product-status/{id}', [VendorProductController::class, 'status']);
+    Route::get('get-product', [VendorProductController::class, 'listData']);
     Route::delete('vendor-product-delete/{id}', [VendorProductController::class, 'destroy']);
 });

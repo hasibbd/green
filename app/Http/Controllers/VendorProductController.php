@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Stock;
 use App\Models\Unit;
 use App\Models\VendorProduct;
 use Illuminate\Http\Request;
@@ -14,72 +15,104 @@ use Yajra\DataTables\DataTables;
 
 class VendorProductController extends Controller
 {
+    public function listData(){
+        $target = VendorProduct::where('created_by', auth()->user()->id)->get('id');
+        $info = Product::whereNotIn('id', $target)->get();
+        return response()->json([
+            'data' => $info
+        ], 200);
+    }
+    public function show($id){
+        $target = VendorProduct::find($id);
+        return response()->json([
+            'data' => $target
+        ], 200);
+    }
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Product::with('category', 'brand', 'unit')->where('status', '=', 1)->get();
+            $data = VendorProduct::with('stock_details','product_details','product_details.category_details','product_details.brand_details','product_details.unit_details','vendor')->where('created_by', auth::user()->id)->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-primary btn-sm" onclick="addProductForVendor(' . $row->id . ')"><i class="fas fa-plus-circle"></i></button>';
-                })
                 ->addColumn('photo', function ($row) {
-                    return '<img style="width: 50px" src="storage/product/' . $row->photo . '">';
+                    return '<img style="width: 50px" src="storage/product/' . $row->product_details->photo . '">';
                 })
-                ->rawColumns(['action', 'photo'])
+                ->addColumn('name', function ($row) {
+                    return $row->product_details->name;
+                })
+                ->addColumn('vendor', function ($row) {
+                    return $row->vendor->name;
+                })
+                ->addColumn('unit', function ($row) {
+                    return $row->product_details->unit_details->name;
+                })
+                ->addColumn('category', function ($row) {
+                    return $row->product_details->category_details->title;
+                })->addColumn('brand', function ($row) {
+                    return $row->product_details->brand_details->title;
+                })
+                ->addColumn('stock', function ($row) {
+                    return $row->stock_details->sum('qty');
+                })->addColumn('action', function ($row) {
+                    $btn = '<button class="btn btn-primary btn-sm" onclick="AddStock('.$row->id.')"><i class="fab fa-buffer"></i></button>
+                            <button class="btn btn-warning btn-sm" onclick="EditModal('.$row->id.')"><i class="fas fa-edit"></i></button>
+                ';
+
+                    return $btn;
+                })
+                ->rawColumns(['unit', 'photo','vendor','category','brand','stock', 'action'])
                 ->make(true);
         }
         return view('admin.pages.vendor.product.index');
     }
 
-    public function myProductShow(Request $request)
-    {
-        $vendor_id = Auth::user()->id;
-        if ($request->ajax()) {
-            $query = "SELECT c.title AS category_name, d.title AS brand_name, e.name AS unit_name, b.name AS p_name, b.photo as p_photo, b.short_detail AS p_detail, a.vendor_price, a.sell_price, a.id FROM `vendor_products` a
-                    LEFT JOIN `products` b ON a.product = b.id
-                    LEFT JOIN `categories` c ON b.category = c.id
-                    LEFT JOIN `brands` d ON b.brand = d.id
-                    LEFT JOIN `units` e ON b.unit = e.id
-                    WHERE a.created_by =" . $vendor_id;
-
-            $data = DB::select($query);
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('photo', function ($row) {
-                    return '<img style="width: 50px" src="storage/product/' . $row->p_photo . '">';
-                })
-                ->addColumn('action', function ($row) {
-                    return '<button class="btn btn-warning btn-sm" onclick="addProductForVendor(' . $row->id . ')"><i class="fas fa-file-invoice-dollar"></i></button>
-                            <button class="btn btn-danger btn-sm" onclick="RemoveProductForVendor(' . $row->id . ')"><i class="fas fa-trash"></i></button>';
-                })
-                ->rawColumns(['photo','action'])
-                ->make(true);
-        }
-        return view('admin.pages.vendor.my_product.index');
-    }
-
     public function store(Request $request)
     {
-        if ($request->product_id) {
+       $st = VendorProduct::create([
+            'product' => $request->products,
+            'vendor_price' => $request->vendor_price,
+            'sell_price' => $request->sell_price,
+            'point' => $request->sell_price - $request->vendor_price,
+            'created_by' =>  auth()->user()->id
+        ]);
+       if ($st){
+           Stock::create([
+               'vendor_product' =>$st->id,
+               'created_by' => auth()->user()->id,
+               'qty' =>  $request->qty
+           ]);
+       }
 
-            $v_product = new VendorProduct();
-            $v_product->product = $request->product_id;
-            $v_product->vendor_price = $request->vendor_price;
-            $v_product->sell_price = $request->sell_price;
-            $v_product->point = $request->sell_price - $request->vendor_price;
-            $v_product->created_by = Auth::user()->id;
+        return response()->json([
+            'data' => $st,
+            'message' => 'Product Added'
+        ], 200);
+    }
+    public function price(Request $request)
+    {
+       $st = VendorProduct::where('id', $request->id)->update([
+            'vendor_price' => $request->vendor_price,
+            'sell_price' => $request->sell_price,
+            'point' => $request->sell_price - $request->vendor_price,
+        ]);
 
-            if ($v_product->save()) {
-                return response()->json([
-                    'message' => 'Data successfully saved.',
-                ], 200);
-            }
-        } else {
-            return response()->json([
-                'message' => 'Something Error Found, Please try again.',
-            ], 500);
-        }
+        return response()->json([
+            'data' => $st,
+            'message' => 'Product price Update'
+        ], 200);
+    }
+    public function stock(Request $request)
+    {
+     $st = Stock::create([
+            'vendor_product' => $request->id,
+            'created_by' => auth()->user()->id,
+            'qty' =>  $request->qty
+        ]);
+
+        return response()->json([
+            'data' => $st,
+            'message' => 'Stock Added'
+        ], 200);
     }
     public function pedit($id){
         $target = VendorProduct::find($id);

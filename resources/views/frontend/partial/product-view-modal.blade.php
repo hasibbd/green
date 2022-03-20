@@ -63,22 +63,8 @@
                                 </ul>
                             </div>--}}
                             <div class="view-add-group">
-                                <button class="product-add" title="Add to Cart"><i
-                                        class="fas fa-shopping-basket"></i><span>add to cart</span></button>
-                                <div class="product-action">
-                                    <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i>
-                                    </button>
-                                    <input class="action-input" title="Quantity Number" type="text" name="quantity"
-                                           value="1">
-                                    <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i>
-                                    </button>
-                                </div>
+
                             </div>
-                            <div class="view-action-group"><a class="view-wish wish" href="#" title="Add Your Wishlist"><i
-                                        class="icofont-heart"></i><span>add to wish</span></a><a class="view-compare"
-                                                                                                 href="compare.html"
-                                                                                                 title="Compare This Item"><i
-                                        class="fas fa-random"></i><span>Compare This</span></a></div>
                         </div>
                     </div>
                 </div>

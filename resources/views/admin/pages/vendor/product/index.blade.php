@@ -27,12 +27,13 @@
                      <div class="card">
                          <div class="card-header">
                              <div class="row">
-                                 <div class="col"><div class="card-title">
+                                 <div class="col">
+                                     <div class="card-title">
                                         All Product
                                      </div></div>
-{{--                                 <div class="col text-right">--}}
-{{--                                     <button onclick="$('#add_modal').modal('show')" class="btn btn-sm btn-primary">Add New</button>--}}
-{{--                                 </div>--}}
+                                 <div class="col text-right">
+                                     <button onclick="OpenModal()" class="btn btn-sm btn-primary">Add New</button>
+                                 </div>
                              </div>
                          </div>
                          <div class="card-body">
@@ -45,7 +46,10 @@
                                      <th>Unit</th>
                                      <th>Category</th>
                                      <th>Brand</th>
-                                     <th>Sort</th>
+                                     <th>Vendor Price</th>
+                                     <th>Sell Price</th>
+                                     <th>Point</th>
+                                     <th>Stock</th>
                                      <th style="width: 150px">Action</th>
                                  </tr>
                                  </thead>
@@ -61,4 +65,6 @@
         <!-- /.content -->
     </div>
     @include('admin.pages.vendor.product.modal')
+    @include('admin.pages.vendor.product.stock-modal')
+    @include('admin.pages.vendor.product.edit-modal')
 @endsection

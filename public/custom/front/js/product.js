@@ -22,6 +22,9 @@ function viewProduct(id){
             $('.view-desc').text(data.data.product_details.detail);
             $('#pr_price').text(data.data.sell_price);
             $('#pr_vendor').text(data.data.vendor.name);
+            $('.view-add-group').empty()
+            $('.view-add-group').append('<button onclick="AddToCart('+data.data.id+')" class="btn btn-success" title="Add to Cart" ><i\n' +
+                '                                        class="fas fa-shopping-basket"></i><span>add to cart</span></button>');
             $('#pr_image').attr('src', '/storage/product/'+data.data.product_details.photo);
             $('#product-view').modal('show')
         },

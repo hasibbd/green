@@ -15,17 +15,10 @@
             <a href="{{url('vendor-product-list')}}"
                class="nav-link {{ Request::segment(1) == 'vendor-product-list'  ? 'active' : ''}}">
                 <i class="nav-icon far fa-circle text-info"></i>
-                <p>All Product List</p>
+                <p>Product List</p>
             </a>
         </li>
 
-        <li class="nav-item">
-            <a href="{{url('my-product-list')}}"
-               class="nav-link {{ Request::segment(1) == 'my-product-list'  ? 'active' : ''}}">
-                <i class="nav-icon far fa-circle text-info"></i>
-                <p>My Product List</p>
-            </a>
-        </li>
 
     </ul>
 </nav>

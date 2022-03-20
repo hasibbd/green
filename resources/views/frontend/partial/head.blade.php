@@ -10,10 +10,16 @@
                 <a href="{{url('/')}}" class="header-logo">
                     <img src="{{asset('frontend/images/logo.png')}}" alt="logo">
                 </a>
+            @if(!auth()->user())
                 <a href="{{url('login')}}" class="header-widget" title="My Account">
-                    <img src="{{asset('frontend/images/user.png')}}" alt="user">
-                    <span>join</span>
+                    <span>Login</span>
                 </a>
+            @else
+            <a href="{{url('profile')}}" class="header-widget" title="My Account">
+                <img src="{{asset('frontend/images/user.png')}}" alt="user">
+                <span>My Profile</span>
+            </a>
+            @endif
             <form class="header-form">
                 <input type="text" placeholder="Search anything...">
                 <button><i class="fas fa-search"></i></button>

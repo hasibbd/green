@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{asset('frontend/vendor/bootstrap/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/index.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/css/checkout.css')}}">
 <!-- Data Table -->
 {{--    <link rel="stylesheet" href="{{asset('back/plugin/dudatepicker/duDatepicker.css')}}">--}}
 <link rel="stylesheet" href="{{asset('plugins/dt/datatables/css/dataTables.bootstrap4.min.css')}}">

@@ -179,10 +179,13 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'photo', name: 'photo'},
                     {data: 'name', name: 'name'},
-                    {data: 'unit.name', name: 'unit.name'},
-                    {data: 'category.title', name: 'category.title'},
-                    {data: 'brand.title', name: 'brand.title'},
-                    {data: 'short_detail', name: 'short_detail'},
+                    {data: 'unit', name: 'unit'},
+                    {data: 'category', name: 'category'},
+                    {data: 'brand', name: 'brand'},
+                    {data: 'vendor_price', name: 'vendor_price'},
+                    {data: 'sell_price', name: 'sell_price'},
+                    {data: 'point', name: 'point'},
+                    {data: 'stock', name: 'stock'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });

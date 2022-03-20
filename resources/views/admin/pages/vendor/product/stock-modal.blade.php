@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="add_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+<div class="modal fade" id="stock_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -9,19 +9,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit" enctype="multipart/form-data">
+            <form id="stock_submit" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="hidden" name="product_id" id="product_id">
-
+                    <input type="hidden" name="id" id="id">
                     <div class="form-group ">
-                        <label for="vendor_price">Vendor Price</label>
-                        <input type="number" class="form-control" id="vendor_price" name="vendor_price"
-                               placeholder="Vendor Price" required>
-                    </div>
-
-                    <div class="form-group ">
-                        <label for="sell_price">Sell Price</label>
-                        <input type="number" class="form-control" id="sell_price" name="sell_price" placeholder="Sell Price"
+                        <label for="qty">Quantity</label>
+                        <input type="number" class="form-control" id="qty" name="qty" placeholder="Quantity"
                                required>
                     </div>
                 </div>

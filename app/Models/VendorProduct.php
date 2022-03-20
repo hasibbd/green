@@ -23,4 +23,8 @@ class VendorProduct extends Model
     {
         return $this->hasOne(Product::class, 'id', 'product');
     }
+    public function stock_details()
+    {
+        return $this->hasMany(Stock::class, 'vendor_product', 'id');
+    }
 }

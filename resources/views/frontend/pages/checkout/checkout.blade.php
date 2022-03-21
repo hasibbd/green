@@ -260,8 +260,11 @@
                                 making this purchase you agree to our <a href="#">Terms and Conditions</a>.</label>
                         </div>
                         <div class="checkout-proced">
-                            <a href="invoice.html" class="btn btn-inline">proced to checkout</a>
+                            <a href="{{ route('invoice.show') }}" class="btn btn-inline">proced to checkout</a>
                         </div>
+                        {{-- @php
+                            dd(session('cart'));
+                        @endphp --}}
                     </div>
                 </div>
             </div>

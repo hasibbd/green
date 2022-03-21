@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
@@ -98,6 +99,10 @@ Route::get('decrease/{id}', [CartController::class, 'decreseCart'])->name('decre
 Route::get('get-cart', [CartController::class, 'getCart'])->name('get.cart');
 Route::get('remove/{id}', [CartController::class, 'remove'])->name('remove.cart');
 Route::get('check-out', [CartController::class, 'checkOut'])->name('check-out');
+
+// for invoice routes here
+Route::get('invoice-show', [InvoiceController::class, 'invoiceShow'])->name('invoice.show');
+
 
 Route::get('product-list/{id}', [HomeController::class, 'SimProduct']);
 Route::get('product-list-data', [HomeController::class, 'SimProductData'])->name('productData.index');

@@ -15,16 +15,14 @@ class CreateOrderMainsTable extends Migration
     {
         Schema::create('order_mains', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('main_id');
-            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('created_by'); // which person order this
             $table->unsignedBigInteger('vendor_id');
-            $table->integer('order_id');
+            $table->integer('order_id'); // generate order id
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('is_paid')->default(0);
             $table->timestamps();
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('vendor_id')->references('id')->on('users');
-            $table->foreign('main_id')->references('id')->on('order_mains');
         });
     }
 

@@ -117,8 +117,10 @@
                                         <th scope="col">Product</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Price</th>
+                                        <th scope="col">Point</th>
                                         <th scope="col">brand</th>
                                         <th scope="col">quantity</th>
+                                        <th scope="col">Vendor Name</th>
                                         <th scope="col">action</th>
                                     </tr>
                                 </thead>
@@ -135,103 +137,17 @@
                                         <td class="table-price">
                                             <h6>$19<small>/kilo</small></h6>
                                         </td>
+                                        <td class="table-price">
+                                            <h6>$19<small>/kilo</small></h6>
+                                        </td>
                                         <td class="table-brand">
                                             <h6>Fresh Company</h6>
                                         </td>
                                         <td class="table-quantity">
                                             <h6>3</h6>
                                         </td>
-                                        <td class="table-action"><a class="view" href="#" title="Quick View"
-                                                data-bs-toggle="modal" data-bs-target="#product-view"><i
-                                                    class="fas fa-eye"></i></a><a class="trash" href="#"
-                                                title="Remove Wishlist"><i class="icofont-trash"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-serial">
-                                            <h6>02</h6>
-                                        </td>
-                                        <td class="table-image"><img src="{{asset('frontend/images/product/02.jpg')}}"
-                                                alt="product"></td>
                                         <td class="table-name">
-                                            <h6>product name</h6>
-                                        </td>
-                                        <td class="table-price">
-                                            <h6>$19<small>/kilo</small></h6>
-                                        </td>
-                                        <td class="table-brand">
-                                            <h6>Radhuni Masala</h6>
-                                        </td>
-                                        <td class="table-quantity">
-                                            <h6>5</h6>
-                                        </td>
-                                        <td class="table-action"><a class="view" href="#" title="Quick View"
-                                                data-bs-toggle="modal" data-bs-target="#product-view"><i
-                                                    class="fas fa-eye"></i></a><a class="trash" href="#"
-                                                title="Remove Wishlist"><i class="icofont-trash"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-serial">
-                                            <h6>03</h6>
-                                        </td>
-                                        <td class="table-image"><img src="{{asset('frontend/images/product/03.jpg')}}"
-                                                alt="product"></td>
-                                        <td class="table-name">
-                                            <h6>product name</h6>
-                                        </td>
-                                        <td class="table-price">
-                                            <h6>$19<small>/kilo</small></h6>
-                                        </td>
-                                        <td class="table-brand">
-                                            <h6>Pran Prio</h6>
-                                        </td>
-                                        <td class="table-quantity">
-                                            <h6>2</h6>
-                                        </td>
-                                        <td class="table-action"><a class="view" href="#" title="Quick View"
-                                                data-bs-toggle="modal" data-bs-target="#product-view"><i
-                                                    class="fas fa-eye"></i></a><a class="trash" href="#"
-                                                title="Remove Wishlist"><i class="icofont-trash"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-serial">
-                                            <h6>04</h6>
-                                        </td>
-                                        <td class="table-image"><img src="{{asset('frontend/images/product/04.jpg')}}"
-                                                alt="product"></td>
-                                        <td class="table-name">
-                                            <h6>product name</h6>
-                                        </td>
-                                        <td class="table-price">
-                                            <h6>$19<small>/kilo</small></h6>
-                                        </td>
-                                        <td class="table-brand">
-                                            <h6>Real Food</h6>
-                                        </td>
-                                        <td class="table-quantity">
-                                            <h6>3</h6>
-                                        </td>
-                                        <td class="table-action"><a class="view" href="#" title="Quick View"
-                                                data-bs-toggle="modal" data-bs-target="#product-view"><i
-                                                    class="fas fa-eye"></i></a><a class="trash" href="#"
-                                                title="Remove Wishlist"><i class="icofont-trash"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-serial">
-                                            <h6>05</h6>
-                                        </td>
-                                        <td class="table-image"><img src="{{asset('frontend/images/product/05.jpg')}}"
-                                                alt="product"></td>
-                                        <td class="table-name">
-                                            <h6>product name</h6>
-                                        </td>
-                                        <td class="table-price">
-                                            <h6>$19<small>/kilo</small></h6>
-                                        </td>
-                                        <td class="table-brand">
-                                            <h6>Rdhuni Company</h6>
-                                        </td>
-                                        <td class="table-quantity">
-                                            <h6>7</h6>
+                                            <h6>vendor name</h6>
                                         </td>
                                         <td class="table-action"><a class="view" href="#" title="Quick View"
                                                 data-bs-toggle="modal" data-bs-target="#product-view"><i
@@ -263,7 +179,7 @@
                             <a href="{{ route('invoice.show') }}" class="btn btn-inline">proced to checkout</a>
                         </div>
                         {{-- @php
-                            dd(session('cart'));
+                        dd(session('cart'));
                         @endphp --}}
                     </div>
                 </div>

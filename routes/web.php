@@ -6,6 +6,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\ListController;
@@ -98,7 +99,8 @@ Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.
 Route::get('decrease/{id}', [CartController::class, 'decreseCart'])->name('decrease.to.cart');
 Route::get('get-cart', [CartController::class, 'getCart'])->name('get.cart');
 Route::get('remove/{id}', [CartController::class, 'remove'])->name('remove.cart');
-Route::get('check-out', [CartController::class, 'checkOut'])->name('check-out');
+Route::get('check-out', [CheckoutController::class, 'checkOut'])->name('check-out');
+Route::post('store-order', [CheckoutController::class, 'storeOrder'])->name('store.order');
 
 // for invoice routes here
 Route::get('invoice-show', [InvoiceController::class, 'invoiceShow'])->name('invoice.show');

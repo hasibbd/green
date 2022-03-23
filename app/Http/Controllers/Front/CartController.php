@@ -8,13 +8,6 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function checkOut(){
-        if (auth()->user()){
-              return view('frontend.pages.checkout.checkout');
-        }else{
-            return redirect()->route('/');
-        }
-    }
     /**
      * Display a listing of the resource.
      *

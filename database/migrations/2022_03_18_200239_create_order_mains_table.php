@@ -18,6 +18,9 @@ class CreateOrderMainsTable extends Migration
             $table->unsignedBigInteger('created_by'); // which person order this
             $table->unsignedBigInteger('vendor_id');
             $table->integer('order_id'); // generate order id
+            $table->double('total_price');
+            $table->double('total_point');
+            $table->bigInteger('total_qty');
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('is_paid')->default(0);
             $table->timestamps();

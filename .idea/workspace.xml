@@ -20,8 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f8e5c3b-f1c9-44cd-b878-7a3354afcef6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/pages/order-list/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/CheckoutController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/CheckoutController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2022_03_18_200239_create_order_mains_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_03_18_200239_create_order_mains_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2022_03_18_200610_create_order_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_03_18_200610_create_order_details_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/partial/menu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/partial/menu.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/checkout/checkout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/checkout/checkout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -166,12 +172,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/pages" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\laragon\www\green\resources\views\admin\pages" />
       <recent name="D:\laragon\www\green\public\custom\js" />
       <recent name="D:\laragon\www\green\resources\views\admin\pages\vendor" />
       <recent name="D:\laragon\www\green\resources\views\admin\pages\dashboard" />
@@ -200,7 +207,9 @@
       <workItem from="1646847821833" duration="2701000" />
       <workItem from="1647171324626" duration="191000" />
       <workItem from="1647889266910" duration="879000" />
-      <workItem from="1648057319762" duration="3523000" />
+      <workItem from="1648057319762" duration="3743000" />
+      <workItem from="1648222586691" duration="15578000" />
+      <workItem from="1648289779270" duration="5554000" />
     </task>
     <servers />
   </component>

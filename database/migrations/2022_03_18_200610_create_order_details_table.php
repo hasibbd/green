@@ -17,6 +17,7 @@ class CreateOrderDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('order_main_id');
             $table->unsignedBigInteger('vendor_product'); // vendor product id
+            $table->unsignedBigInteger('vendor_id');
             $table->integer('qty');
             $table->float('price');
             $table->integer('point');

@@ -86,6 +86,7 @@ class CartController extends Controller
                 "price" => $target->sell_price,
                 "point" => $target->point,
                 "vendor" => $target->vendor->name,
+                "vendor_id" => $target->vendor->id,
                 "image" => $target->product_details->photo
             ];
         }
@@ -101,6 +102,7 @@ class CartController extends Controller
                 "price" => $c['price'],
                 "point" => $c['point'],
                 "vendor" => $c['vendor'],
+                "vendor_id" => $c['vendor_id'],
                 "image" => "/storage/product/".$c['image']
             ]);
         }
@@ -134,6 +136,7 @@ class CartController extends Controller
                 "price" => $c['price'],
                 "point" => $c['point'],
                 "vendor" => $c['vendor'],
+                "vendor_id" => $c['vendor_id'],
                 "image" => "/storage/product/".$c['image']
             ]);
         }
@@ -154,6 +157,7 @@ class CartController extends Controller
                     "price" => $c['price'],
                     "point" => $c['point'],
                     "vendor" => $c['vendor'],
+                    "vendor_id" => $c['vendor_id'],
                     "image" => "/storage/product/".$c['image']
                 ]);
             }
@@ -186,6 +190,7 @@ class CartController extends Controller
                     "price" => $c['price'],
                     "point" => $c['point'],
                     "vendor" => $c['vendor'],
+                    "vendor_id" => $c['vendor_id'],
                     "image" => "/storage/product/".$c['image']
                 ]);
             }

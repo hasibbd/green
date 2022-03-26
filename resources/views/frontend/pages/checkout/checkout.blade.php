@@ -130,10 +130,12 @@
 
                                     @php
                                         $subTotal = 0;
+                                        $totalPoint = 0;
                                     @endphp
                                     @foreach(session('cart') as $cart)
                                         @php
                                             $subTotal += $cart['price'] * $cart['quantity'];
+                                            $totalPoint += $cart['point'];
                                         @endphp
                                         <tr>
                                             <td class="table-serial">
@@ -179,8 +181,10 @@
                             <div class="checkout-charge">
                                 <ul>
                                     <li><span>Sub total</span><span>TK. {{number_format($subTotal,2)}}</span></li>
-                                    <li><span>delivery fee</span><span>$10.00</span></li>
-                                    <li><span>discount</span><span>$00.00</span></li>
+                                    <li><span>Total Point </span><span>{{$totalPoint}}</span></li>
+                                    <li><span>delivery fee</span><span>TK. 10.00</span></li>
+                                    <li><span>discount</span><span>TK. 00.00</span></li>
+                                    <li><span>discount</span><span>TK. 00.00</span></li>
                                     <li>
                                         <span>Total<small>(Incl. VAT)</small></span><span>TK. {{number_format($subTotal,2)}}</span>
                                     </li>

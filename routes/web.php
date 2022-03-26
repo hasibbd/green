@@ -10,6 +10,7 @@ use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UnitController;
@@ -70,6 +71,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('product-show/{id}', [ProductController::class, 'edit']);
     Route::get('product-status/{id}', [ProductController::class, 'status']);
     Route::delete('product-delete/{id}', [ProductController::class, 'destroy']);
+
+    // order list
+    Route::get('order-list', [OrderController::class, 'showOrderList']);
 });
 
 Route::middleware(['user'])->group(function () {

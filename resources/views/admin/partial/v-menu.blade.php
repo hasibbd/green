@@ -19,6 +19,13 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{url('seller-order-list')}}"
+               class="nav-link {{ request()->is() == 'seller-order-list'  ? 'active' : ''}}">
+                <i class="nav-icon far fa-circle text-info"></i>
+                <p>Order List</p>
+            </a>
+        </li>
 
     </ul>
 </nav>

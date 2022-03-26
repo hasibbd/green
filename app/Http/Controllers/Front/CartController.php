@@ -8,13 +8,6 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function checkOut(){
-        if (auth()->user()){
-              return view('frontend.pages.checkout.checkout');
-        }else{
-            return redirect()->route('/');
-        }
-    }
     /**
      * Display a listing of the resource.
      *
@@ -93,6 +86,7 @@ class CartController extends Controller
                 "price" => $target->sell_price,
                 "point" => $target->point,
                 "vendor" => $target->vendor->name,
+                "vendor_id" => $target->vendor->id,
                 "image" => $target->product_details->photo
             ];
         }
@@ -108,6 +102,7 @@ class CartController extends Controller
                 "price" => $c['price'],
                 "point" => $c['point'],
                 "vendor" => $c['vendor'],
+                "vendor_id" => $c['vendor_id'],
                 "image" => "/storage/product/".$c['image']
             ]);
         }
@@ -141,6 +136,7 @@ class CartController extends Controller
                 "price" => $c['price'],
                 "point" => $c['point'],
                 "vendor" => $c['vendor'],
+                "vendor_id" => $c['vendor_id'],
                 "image" => "/storage/product/".$c['image']
             ]);
         }
@@ -161,6 +157,7 @@ class CartController extends Controller
                     "price" => $c['price'],
                     "point" => $c['point'],
                     "vendor" => $c['vendor'],
+                    "vendor_id" => $c['vendor_id'],
                     "image" => "/storage/product/".$c['image']
                 ]);
             }
@@ -193,6 +190,7 @@ class CartController extends Controller
                     "price" => $c['price'],
                     "point" => $c['point'],
                     "vendor" => $c['vendor'],
+                    "vendor_id" => $c['vendor_id'],
                     "image" => "/storage/product/".$c['image']
                 ]);
             }

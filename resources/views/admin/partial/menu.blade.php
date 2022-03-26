@@ -53,5 +53,11 @@
                 <p>User List</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{url('order-list')}}" class="nav-link {{ Request::segment(1) == 'order-list'  ? 'active' : ''}}">
+                <i class="nav-icon far fa-circle text-info"></i>
+                <p>Order List</p>
+            </a>
+        </li>
     </ul>
 </nav>

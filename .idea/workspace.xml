@@ -20,10 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f8e5c3b-f1c9-44cd-b878-7a3354afcef6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/pages/vendor/order-list/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/partial/v-menu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/partial/v-menu.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/CheckoutController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/CheckoutController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Front/InvoiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Front/InvoiceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VendorOrderListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VendorOrderListController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/pages/order-list/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pages/order-list/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/pages/vendor/order-list/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pages/vendor/order-list/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/invoice/invoice.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/invoice/invoice.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +207,9 @@
       <workItem from="1647889266910" duration="879000" />
       <workItem from="1648057319762" duration="3743000" />
       <workItem from="1648222586691" duration="15578000" />
-      <workItem from="1648289779270" duration="6429000" />
+      <workItem from="1648289779270" duration="7237000" />
+      <workItem from="1648298415817" duration="87000" />
+      <workItem from="1648298628389" duration="2921000" />
     </task>
     <servers />
   </component>
@@ -223,10 +229,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="499" y="163" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1646591908838">
+    <state x="499" y="163" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1648301559929">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="499" y="163" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816@0.0.1536.816" timestamp="1646591908838" />
+    <state x="499" y="163" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.816@0.0.1536.816" timestamp="1648301559929" />
     <state x="549" y="163" key="FileChooserDialogImpl" timestamp="1647171515060">
       <screen x="0" y="0" width="1536" height="816" />
     </state>

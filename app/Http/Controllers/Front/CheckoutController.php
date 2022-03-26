@@ -27,22 +27,21 @@ class CheckoutController extends Controller
             if (session('cart')) {
                 $cartData = session('cart');
 
-
                 DB::beginTransaction();
 
-                foreach (collect($cartData)->unique('vendor_id') as  $c){
+                foreach (collect($cartData)->unique('vendor_id') as $c) {
                     $st = OrderMain::create([
                         'created_by' => auth()->user()->id,
                         'vendor_id' => $c['vendor_id'],
                         'order_id' => Str::random(10),
                         'status' => 0
                     ]);
-                    if ($st){
+                    if ($st) {
                         $item = [];
                         $total_price = 0;
                         $total_point = 0;
                         $total_qty = 0;
-                        foreach (collect($cartData)->where('vendor_id', $c['vendor_id']) as  $c) {
+                        foreach (collect($cartData)->where('vendor_id', $c['vendor_id']) as $c) {
                             $item[] = [
                                 'order_main_id' => $st->id,
                                 'vendor_id' => $c['vendor_id'],
@@ -66,7 +65,7 @@ class CheckoutController extends Controller
                 }
 
                 // forget or destroy cart session
-     session()->forget('cart');
+                session()->forget('cart');
 
                 DB::commit();
 
@@ -77,8 +76,6 @@ class CheckoutController extends Controller
 //                ]);
             }
         } catch (\Exception $exception) {
-
-            dd($exception);
 
             DB::rollBack();
         }

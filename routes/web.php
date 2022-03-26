@@ -16,6 +16,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorOrderListController;
 use App\Http\Controllers\VendorProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -134,4 +135,8 @@ Route::middleware(['vendor'])->group(function () {
     Route::get('vendor-product-status/{id}', [VendorProductController::class, 'status']);
     Route::get('get-product', [VendorProductController::class, 'listData']);
     Route::delete('vendor-product-delete/{id}', [VendorProductController::class, 'destroy']);
+
+
+    // order list
+    Route::get('seller-order-list', [VendorOrderListController::class, 'showSellerOrderList']);
 });

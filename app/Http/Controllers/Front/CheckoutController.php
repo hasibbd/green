@@ -8,6 +8,7 @@ use App\Models\OrderMain;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -26,69 +27,46 @@ class CheckoutController extends Controller
             if (session('cart')) {
                 $cartData = session('cart');
 
-                $total_price = 0;
-                $total_point = 0;
-                $total_qty = 0;
-
-                $order_data_array = [];
-                $unique_vendor_Array = [];
-                $vendor_Array = [];
-
 
                 DB::beginTransaction();
 
-                foreach ($cartData as $data) {
-
-                    $vendor_Array[] = $data['vendor_id'];
-                    $order_data_array[] = $data;
-
-                    $total_point += $data['point'];
-                    $total_price += $data['price'];
-                    $total_qty += $data['quantity'];
-                }
-
-                $unique_vendor_Array[] = array_unique($vendor_Array);
-
-//                dd($order_data_array, $unique_vendor_Array);
-
-                for ($i = 0; $i < $unique_vendor_Array; $i++) {
-
-                    $orders = new OrderMain();
-                    $orders->created_by = Auth::user()->id;
-                    $orders->vendor_id = 1;
-                    $orders->total_point = $total_point;
-                    $orders->total_price = $total_price;
-                    $orders->total_qty = $total_qty;
-                    $orders->order_id = rand(9999, 10000);
-                    $orders->status = 0;
-                    $orders->is_paid = 0;
-                    $orders->save();
-
-                    for ($j = 0; $j < $order_data_array; $j++) {
-
-//                        dd($unique_vendor_Array[$i][0] == $order_data_array[$j]['vendor_id']);
-//                        dd($order_data_array[$j]['vendor_id']);
-
-
-                        if ($unique_vendor_Array[$i][0] != $order_data_array[$j]['vendor_id']) {
-
-                            // dd($order_data_array[$j]);
-                            $orderDetails = new OrderDetail();
-                            $orderDetails->order_main_id = $orders->id;
-                            $orderDetails->vendor_product = $order_data_array[$j]['id'];
-                            $orderDetails->vendor_id = $order_data_array[$j]['vendor_id'];
-                            $orderDetails->qty = $order_data_array[$j]['quantity'];
-                            $orderDetails->price = $order_data_array[$j]['price'];
-                            $orderDetails->point = $order_data_array[$j]['point'];
-                            $orderDetails->status = 0;
-                            $orderDetails->save();
-
+                foreach (collect($cartData)->unique('vendor_id') as  $c){
+                    $st = OrderMain::create([
+                        'created_by' => auth()->user()->id,
+                        'vendor_id' => $c['vendor_id'],
+                        'order_id' => Str::random(10),
+                        'status' => 0
+                    ]);
+                    if ($st){
+                        $item = [];
+                        $total_price = 0;
+                        $total_point = 0;
+                        $total_qty = 0;
+                        foreach (collect($cartData)->where('vendor_id', $c['vendor_id']) as  $c) {
+                            $item[] = [
+                                'order_main_id' => $st->id,
+                                'vendor_id' => $c['vendor_id'],
+                                'vendor_product' => $c['id'],
+                                'qty' => $c['quantity'],
+                                'price' => $c['price'],
+                                'point' => $c['point'],
+                                'status' => 0
+                            ];
+                            $total_price += $c['price'];
+                            $total_point += $c['point'];
+                            $total_qty += $c['quantity'];
                         }
+                        OrderDetail::insert($item);
+                        OrderMain::where('id', $st->id)->update([
+                            'total_price' => $total_price,
+                            'total_point' => $total_point,
+                            'total_qty' => $total_qty
+                        ]);
                     }
                 }
 
                 // forget or destroy cart session
-                session()->forget('cart');
+     session()->forget('cart');
 
                 DB::commit();
 

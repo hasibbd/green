@@ -15,7 +15,7 @@
                     <span>Login</span>
                 </a>
             @else
-            <a href="{{url('profile')}}" class="header-widget" title="My Account">
+            <a href="{{url('my-profile')}}" class="header-widget" title="My Account">
                 <img src="{{asset('frontend/images/user.png')}}" alt="user">
                 <span>My Profile</span>
             </a>
@@ -28,6 +28,9 @@
               {{--  <a href="#" class="header-widget" title="Compare List"><i
                         class="fas fa-random"></i><sup>0</sup></a>
                 <a href="#" class="header-widget" title="Wishlist"><i class="fas fa-heart"></i><sup>0</sup></a>--}}
+                @if(auth()->user())
+                <a href="{{url('logout')}}" class="header-widget" title="Logout">Logout</a>
+                @endif
                 <button class="header-widget header-cart" title="Cartlist"><i
                         class="fas fa-shopping-basket"></i><sup class="t_cart_item">0</sup><span>total price<small id="t_cart_price">00.00</small></span>
                 </button>

@@ -92,6 +92,8 @@ Route::post('login-check', [DashboardController::class, 'index'])->middleware('l
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('my-profile', [HomeController::class, 'profile'])->name('order-list');
+Route::get('change-password', [HomeController::class, 'changePass']);
 Route::get('product/{id}', [HomeController::class, 'product']);
 Route::get('product-data', [HomeController::class, 'productData'])->name('product.index');
 Route::get('brand-products/{id}', [HomeController::class, 'brand']);

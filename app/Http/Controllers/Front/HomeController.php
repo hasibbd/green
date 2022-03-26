@@ -216,5 +216,10 @@ class HomeController extends Controller
     {
         //
     }
-
+    public function profile(){
+        return view('frontend.pages.profile.index');
+    }
+    public function changePass(){
+        return view('frontend.pages.profile.passchange');
+    }
 }

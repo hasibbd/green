@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/index.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/checkout.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/css/wallet.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/css/profile.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/css/user-auth.css')}}">
 <!-- Data Table -->
 {{--    <link rel="stylesheet" href="{{asset('back/plugin/dudatepicker/duDatepicker.css')}}">--}}
 <link rel="stylesheet" href="{{asset('plugins/dt/datatables/css/dataTables.bootstrap4.min.css')}}">

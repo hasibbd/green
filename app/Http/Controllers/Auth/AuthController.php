@@ -9,6 +9,19 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function checkRef(Request $request){
+        $check = User::where('user_id', $request->user_id)->get();
+        if (count($check) > 0){
+            return response()->json([
+                'message' => 'User Found',
+                'data' => $check
+            ],200);
+        }else{
+            return response()->json([
+                'message' => 'Not Found'
+            ],404);
+        }
+    }
     public function login(){
        return view('auth.pages.login');
     }

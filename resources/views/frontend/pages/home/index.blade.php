@@ -23,7 +23,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-6">
-                            <div class="banner-img"><img style="width: 636px; height: 570px" src="{{asset('/storage/slider/'.$s->photo)}}" alt="index"></div>
+                            <div class="banner-img"><img src="{{asset('/storage/slider/'.$s->photo)}}" alt="index"></div>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-md-6 col-lg-6">
-                            <div class="banner-img"><img style="width: 636px; height: 570px" src="{{asset('/storage/slider/'.$s->photo)}}" alt="index"></div>
+                            <div class="banner-img"><img  src="{{asset('/storage/slider/'.$s->photo)}}" alt="index"></div>
                         </div>
                         <div class="col-md-6 col-lg-6">
                             <div class="banner-content"><h1>{{$s->title}}</h1>
@@ -56,7 +56,7 @@
             @foreach($categories as $c)
             <li>
                 <a class="suggest-card" href="{{url('product/'.$c->id)}}">
-                    <img style="width: 212px; height: 120px" src="{{asset('/storage/category/'.$c->photo)}}" alt="suggest">
+                    <img src="{{asset('/storage/category/'.$c->photo)}}" alt="suggest">
                     <h5>{{$c->title}} <span>{{$c->product->count()}} items</span></h5>
                 </a>
             </li>
@@ -161,15 +161,15 @@
                 <div class="blog-slider slider-arrow">
                     @foreach($articles as $a)
                     <div class="blog-card">
-                        <div class="blog-media"><a class="blog-img" href="#"><img src="{{asset('/storage/article/'.$a->photo)}}"
+                        <div class="blog-media"><a class="blog-img" href="{{url('read/'.$a->id)}}"><img src="{{asset('/storage/article/'.$a->photo)}}"
                                                                                   alt="blog"></a></div>
                         <div class="blog-content">
                             <ul class="blog-meta">
                                 <li><i class="fas fa-user"></i><span>{{$a->creator->name}}</span></li>
                                 <li><i class="fas fa-calendar-alt"></i><span>{{$a->created_at}}</span></li>
                             </ul>
-                            <h4 class="blog-title"><a href="blog-details.html">{{$a->title}}</a></h4>
-                            <p class="blog-desc">{{mb_strimwidth($a->details, 0, 200, "...")}}</p><a class="blog-btn" href="#"><span>read more</span><i
+                            <h4 class="blog-title"><a href="{{url('read/'.$a->id)}}">{{$a->title}}</a></h4>
+                            <p class="blog-desc">{{mb_strimwidth($a->details, 0, 200, "...")}}</p><a class="blog-btn" href="{{url('read/'.$a->id)}}"><span>read more</span><i
                                     class="icofont-arrow-right"></i></a></div>
                     </div>
                     @endforeach
@@ -178,7 +178,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="section-btn-25"><a href="blog-grid.html" class="btn btn-outline"><i
+                <div class="section-btn-25"><a href="{{url('article-list')}}" class="btn btn-outline"><i
                             class="fas fa-eye"></i><span>view all blog</span></a></div>
             </div>
         </div>

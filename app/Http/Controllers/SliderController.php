@@ -6,6 +6,7 @@ use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
 
 class SliderController extends Controller
@@ -72,16 +73,19 @@ class SliderController extends Controller
     {
         if($request->hasfile('photo'))
         {
-            $file = $request->file('photo');
+         /*   $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().Str::random(5).'.'.$extension;
 
 
             $filePath = 'public/slider';
-            $file->storeAs($filePath, $filename);
+            $file->storeAs($filePath, $filename);*/
 
-         /*   $path = storage_path('slider');
-            $file->move($path, $filename);*/
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().Str::random(5).'.'.$extension;
+            $resize = Image::make($file)->resize(560, 500)->encode($extension);
+            $save = Storage::put("public/slider/".$filename, $resize->__toString());
 
             Slider::updateOrCreate([
                     'id' => $request->id

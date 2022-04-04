@@ -39,7 +39,7 @@ class HomeController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $t = VendorProduct::with('vendor')->where('product', $row->id)->orderBy('point', 'desc')->first();
+                    $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
                     $btn = '<div style="width: 140px">
                             <a class="view" href="javascript:void(0)" title="Quick View"  onclick="viewProduct('.$row->id.')"><i class="fas fa-eye"></i></a>
                              <a class="view" href="/product-list/'.$row->product.'" title="Similar Product" ><i class="fas fa-angle-double-right"></i></a>
@@ -49,20 +49,20 @@ class HomeController extends Controller
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img href="javascript:void(0)" style="width: 50px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
+                    return '<img href="javascript:void(0)" style="width: 100px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
                 })
                 ->addColumn('brand', function($row){
                     return $row->product_details->brand_details->title;
                 })
                 ->addColumn('vendor', function($row){
-                    $t = VendorProduct::with('vendor')->where('product', $row->id)->orderBy('point', 'desc')->first();
+                    $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
                     return $t->vendor->name;
                 })->addColumn('points', function($row){
-                    $t = VendorProduct::with('vendor')->where('product', $row->id)->orderBy('point', 'desc')->first();
+                    $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
                     return $t->point;
                 })
                 ->addColumn('price', function($row){
-                    $t = VendorProduct::with('vendor')->where('product', $row->id)->orderBy('point', 'desc')->first();
+                    $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
                     return $t->sell_price.' Tk';
                 })
                 ->rawColumns(['action', 'photo', 'vendor', 'brand', 'points', 'price'])
@@ -88,7 +88,7 @@ class HomeController extends Controller
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img href="javascript:void(0)" style="width: 50px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
+                    return '<img href="javascript:void(0)" style="width: 100px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
                 })
                 ->addColumn('brand', function($row){
                     return $row->product_details->brand_details->title;
@@ -132,7 +132,7 @@ class HomeController extends Controller
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img style="width: 50px; border-radius: 50%" src="/storage/product/'.$row->photo .'">';
+                    return '<img style="width: 100px; border-radius: 50%" src="/storage/product/'.$row->photo .'">';
                 })
                 ->rawColumns(['action', 'photo'])
                 ->make(true);
@@ -221,5 +221,15 @@ class HomeController extends Controller
     }
     public function changePass(){
         return view('frontend.pages.profile.passchange');
+    }
+    public function read($id){
+        $article = Article::where('id', $id)->first();
+        $previous = Article::where('id', '<', $article->id)->orderBy('id','asc')->first();
+        $next = Article::where('id', '>', $article->id)->orderBy('id','asc')->first();
+        return view('frontend.pages.blog.index', compact('article','previous','next'));
+    }
+    public function Allread(){
+        $article = Article::latest()->paginate();
+        return view('frontend.pages.blog.all', compact('article'));
     }
 }

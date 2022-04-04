@@ -9,7 +9,9 @@
                             <div class="view-label-group">{{--<label class="view-label new">new</label><label
                                     class="view-label off">-10%</label>--}}</div>
                             <ul class="preview-slider slider-arrow">
-                                <li><img id="pr_image" style="width: 428px; height: 428px" src="{{asset('frontend/images/product/01.jpg')}}" alt="product"></li>
+                                <li class="picZoomer">
+                                    <img id="pr_image" src="{{asset('frontend/images/product/01.jpg')}}" alt="product">
+                                </li>
                                 {{-- <li><img src="{{asset('frontend/images/product/01.jpg')}}" alt="product"></li>
                                  <li><img src="{{asset('frontend/images/product/01.jpg')}}" alt="product"></li>
                                  <li><img src="{{asset('frontend/images/product/01.jpg')}}" alt="product"></li>

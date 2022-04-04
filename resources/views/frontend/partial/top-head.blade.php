@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-lg-5">
-                <div class="header-top-welcome"><p>Welcome to Ecomart in Your Dream Online Store!</p></div>
+                <div class="header-top-welcome"><p>Welcome to ShoppingBook!</p></div>
             </div>
             <div class="col-md-5 col-lg-3">
                 <div class="header-top-select">

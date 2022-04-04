@@ -48,35 +48,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($order_lists as $order)
-                                        <tr class="text-center">
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$order->customer_name}}</td>
-                                            <td>{{$order->vendor_name}}</td>
-                                            <td>{{$order->order_id}}</td>
-                                            <td>
-                                                @if($order->is_paid == 0)
-                                                    <span class="badge badge-warning">Due</span>
-                                                @else
-                                                    <span class="badge badge-success">Paid</span>
-                                                @endif
-                                            </td>
-                                            <td>{{$order->total_price}}</td>
-                                            <td>{{$order->total_qty}}</td>
-                                            <td>{{$order->total_point}}</td>
-                                            <td>
-                                                @if($order->status == 0)
-                                                    <span class="badge badge-warning">Pending</span>
-                                                @else
-                                                    <span class="badge badge-success">Success</span>
-                                                @endif
-                                            </td>
-                                            <td>{{$order->created_at}}</td>
-                                            <td>
-                                                <a href="" class="btn btn-success">View</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -87,7 +59,7 @@
         </section>
         <!-- /.content -->
     </div>
-    <script>
+  {{--  <script>
         const dataTable = $('#order_list').DataTable({});
-    </script>
+    </script>--}}
 @endsection

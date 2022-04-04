@@ -33,7 +33,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['admin'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('user-list', [ListController::class, 'index'])->name('user-list.index');
+    Route::get('flying-user-list', [UserController::class, 'findex'])->name('flying-user-list.index');
+    Route::get('admin-user-list', [UserController::class, 'aindex'])->name('admin-user-list.index');
+    Route::get('store-user-list', [UserController::class, 'sindex'])->name('store-user-list.index');
+    Route::get('user-list', [UserController::class, 'uindex'])->name('user-list.index');
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('profile-info-change', [ProfileController::class, 'update']);
 
@@ -74,7 +77,7 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('product-delete/{id}', [ProductController::class, 'destroy']);
 
     // order list
-    Route::get('order-list', [OrderController::class, 'showOrderList']);
+    Route::get('order-list', [OrderController::class, 'showOrderList'])->name('order-list.index');
 });
 
 Route::middleware(['user'])->group(function () {
@@ -82,6 +85,7 @@ Route::middleware(['user'])->group(function () {
 });
 
 Route::get('login', [AuthController::class, 'login'])->name('/');
+Route::get('check-ref', [AuthController::class, 'checkRef']);
 Route::get('registration', [AuthController::class, 'registration']);
 Route::get('forgot', [AuthController::class, 'forgot']);
 Route::get('recover/{token}', [AuthController::class, 'recover']);
@@ -100,6 +104,8 @@ Route::get('product-data', [HomeController::class, 'productData'])->name('produc
 Route::get('brand-products/{id}', [HomeController::class, 'brand']);
 Route::get('brand-data', [HomeController::class, 'brandData'])->name('brand-product.index');
 Route::get('product-view/{id}', [HomeController::class, 'productDetails']);
+Route::get('read/{id}', [HomeController::class, 'read']);
+Route::get('article-list', [HomeController::class, 'Allread']);
 
 
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');

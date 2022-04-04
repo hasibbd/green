@@ -25,26 +25,69 @@ $(document).ready(function () {
         e.preventDefault();
        if ($('#password').val() === $('#c_password').val()){
            loading('on','Wait...')
-           let formData = new FormData(this);
-           let  my_url = base + "/user-create";
-           $.ajax({
-               type: 'post',
-               url: my_url,
-               data: formData,
-               cache: false,
-               contentType: false,
-               processData: false,
-               success: (data) => {
-                   loading('off','Submit')
-                   toastr.success(data.message)
-                   formReset();
-               },
-               error: function (data) {
-                   loading('off','Submit')
-                   toastr.error(data.responseJSON.message)
+           if ($('#type').prop( "checked")){
+               $.ajaxSetup({
+                   headers: {
+                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                   }
+               });
+               let  my_url = base + "/check-ref";
+               $.ajax({
+                   type: 'get',
+                   data: {
+                     'user_id': $('#ref_user').val()
+                   },
+                   url: my_url,
+                   success: (data) => {
+                       console.log('ddd')
+                       let formData = new FormData(this);
+                       let  my_url = base + "/user-create";
+                       $.ajax({
+                           type: 'post',
+                           url: my_url,
+                           data: formData,
+                           cache: false,
+                           contentType: false,
+                           processData: false,
+                           success: (data) => {
+                               loading('off','Submit')
+                               toastr.success(data.message)
+                               formReset();
+                           },
+                           error: function (data) {
+                               loading('off','Submit')
+                               toastr.error(data.responseJSON.message)
 
-               }
-           });
+                           }
+                       });
+                   },
+                   error: function (data) {
+                       toastr.error('Please check the referral user id')
+                   }
+               });
+           }else{
+               console.log('dsfsfdd')
+               let formData = new FormData(this);
+               let  my_url = base + "/user-create";
+               $.ajax({
+                   type: 'post',
+                   url: my_url,
+                   data: formData,
+                   cache: false,
+                   contentType: false,
+                   processData: false,
+                   success: (data) => {
+                       loading('off','Submit')
+                       toastr.success(data.message)
+                       formReset();
+                   },
+                   error: function (data) {
+                       loading('off','Submit')
+                       toastr.error(data.responseJSON.message)
+
+                   }
+               });
+           }
        }else{
            toastr.error('Password did not match')
        }
@@ -113,5 +156,20 @@ $(document).ready(function () {
         }
 
     });
+    $('#type').on('click', function () {
+        if(this.checked){
+            $('#ref').removeClass('d-none').addClass('d-block')
+        }else{
+            $('#ref').removeClass('d-block').addClass('d-none')
+        }
+    })
 
 });
+function En(type) {
+    console.log($('#inlineRadio1').val())
+  if (type == 2){
+
+  }else{
+      $('#ref').removeClass('d-block').addClass('d-none')
+  }
+}

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
 
 class ArticleController extends Controller
@@ -74,10 +76,11 @@ class ArticleController extends Controller
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().Str::random(5).'.'.$extension;
+            $resize = Image::make($file)->resize(980, 620)->encode($extension);
+            $save = Storage::put("public/article/".$filename, $resize->__toString());
 
-
-            $filePath = 'public/article';
-            $file->storeAs($filePath, $filename);
+          /*  $filePath = 'public/article';
+            $file->storeAs($filePath, $filename);*/
 
             /*   $path = storage_path('slider');
                $file->move($path, $filename);*/

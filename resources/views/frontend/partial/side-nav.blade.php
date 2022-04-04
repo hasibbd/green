@@ -1,4 +1,4 @@
-{{--
+
 <aside class="nav-sidebar">
     <div class="nav-header"><a href="#"><img src="{{asset('frontend/images/logo.png')}}" alt="logo"></a>
         <button class="nav-close"><i class="icofont-close"></i></button>
@@ -91,4 +91,4 @@
         <div class="nav-footer"><p>All Rights Reserved by <a href="#">Hasibul Hasan</a></p></div>
     </div>
 </aside>
---}}
+

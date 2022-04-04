@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="mironcoder">
-    <meta name="email" content="mironcoder@gmail.com">
-    <meta name="profile" content="https://themeforest.net/user/mironcoder">
-    <meta name="template" content="greeny">
-    <meta name="title" content="greeny - Ecommerce Food Store HTML Template">
+    <meta name="template" content="ShoppingBook">
+    <meta name="title" content="ShoppingBook">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="keywords"
           content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online">
-    <title>Index Home - Greeny</title>
+    <title>Home - ShoppingBook</title>
     <link rel="icon" href="images/favicon.png">
 @include('frontend.partial.css')
 </head>

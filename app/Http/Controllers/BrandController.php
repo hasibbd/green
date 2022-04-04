@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Yajra\DataTables\DataTables;
 
 class BrandController extends Controller
@@ -71,10 +73,11 @@ class BrandController extends Controller
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().Str::random(5).'.'.$extension;
-
-
+            $resize = Image::make($file)->resize(300, 300)->encode($extension);
+            $save = Storage::put("public/brand/".$filename, $resize->__toString());
+/*
             $filePath = 'public/brand';
-            $file->storeAs($filePath, $filename);
+            $file->storeAs($filePath, $filename);*/
 
             /*   $path = storage_path('brand');
                $file->move($path, $filename);*/

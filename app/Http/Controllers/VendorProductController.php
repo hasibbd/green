@@ -15,9 +15,16 @@ use Yajra\DataTables\DataTables;
 
 class VendorProductController extends Controller
 {
-    public function listData(){
-        $target = VendorProduct::where('created_by', auth()->user()->id)->get('id');
-        $info = Product::whereNotIn('id', $target)->get();
+    public function listData(Request $request){
+       //$target = VendorProduct::where('created_by', auth()->user()->id)->get('id');
+        $data = Product::where('status', 1);
+        if ($request->brand > 0){
+            $data->where('brand', $request->brand);
+        }
+        if ($request->category > 0){
+            $data->where('category', $request->category);
+        }
+        $info = $data->get();
         return response()->json([
             'data' => $info
         ], 200);
@@ -63,11 +70,20 @@ class VendorProductController extends Controller
                 ->rawColumns(['unit', 'photo','vendor','category','brand','stock', 'action'])
                 ->make(true);
         }
-        return view('admin.pages.vendor.product.index');
+        $category = Category::where('status', 1)->get();
+        $brand = Brand::where('status', 1)->get();
+        return view('admin.pages.vendor.product.index', compact('category','brand'));
     }
 
     public function store(Request $request)
     {
+        $check = VendorProduct::where('product', $request->products)->where('created_by', auth()->user()->id)->get();
+        if (count($check) > 0){
+            return response()->json([
+                'data' => $check,
+                'message' => 'This Product Already Added'
+            ], 404);
+        }
        $st = VendorProduct::create([
             'product' => $request->products,
             'vendor_price' => $request->vendor_price,

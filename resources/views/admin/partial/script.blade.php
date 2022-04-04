@@ -212,6 +212,108 @@
             });
         });
     </script> @break
+    @case('flying-user-list')
+    <script>
+        $(function () {
+            $("#flying_user").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('flying-user-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'photo', name: 'photo'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'phone', name: 'phone'},
+                    {data: 'status', name: 'status'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+
+    @case('store-user-list')
+    <script>
+        $(function () {
+            $("#store_user").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('store-user-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'photo', name: 'photo'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'phone', name: 'phone'},
+                    {data: 'status', name: 'status'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+
+    @case('user-list')
+    <script>
+        $(function () {
+            $("#user_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('user-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'photo', name: 'photo'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'phone', name: 'phone'},
+                    {data: 'status', name: 'status'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+
+    @case('admin-user-list')
+    <script>
+        $(function () {
+            $("#admin_user").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin-user-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'photo', name: 'photo'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'phone', name: 'phone'},
+                    {data: 'status', name: 'status'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+    @case('order-list')
+    <script>
+        $(function () {
+            $("#order_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('order-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'customer_name', name: 'customer_name'},
+                    {data: 'vendor_name', name: 'vendor_name'},
+                    {data: 'order_id', name: 'order_id'},
+                    {data: 'is_paid', name: 'is_paid'},
+                    {data: 'total_price', name: 'total_price'},
+                    {data: 'total_qty', name: 'total_qty'},
+                    {data: 'total_point', name: 'total_point'},
+                    {data: 'status', name: 'status'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
 
 @endswitch
 

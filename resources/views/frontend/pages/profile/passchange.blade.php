@@ -29,7 +29,7 @@
                         </form>
                     </div>
                     <div class="user-form-remind"><p>Go Back To<a href="{{url('login')}}">login here</a></p></div>
-                    <div class="user-form-footer"><p>Greeny | &COPY; Copyright by <a href="#">Mironcoder</a></p></div>
+                    <div class="user-form-footer"><p>ShoppingBook | &COPY; Copyright</p></div>
                 </div>
             </div>
         </div>

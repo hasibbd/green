@@ -23,7 +23,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script src="{{asset('custom/front/js/product.js')}}"></script>
+<script src="{{asset('custom/front/plugin/xzoom.min.js')}}"></script>
+<script src="{{asset('custom/front/plugin/setup.js')}}"></script>
+<script>
+    $(function () {
 
+    })
+</script>
 @switch(Request::segment(1))
  @case('product')
  <script>
@@ -50,8 +56,8 @@
              ],
              "language": {
                  "paginate": {
-                     "next": ">",
-                     "previous": "<"
+                     "next": '<i class="fas fa-long-arrow-alt-right"></i>',
+                     "previous": '<i class="fas fa-long-arrow-alt-left"></i>'
                  }
              }
          });

@@ -105,6 +105,64 @@ $(document).ready(function () {
             }
         });
     });
+    $('#brand').on('change', function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#products').empty()
+        let  my_url = base + "/get-product";
+        $.ajax({
+            type: 'get',
+            data:{
+                'brand' : $(this).val(),
+                'category' : $('#category').val()
+            },
+            url: my_url,
+            success: (data) => {
+                $('#products').empty()
+                $('#products').append('<option value="0" disabled selected>Select Product</option>')
+                data.data.forEach((element, index) => {
+                    $('#products').append('<option value="'+element.id+'">'+element.name+'</option>')
+                })
+                $('#add_modal').modal('show')
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.message)
+
+            }
+        });
+    });
+    $('#category').on('change', function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#products').empty()
+        let  my_url = base + "/get-product";
+        $.ajax({
+            type: 'get',
+            data:{
+                'category' : $(this).val(),
+                'brand' : $('#brand').val()
+            },
+            url: my_url,
+            success: (data) => {
+                $('#products').empty()
+                $('#products').append('<option value="0"  disabled selected>Select Product</option>')
+                data.data.forEach((element, index) => {
+                    $('#products').append('<option value="'+element.id+'">'+element.name+'</option>')
+                })
+                $('#add_modal').modal('show')
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.message)
+
+            }
+        });
+    });
 });
 var base = window.location.origin;
 function addProductForVendor(product_id) {
@@ -141,26 +199,9 @@ function EditModal(id) {
 
 }
 function OpenModal() {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    let  my_url = base + "/get-product";
-    $.ajax({
-        type: 'get',
-        url: my_url,
-        success: (data) => {
-            $('#products').empty()
-            data.data.forEach((element, index) => {
-                $('#products').append('<option value="'+element.id+'">'+element.name+'</option>')
-            })
-            $('#add_modal').modal('show')
-        },
-        error: function (data) {
-            toastr.error(data.responseJSON.message)
-
-        }
-    });
-
+    $('#products').empty()
+    $('#category').val(0)
+    $('#brand').val(0)
+    $('#products').empty()
+    $('#add_modal').modal('show')
 }

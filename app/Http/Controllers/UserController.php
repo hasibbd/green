@@ -213,13 +213,15 @@ class UserController extends Controller
            'reffer_by' => $ref,
            'password' => Hash::make($request->password)
         ]);
-        $data = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
-        (new User)->forceFill([
-            'email' => $request->email,
-        ])->notify(new NewUser($data));
+        if (!$request->id){
+            $data = [
+                'email' => $request->email,
+                'password' => $request->password,
+            ];
+            (new User)->forceFill([
+                'email' => $request->email,
+            ])->notify(new NewUser($data));
+        }
         return response()->json([
             'message' => 'Registration done'
         ],200);
@@ -246,13 +248,16 @@ class UserController extends Controller
                     'role' => $request->role,
                     'password' => Hash::make($pass),
                 ]);
-            $data = [
-                'email' => $request->email,
-                'password' => $pass,
-            ];
-            (new User)->forceFill([
-                'email' => $request->email,
-            ])->notify(new NewUser($data));
+            if (!$request->id){
+                $data = [
+                    'email' => $request->email,
+                    'password' => $pass,
+                ];
+                (new User)->forceFill([
+                    'email' => $request->email,
+                ])->notify(new NewUser($data));
+            }
+
         }else{
             if ($request->id){
                 $target = User::find($request->id)->photo;
@@ -269,6 +274,7 @@ class UserController extends Controller
                     'email' => $request->email,
                     'phone' => $request->phone,
                 ]);
+
         }
         return response()->json([
             'message' => 'Registration done'
@@ -302,13 +308,15 @@ class UserController extends Controller
                     'role' => $request->role,
                     'password' => Hash::make($pass),
                 ]);
-            $data = [
-                'email' => $request->email,
-                'password' => $pass,
-        ];
-            (new User)->forceFill([
-                'email' => $request->email,
-            ])->notify(new NewUser($data));
+            if (!$request->id){
+                $data = [
+                    'email' => $request->email,
+                    'password' => $request->password,
+                ];
+                (new User)->forceFill([
+                    'email' => $request->email,
+                ])->notify(new NewUser($data));
+            }
         }else{
             if ($request->id){
                 $target = User::find($request->id)->photo;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\Stock;
 use App\Models\Unit;
 use App\Models\VendorProduct;
@@ -84,11 +85,20 @@ class VendorProductController extends Controller
                 'message' => 'This Product Already Added'
             ], 404);
         }
+        $profit = $request->sell_price - $request->vendor_price;
+        $g_point = $profit - ($profit*(Setting::find(1)->point_rate)/100);
+        $check = Product::find($request->products)->is_reserve_point;
+        if ($check == 1){
+            $point = $g_point;
+        }else{
+            $point = $profit;
+        }
+
        $st = VendorProduct::create([
             'product' => $request->products,
             'vendor_price' => $request->vendor_price,
             'sell_price' => $request->sell_price,
-            'point' => $request->sell_price - $request->vendor_price,
+            'point' => $point,
             'created_by' =>  auth()->user()->id
         ]);
        if ($st){

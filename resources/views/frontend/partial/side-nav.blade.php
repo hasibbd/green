@@ -4,7 +4,7 @@
         <button class="nav-close"><i class="icofont-close"></i></button>
     </div>
     <div class="nav-content">
-        <div class="nav-btn"><a href="login.html" class="btn btn-inline"><i
+        <div class="nav-btn"><a href="{{url('login')}}" class="btn btn-inline"><i
                     class="fa fa-unlock-alt"></i><span>join here</span></a></div>
         <div class="nav-select-group">
             <div class="nav-select"><i class="icofont-world"></i><select class="select">

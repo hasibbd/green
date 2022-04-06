@@ -16,13 +16,14 @@
                     <div class="user-form-card">
                         <div class="user-form-title"><h2>any issue?</h2>
                             <p>Make sure your current password is strong</p></div>
-                        <form class="user-form">
-                            <div class="form-group"><input type="password" class="form-control" placeholder="Old password">
+                        <form class="user-form" id="pass_change">
+                            <div class="form-group">
+                                <input name="o_pass"  id="o_pass" required type="password" class="form-control" placeholder="Old password">
                             </div>
-                            <div class="form-group"><input type="password" class="form-control"
-                                                           placeholder="Current password"></div>
-                            <div class="form-group"><input type="password" class="form-control"
-                                                           placeholder="reapet password"></div>
+                            <div class="form-group"><input name="n_pass" id="n_pass" type="password" class="form-control"
+                                                           placeholder="Current password" required></div>
+                            <div class="form-group"><input name="r_pass" id="r_pass"  type="password" class="form-control"
+                                                           placeholder="reapet password" required></div>
                             <div class="form-button">
                                 <button type="submit">change password</button>
                             </div>

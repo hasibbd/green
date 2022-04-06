@@ -28,4 +28,7 @@ class Product extends Model
     public function category_details () {
         return $this->hasOne(Category::class, 'id', 'category');
     }
+    public function vendor_product () {
+        return $this->hasMany(VendorProduct::class, 'product', 'id');
+    }
 }

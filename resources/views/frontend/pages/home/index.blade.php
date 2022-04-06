@@ -57,7 +57,18 @@
             <li>
                 <a class="suggest-card" href="{{url('product/'.$c->id)}}">
                     <img src="{{asset('/storage/category/'.$c->photo)}}" alt="suggest">
-                    <h5>{{$c->title}} <span>{{$c->product->count()}} items</span></h5>
+                    <h5>{{$c->title}} <span>
+                            <?php
+                            $ite = 0;
+                            foreach ($c->product as $p){
+                                if ($p->vendor_product){
+                                    $ite += $p->vendor_product->count();
+                                }
+                            }
+                            echo $ite;
+                            ?>
+
+                            items</span></h5>
                 </a>
             </li>
             @endforeach

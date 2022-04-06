@@ -73,7 +73,7 @@ function AddToCart(id){
             })
             $('#t_cart_price').text(total+' Tk')
             $('.checkout-price').text(sub+' Tk')
-            toastr.success(data.message)
+            //toastr.success(data.message)
         },
         error: function (data) {
             toastr.error(data.responseJSON.message)
@@ -120,7 +120,7 @@ function DecreaseToCart(id){
             })
             $('#t_cart_price').text(total+' Tk')
             $('.checkout-price').text(sub+' Tk')
-            toastr.success(data.message)
+          //  toastr.success(data.message)
         },
         error: function (data) {
             toastr.error(data.responseJSON.message)
@@ -167,7 +167,7 @@ function RemoveToCart(id){
             })
             $('#t_cart_price').text(total+' Tk')
             $('.checkout-price').text(sub+' Tk')
-            toastr.success(data.message)
+           // toastr.success(data.message)
         },
         error: function (data) {
             toastr.error(data.responseJSON.message)

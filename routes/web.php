@@ -12,6 +12,7 @@ use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\User\ProfileController;
@@ -33,7 +34,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['admin'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('flying-user-list', [UserController::class, 'findex'])->name('flying-user-list.index');
     Route::get('admin-user-list', [UserController::class, 'aindex'])->name('admin-user-list.index');
     Route::get('store-user-list', [UserController::class, 'sindex'])->name('store-user-list.index');
     Route::get('user-list', [UserController::class, 'uindex'])->name('user-list.index');
@@ -70,6 +70,13 @@ Route::middleware(['admin'])->group(function () {
     Route::get('unit-status/{id}', [UnitController::class, 'status']);
     Route::delete('unit-delete/{id}', [UnitController::class, 'destroy']);
 
+    Route::get('flying-user-list', [UserController::class, 'findex'])->name('flying-user-list.index');
+    Route::post('store-user-store', [UserController::class, 'store3']);
+    Route::post('user-store', [UserController::class, 'store2']);
+    Route::get('user-show/{id}', [UserController::class, 'edit']);
+    Route::get('user-status/{id}', [UserController::class, 'status']);
+    Route::delete('user-delete/{id}', [UserController::class, 'destroy']);
+
     Route::get('product-list', [ProductController::class, 'index'])->name('product-list.index');
     Route::post('product-store', [ProductController::class, 'store']);
     Route::get('product-show/{id}', [ProductController::class, 'edit']);
@@ -78,10 +85,15 @@ Route::middleware(['admin'])->group(function () {
 
     // order list
     Route::get('order-list', [OrderController::class, 'showOrderList'])->name('order-list.index');
+    //Setting
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
+    Route::get('setting-show/{id}', [SettingController::class, 'edit']);
+    Route::post('setting-store', [SettingController::class, 'store']);
 });
 
 Route::middleware(['user'])->group(function () {
-
+    Route::post('basic-update', [UserController::class, 'basicUpdate']);
+    Route::post('pass-update', [UserController::class, 'passUpdate']);
 });
 
 Route::get('login', [AuthController::class, 'login'])->name('/');

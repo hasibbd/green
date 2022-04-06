@@ -3,7 +3,13 @@
     <div class="container">
         <div class="header-content">
             <div class="header-media-group">
-                <button class="header-user"><img src="{{asset('frontend/images/user.png')}}" alt="user"></button>
+                <button class="header-user">
+                    @if(Auth::user())
+                        <img src="/storage/user/{{Auth::user()->photo}}" alt="user"></button>
+                    @else
+                    <img src="{{asset('frontend/images/user.png')}}" alt="user">
+                    @endif
+                </button>
                 <a href="{{url('/')}}"><img src="{{asset('frontend/images/logo.png')}}" alt="logo"></a>
                 <button class="header-src"><i class="fas fa-search"></i></button>
             </div>
@@ -16,7 +22,7 @@
                 </a>
             @else
             <a href="{{url('my-profile')}}" class="header-widget" title="My Account">
-                <img src="{{asset('frontend/images/user.png')}}" alt="user">
+                <img src="/storage/user/{{Auth::user()->photo}}" alt="user">
                 <span>My Profile</span>
             </a>
             @endif

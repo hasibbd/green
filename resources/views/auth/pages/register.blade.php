@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="mironcoder">
-    <meta name="email" content="mironcoder@gmail.com">
-    <meta name="profile" content="https://themeforest.net/user/mironcoder">
-    <meta name="template" content="greeny">
-    <meta name="title" content="greeny - Ecommerce Food Store HTML Template">
+    <meta name="title" content="ShoppingBook - Ecommerce Food Store HTML Template">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="keywords"
           content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online">
-    <title>Greeny - Register</title>
+    <title>ShoppingBook - Register</title>
     <link rel="icon" href="{{asset('frontend/images/favicon.png')}}">
     <link rel="stylesheet" href="{{asset('frontend/fonts/flaticon/flaticon.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/fonts/icofont/icofont.min.css')}}">
@@ -78,7 +74,7 @@
                     </form>
                 </div>
                 <div class="user-form-remind"><p>Already Have An Account?<a href="{{url('/')}}">login here</a></p></div>
-                <div class="user-form-footer"><p>Green | &COPY; Copyright by <a href="#">Green</a></p></div>
+                <div class="user-form-footer"><p>ShoppingBook | &COPY; Copyright by <a href="{{url('/')}}">ShoppingBook</a></p></div>
             </div>
         </div>
     </div>

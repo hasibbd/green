@@ -149,10 +149,10 @@
         </li>
 
         <li class="nav-item
-        {{ Request::segment(1) == 'order-list'  ? 'menu-open' : ''}}
+        {{ Request::segment(1) == 'setting'  ? 'menu-open' : ''}}
             ">
             <a href="#" class="nav-link
-            {{ Request::segment(1) == 'order-list'  ? 'active' : ''}}
+            {{ Request::segment(1) == 'setting'  ? 'active' : ''}}
                 ">
                 <i class="nav-icon fas fa-tools"></i>
                 <p>
@@ -162,7 +162,7 @@
             </a>
             <ul class="nav nav-treeview small">
                 <li class="nav-item">
-                    <a href="{{url('order-list')}}" class="nav-link {{ Request::segment(1) == 'order-list'  ? 'active' : ''}}">
+                    <a href="{{url('setting')}}" class="nav-link {{ Request::segment(1) == 'setting'  ? 'active' : ''}}">
                         <i class="nav-icon fab fa-buffer"></i>
                         <p>Point Setting</p>
                     </a>

@@ -45,9 +45,10 @@
                                      <th>Unit</th>
                                      <th>Category</th>
                                      <th>Brand</th>
-                                     <th>Sort</th>
+                                     <th>Sort Description</th>
+                                     <th>Reserve Wallet</th>
                                      <th>Status</th>
-                                     <th width="150px">Action</th>
+                                     <th width="120px">Action</th>
                                  </tr>
                                  </thead>
                                  <tbody>

@@ -39,7 +39,13 @@ class OrderController extends Controller
                         return '<span class="badge badge-success">Paid</span>';
                     }
                 })
-                ->rawColumns(['action','status','is_paid'])
+                ->addColumn('date', function($row){
+
+                    $btn = date("F j, Y, g:i a", strtotime($row->created_at));
+
+                    return $btn;
+                })
+                ->rawColumns(['action','status','is_paid','date'])
                 ->make(true);
         }
 

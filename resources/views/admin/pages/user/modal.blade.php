@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel"><span id="mdl_ttl"></span> Category</h5>
+                <h5 class="modal-title" id="staticBackdropLabel"><span id="mdl_ttl"></span> Flying User</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -18,12 +18,16 @@
                         </div>
                     <div class="form-group ">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
                     </div>
-                        <div class="form-group ">
-                            <label for="sort">Sort</label>
-                            <input type="number" min="1" class="form-control" id="sort" name="sort" placeholder="Sort" required>
-                        </div>
+                    <div class="form-group ">
+                        <label for="title">Phone</label>
+                        <input type="phone" class="form-control" id="phone" name="phone" placeholder="Name" required>
+                    </div>
+                    <div class="form-group ">
+                        <label for="title">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Name" required>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

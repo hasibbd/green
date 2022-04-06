@@ -23,6 +23,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script src="{{asset('custom/front/js/product.js')}}"></script>
+<script src="{{asset('custom/front/js/my-profile.js')}}"></script>
 <script src="{{asset('custom/front/plugin/xzoom.min.js')}}"></script>
 <script src="{{asset('custom/front/plugin/setup.js')}}"></script>
 <script>

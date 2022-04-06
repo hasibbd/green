@@ -123,6 +123,7 @@ function Show(id) {
             $('#unit').val(data.data.unit);
             $('#category').val(data.data.category);
             $('#brand').val(data.data.brand);
+            $('#r_wallet').prop('checked', data.data.is_reserve_point)
             $('#previewImg').attr('src', '/storage/product/'+data.data.photo);
             $('#add_modal').modal('show');
         },

@@ -44,6 +44,7 @@
                                      <th>Name</th>
                                      <th>Email</th>
                                      <th>Phone</th>
+                                     <th>Shop Type</th>
                                      <th>Status</th>
                                      <th width="150px">Action</th>
                                  </tr>
@@ -59,5 +60,5 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('admin.pages.brand.modal')
+    @include('admin.pages.store-user.modal')
 @endsection

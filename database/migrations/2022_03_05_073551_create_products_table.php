@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('unit');
             $table->text('short_detail');
             $table->text('detail');
+            $table->tinyInteger('is_reserve_point')->default(1);
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->foreign('unit')->references('id')->on('units');

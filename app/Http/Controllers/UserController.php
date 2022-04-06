@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\NewUser;
+use App\Notifications\PasswordChanged;
 use App\Notifications\PasswordRecover;
 use App\Notifications\PasswordReset;
 use Illuminate\Http\Request;
@@ -211,6 +213,13 @@ class UserController extends Controller
            'reffer_by' => $ref,
            'password' => Hash::make($request->password)
         ]);
+        $data = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+        (new User)->forceFill([
+            'email' => $request->email,
+        ])->notify(new NewUser($data));
         return response()->json([
             'message' => 'Registration done'
         ],200);
@@ -224,6 +233,7 @@ class UserController extends Controller
             $filename =time().Str::random(5).'.'.$extension;
             $resize = Image::make($file)->resize(300, 300)->encode($extension);
             $save = Storage::put("public/user/".$filename, $resize->__toString());
+            $pass = rand(100000,999999);
             User::updateOrCreate([
                     'id' => $request->id
                 ]
@@ -234,8 +244,15 @@ class UserController extends Controller
                     'email' => $request->email,
                     'phone' => $request->phone,
                     'role' => $request->role,
-                    'password' => Hash::make(123456),
+                    'password' => Hash::make($pass),
                 ]);
+            $data = [
+                'email' => $request->email,
+                'password' => $pass,
+            ];
+            (new User)->forceFill([
+                'email' => $request->email,
+            ])->notify(new NewUser($data));
         }else{
             if ($request->id){
                 $target = User::find($request->id)->photo;
@@ -271,6 +288,7 @@ class UserController extends Controller
             $filename =time().Str::random(5).'.'.$extension;
             $resize = Image::make($file)->resize(300, 300)->encode($extension);
             $save = Storage::put("public/user/".$filename, $resize->__toString());
+            $pass = rand(100000,999999);
             User::updateOrCreate([
                     'id' => $request->id
                 ]
@@ -282,8 +300,15 @@ class UserController extends Controller
                     'phone' => $request->phone,
                     'is_mobile_store' => $type,
                     'role' => $request->role,
-                    'password' => Hash::make(123456),
+                    'password' => Hash::make($pass),
                 ]);
+            $data = [
+                'email' => $request->email,
+                'password' => $pass,
+        ];
+            (new User)->forceFill([
+                'email' => $request->email,
+            ])->notify(new NewUser($data));
         }else{
             if ($request->id){
                 $target = User::find($request->id)->photo;
@@ -302,6 +327,7 @@ class UserController extends Controller
                     'is_mobile_store' => $type,
                 ]);
         }
+
         return response()->json([
             'message' => 'Registration done'
         ],200);
@@ -353,6 +379,9 @@ class UserController extends Controller
                     ,[
                         'password' => Hash::make($request->r_pass),
                     ]);
+                (new User)->forceFill([
+                    'email' => auth()->user()->id->email,
+                ])->notify(new PasswordChanged());
                 return response()->json([
                     'message' => 'Password Changed'
                 ],200);

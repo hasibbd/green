@@ -32,7 +32,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="sub_btn">Save</button>
+                    <button type="submit" class="btn btn-primary load" id="sub_btn">Save</button>
                 </div>
             </form>
         </div>

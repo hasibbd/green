@@ -16,7 +16,7 @@ $(document).ready(function () {
         $("formId")[0].reset()
     }
 
-    $('#form_submit').submit(function (e) {
+    $('#basic_submit').submit(function (e) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -25,7 +25,7 @@ $(document).ready(function () {
         e.preventDefault();
         loading('on','Wait...')
         let formData = new FormData(this);
-        let  my_url = base + "/product-store";
+        let  my_url = base + "/basic-update";
         $.ajax({
             type: 'post',
             url: my_url,
@@ -34,10 +34,11 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: (data) => {
-                $('.table').DataTable().ajax.reload();
+              //  $('.table').DataTable().ajax.reload();
                 loading('off','Submit')
                 toastr.success(data.message)
                 formReset();
+                location.reload()
             },
             error: function (data) {
                 loading('off','Submit')
@@ -45,6 +46,41 @@ $(document).ready(function () {
 
             }
         });
+    });
+    $('#pass_change').submit(function (e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        e.preventDefault();
+        if ($('#r_pass').val() == $('#n_pass').val()){
+            loading('on','Wait...')
+            let formData = new FormData(this);
+            let  my_url = base + "/pass-update";
+            $.ajax({
+                type: 'post',
+                url: my_url,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: (data) => {
+                    //  $('.table').DataTable().ajax.reload();
+                    loading('off','Submit')
+                    toastr.success(data.message)
+                    formReset();
+                    location.reload()
+                },
+                error: function (data) {
+                    loading('off','Submit')
+                    toastr.error(data.responseJSON.message)
+
+                }
+            });
+        }else{
+            toastr.error('New password and Repeat password is not matched')
+        }
     });
 });
 var base = window.location.origin;
@@ -54,7 +90,7 @@ function Status(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    let  my_url = base + "/product-status/" + id;
+    let  my_url = base + "/brand-status/" + id;
     $.ajax({
         type: 'get',
         url: my_url,
@@ -83,7 +119,7 @@ function Delete(id) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                let  my_url = base + "/product-delete/" + id;
+                let  my_url = base + "/brand-delete/" + id;
                 $.ajax({
                     type: 'delete',
                     url: my_url,
@@ -110,21 +146,17 @@ function Show(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    let  my_url = base + "/product-show/" + id;
+    let  my_url = base + "/brand-show/" + id;
     $.ajax({
         type: 'get',
         url: my_url,
         success: (data) => {
             $('form').trigger("reset");
             $('#id').val(data.data.id);
-            $('#title').val(data.data.name);
-            $('#detail').text(data.data.detail);
-            $('#short_detail').val(data.data.short_detail);
-            $('#unit').val(data.data.unit);
-            $('#category').val(data.data.category);
-            $('#brand').val(data.data.brand);
-            $('#r_wallet').prop('checked', data.data.is_reserve_point)
-            $('#previewImg').attr('src', '/storage/product/'+data.data.photo);
+            $('#title').val(data.data.title);
+            $('#details').val(data.data.detail);
+            $('#sort').val(data.data.sort);
+            $('#previewImg').attr('src', '/storage/brand/'+data.data.photo);
             $('#add_modal').modal('show');
         },
         error: function (data) {
@@ -134,7 +166,6 @@ function Show(id) {
     });
 }
 function previewFile(input){
-    console.log(input)
     var file = $("input[type=file]").get(0).files[0];
 
     if(file){

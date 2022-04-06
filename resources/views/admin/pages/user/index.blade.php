@@ -59,5 +59,5 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('admin.pages.brand.modal')
+    @include('admin.pages.user.modal')
 @endsection

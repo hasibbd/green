@@ -8,7 +8,7 @@
     @include('frontend.partial.cart')
     @include('frontend.partial.side-nav')
     @include('frontend.partial.mobile')
-    <section class="profile-part">
+    <section class="profile-part pt-3">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -19,15 +19,15 @@
                         <div class="account-content">
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <div class="profile-image"><a href="#"><img src="{{asset('frontend/images/user.png')}}" alt="user"></a></div>
+                                    <div class="profile-image"><a href="#"><img src="storage/user/{{Auth::user()->photo}}" alt="user"></a></div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
-                                    <div class="form-group"><label class="form-label">name</label><input
-                                            class="form-control" type="text" value="Miron Mahmud"></div>
+                                  <h6>Name: {{Auth::user()->name}}</h6>
+                                    <h6>Email: {{Auth::user()->email}}</h6>
+                                    <h6>Phone: {{Auth::user()->phone}}</h6>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
-                                    <div class="form-group"><label class="form-label">Email</label><input
-                                            class="form-control" type="email" value="mironcoder@gmail.com"></div>
+
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="profile-btn"><a href="{{url('change-password')}}">change pass.</a></div>
@@ -43,14 +43,15 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <button class="modal-close" data-bs-dismiss="modal"><i class="icofont-close"></i></button>
-                <form class="modal-form">
+                <form class="modal-form" id="basic_submit">
                     <div class="form-title"><h3>edit profile info</h3></div>
-                    <div class="form-group"><label class="form-label">profile image</label><input class="form-control"
-                                                                                                  type="file"></div>
-                    <div class="form-group"><label class="form-label">name</label><input class="form-control" type="text"
-                                                                                         value="Miron Mahmud"></div>
-                    <div class="form-group"><label class="form-label">email</label><input class="form-control" type="text"
-                                                                                          value="mironcoder@gmail.com">
+                    <div class="form-group">
+                        <label class="form-label">profile image</label>
+                        <input name="photo" id="photo" class="form-control" type="file">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">name</label>
+                        <input class="form-control" type="text" name="name" value="{{Auth()->user()->name}}">
                     </div>
                     <button class="form-btn" type="submit">save profile info</button>
                 </form>
@@ -73,28 +74,17 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="account-card"><h3 class="account-title">Add Wallet</h3>
-                    <form class="wallet-form"><input type="text" placeholder="$00.00">
-                        <div class="wallet-suggest"><h6>suggested:</h6>
-                            <ul>
-                                <li><a href="#">$50</a></li>
-                                <li><a href="#">$100</a></li>
-                                <li><a href="#">$300</a></li>
-                                <li><a href="#">$500</a></li>
-                                <li><a href="#">$800</a></li>
-                                <li><a href="#">$1000</a></li>
-                                <li><a href="#">$3000</a></li>
-                                <li><a href="#">$5000</a></li>
-                            </ul>
-                        </div>
-                        <button type="submit">add to wallet</button>
-                    </form>
+                <div class="account-card"><h3 class="account-title">Options</h3>
+                    <button style="margin-bottom: 5px" class="form-btn" type="submit">Apply for registered user</button>
+                    <button style="margin-bottom: 5px" class="form-btn " type="submit">Apply for store manager</button>
+                    <button style="margin-bottom: 5px" class="form-btn" type="submit">Go To Dashboard</button>
+                    <button class="form-btn" type="submit">Apply for store manager</button>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="account-card"><h3 class="account-title">Wallet Transaction</h3>
+                <div class="account-card"><h3 class="account-title">Order List</h3>
                     <div class="top-filter">
                         <div class="filter-show"><label class="filter-label">Show :</label><select
                                 class="form-select filter-select">

@@ -53,6 +53,14 @@
     <script src="{{asset('custom/js/vendor_product.js')}}"></script> @break
     @case('my-product-list')
     <script src="{{asset('custom/js/my_product.js')}}"></script> @break
+    @case('setting')
+    <script src="{{asset('custom/js/setting.js')}}"></script> @break
+    @case('flying-user-list')
+    <script src="{{asset('custom/js/user.js')}}"></script> @break
+    @case('admin-user-list')
+    <script src="{{asset('custom/js/user.js')}}"></script> @break
+    @case('store-user-list')
+    <script src="{{asset('custom/js/store-user.js')}}"></script> @break
 @endswitch
 
 @switch(Request::segment(1))
@@ -161,6 +169,7 @@
                     {data: 'category.title', name: 'category.title'},
                     {data: 'brand.title', name: 'brand.title'},
                     {data: 'short_detail', name: 'short_detail'},
+                    {data: 'reserve', name: 'reserve'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
@@ -245,6 +254,7 @@
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
+                    {data: 'type', name: 'type'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action'},
                 ]
@@ -308,7 +318,23 @@
                     {data: 'total_qty', name: 'total_qty'},
                     {data: 'total_point', name: 'total_point'},
                     {data: 'status', name: 'status'},
-                    {data: 'created_at', name: 'created_at'},
+                    {data: 'date', name: 'date'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+    @case('setting')
+    <script>
+        $(function () {
+            $("#point_rate").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('setting.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'title', name: 'ttile'},
+                    {data: 'point_rate', name: 'point_rate'},
                     {data: 'action', name: 'action'},
                 ]
             });

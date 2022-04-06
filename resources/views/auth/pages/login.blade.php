@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Green - Login</title>
+    <title>ShoppingBook - Login</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('frontend/images/favicon.png')}}">
     <link rel="stylesheet" href="{{asset('frontend/fonts/flaticon/flaticon.css')}}">
@@ -59,14 +59,14 @@
                             {{--                            </div>--}}
                             <div class="form-button">
                                 <button type="submit">login</button>
-                                <p>Forgot your password?<a href="#">reset here</a></p></div>
+                                <p>Forgot your password?<a href="{{url('forgot')}}">reset here</a></p></div>
                         </form>
                     </div>
                 </div>
                 <div class="user-form-remind"><p>Don't have any account?<a href="{{url('registration')}}">register
                             here</a></p>
                 </div>
-                <div class="user-form-footer"><p>Green | &COPY; Copyright by <a href="#">Green</a></p></div>
+                <div class="user-form-footer"><p>Green | &COPY; Copyright by <a href="{{url('/')}}">ShoppingBook</a></p></div>
             </div>
         </div>
     </div>

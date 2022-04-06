@@ -12,10 +12,24 @@ class AuthController extends Controller
     public function checkRef(Request $request){
         $check = User::where('user_id', $request->user_id)->get();
         if (count($check) > 0){
-            return response()->json([
-                'message' => 'User Found',
-                'data' => $check
-            ],200);
+            if ($check->is_store_manager == 1){
+                if ($check->is_registered){
+                    return response()->json([
+                        'message' => 'User Found',
+                        'data' => $check
+                    ],200);
+                }else{
+                    return response()->json([
+                        'message' => 'User is not a registered user',
+                        'data' => $check
+                    ],404);
+                }
+            }else{
+                return response()->json([
+                    'message' => 'User is not a store manager',
+                    'data' => $check
+                ],404);
+            }
         }else{
             return response()->json([
                 'message' => 'Not Found'
@@ -33,7 +47,12 @@ class AuthController extends Controller
     }
     public function recover($token){
         $target = User::where('remember_token',$token)->first();
-        return view('auth.pages.recover',compact('target'));
+        if ($target){
+            return view('auth.pages.recover',compact('target'));
+        }else{
+            return view('auth.pages.login');
+        }
+
     }
     public function logout(){
         session()->flush();

@@ -66,7 +66,6 @@ $(document).ready(function () {
                    }
                });
            }else{
-               console.log('dsfsfdd')
                let formData = new FormData(this);
                let  my_url = base + "/user-create";
                $.ajax({
@@ -141,7 +140,7 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: (data) => {
-                    formReset();
+                    //formReset();
                     toastr.success(data.message)
                     loading('off','Submit')
 

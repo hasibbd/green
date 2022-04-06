@@ -24,7 +24,7 @@ class HomeController extends Controller
     {
         $sliders = Slider::where('status', 1)->get();
         $brands = Brand::with('product')->where('status', 1)->get();
-        $categories = Category::with('product')->where('status', 1)->get();
+        $categories = Category::with('product','product.vendor_product')->where('status', 1)->get();
         $articles = Article::with('creator')->where('status', 1)->get();
         return view('frontend.pages.home.index', compact('sliders','brands','categories','articles'));
     }

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\Unit;
+use App\Models\VendorProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -43,10 +45,20 @@ class ProductController extends Controller
                     }
                     return $btn;
                 })
+                ->addColumn('reserve', function($row){
+                    if ($row->is_reserve_point == 1){
+                        $btn = '<span class="badge badge-pill badge-primary">Active</span>';
+
+                    }else{
+                        $btn = '<span class="badge badge-pill badge-danger">Disabled</span>';
+
+                    }
+                    return $btn;
+                })
                 ->addColumn('photo', function($row){
                     return '<img style="width: 40px; border-radius: 50%" src="storage/product/'.$row->photo.'">';
                 })
-                ->rawColumns(['action', 'status', 'photo'])
+                ->rawColumns(['action', 'status', 'photo','reserve'])
                 ->make(true);
         }
         $units = Unit::where('status', 1)->get();
@@ -74,6 +86,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->r_wallet){
+            $r = 1;
+        }else{
+            $r = 0;
+        }
         if($request->hasfile('photo'))
         {
             $file = $request->file('photo');
@@ -81,7 +98,6 @@ class ProductController extends Controller
             $filename =time().Str::random(5).'.'.$extension;
             $resize = Image::make($file)->resize(450, 450)->encode($extension);
             $save = Storage::put("public/product/".$filename, $resize->__toString());
-
             Product::updateOrCreate([
                     'id' => $request->id
                 ]
@@ -93,6 +109,7 @@ class ProductController extends Controller
                     'category' => $request->category,
                     'brand' => $request->brand,
                     'unit' => $request->unit,
+                    'is_reserve_point' => $r,
                     'status' => 1,
                 ]);
         }else{
@@ -107,16 +124,38 @@ class ProductController extends Controller
                 ,[
                     'photo' => $target,
                     'name' => $request->title,
-                    'short_detail' => $request->sort,
-                    'detail' => $request->details,
+                    'short_detail' => $request->short_detail,
+                    'detail' => $request->detail,
                     'category' => $request->category,
                     'brand' => $request->brand,
-                    'unit' => $request->brand,
+                    'unit' => $request->unit,
+                    'is_reserve_point' => $r,
                     'status' => 1,
                 ]);
         }
+        if ($request->id){
+
+            $m = 'Product Updated';
+            $t_vendor = VendorProduct::where('product', $request->id)->get();
+            foreach ($t_vendor as $t){
+                $profit = $t->sell_price - $t->vendor_price;
+                $g_point = $profit - ($profit*(Setting::find(1)->point_rate)/100);
+                if ($r == 1){
+                    VendorProduct::where('id', $t->id)->update([
+                        'point' => $g_point
+                    ]);
+                }else{
+                    VendorProduct::where('id', $t->id)->update([
+                        'point' => $profit
+                    ]);
+                }
+            }
+
+        }else{
+            $m = 'New Product Created';
+        }
         return response()->json([
-            'message' => "New Product Created"
+            'message' => $m
         ], 200);
     }
     /**

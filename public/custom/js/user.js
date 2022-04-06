@@ -25,7 +25,7 @@ $(document).ready(function () {
         e.preventDefault();
         loading('on','Wait...')
         let formData = new FormData(this);
-        let  my_url = base + "/product-store";
+        let  my_url = base + "/user-store";
         $.ajax({
             type: 'post',
             url: my_url,
@@ -54,7 +54,7 @@ function Status(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    let  my_url = base + "/product-status/" + id;
+    let  my_url = base + "/user-status/" + id;
     $.ajax({
         type: 'get',
         url: my_url,
@@ -83,7 +83,7 @@ function Delete(id) {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                let  my_url = base + "/product-delete/" + id;
+                let  my_url = base + "/user-delete/" + id;
                 $.ajax({
                     type: 'delete',
                     url: my_url,
@@ -110,21 +110,17 @@ function Show(id) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    let  my_url = base + "/product-show/" + id;
+    let  my_url = base + "/user-show/" + id;
     $.ajax({
         type: 'get',
         url: my_url,
         success: (data) => {
             $('form').trigger("reset");
             $('#id').val(data.data.id);
-            $('#title').val(data.data.name);
-            $('#detail').text(data.data.detail);
-            $('#short_detail').val(data.data.short_detail);
-            $('#unit').val(data.data.unit);
-            $('#category').val(data.data.category);
-            $('#brand').val(data.data.brand);
-            $('#r_wallet').prop('checked', data.data.is_reserve_point)
-            $('#previewImg').attr('src', '/storage/product/'+data.data.photo);
+            $('#name').val(data.data.name);
+            $('#email').val(data.data.email);
+            $('#phone').val(data.data.phone);
+            $('#previewImg').attr('src', '/storage/user/'+data.data.photo);
             $('#add_modal').modal('show');
         },
         error: function (data) {
@@ -134,7 +130,6 @@ function Show(id) {
     });
 }
 function previewFile(input){
-    console.log(input)
     var file = $("input[type=file]").get(0).files[0];
 
     if(file){

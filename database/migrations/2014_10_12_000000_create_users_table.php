@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->integer('role')->default(0);
             $table->integer('status')->default(1);
              $table->integer('reffer_by')->default(1);
+             $table->integer('is_store_manager')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

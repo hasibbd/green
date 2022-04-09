@@ -97,6 +97,12 @@ Route::middleware(['admin'])->group(function () {
 Route::middleware(['user'])->group(function () {
     Route::post('basic-update', [UserController::class, 'basicUpdate']);
     Route::post('pass-update', [UserController::class, 'passUpdate']);
+    Route::get('my-profile', [HomeController::class, 'profile'])->name('my-profile.index');
+    Route::get('change-password', [HomeController::class, 'changePass']);
+    // for invoice routes here
+    Route::get('invoice-show', [InvoiceController::class, 'invoiceShow'])->name('invoice.show');
+    Route::get('order-show', [InvoiceController::class, 'orderShow'])->name('order.show');
+    Route::get('user-application', [UserController::class, 'userRegistration']);
 });
 
 Route::get('login', [AuthController::class, 'login'])->name('/');
@@ -112,8 +118,7 @@ Route::post('login-check', [DashboardController::class, 'index'])->middleware('l
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('my-profile', [HomeController::class, 'profile'])->name('order-list');
-Route::get('change-password', [HomeController::class, 'changePass']);
+
 Route::get('product/{id}', [HomeController::class, 'product']);
 Route::get('product-data', [HomeController::class, 'productData'])->name('product.index');
 Route::get('brand-products/{id}', [HomeController::class, 'brand']);
@@ -130,8 +135,7 @@ Route::get('remove/{id}', [CartController::class, 'remove'])->name('remove.cart'
 Route::get('check-out', [CheckoutController::class, 'checkOut'])->name('check-out');
 Route::post('store-order', [CheckoutController::class, 'storeOrder'])->name('store.order');
 
-// for invoice routes here
-Route::get('invoice-show', [InvoiceController::class, 'invoiceShow'])->name('invoice.show');
+
 
 
 Route::get('product-list/{id}', [HomeController::class, 'SimProduct']);
@@ -162,4 +166,5 @@ Route::middleware(['vendor'])->group(function () {
 
     // order list
     Route::get('seller-order-list', [VendorOrderListController::class, 'showSellerOrderList']);
+    Route::get('seller-order-list-details/{id}', [VendorOrderListController::class, 'showSellerOrderDetailsList']);
 });

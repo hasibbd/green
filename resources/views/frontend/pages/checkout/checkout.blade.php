@@ -101,11 +101,11 @@
     <section class="inner-section checkout-part">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+         {{--       <div class="col-lg-12">
                     <div class="alert-info">
                         <p>Returning customer? <a href="{{ url('login') }}">Click here to login</a></p>
                     </div>
-                </div>
+                </div>--}}
                 <div class="col-lg-12">
                     <div class="account-card">
                         <div class="account-title">
@@ -123,7 +123,7 @@
                                         <th scope="col">Point</th>
                                         <th scope="col">quantity</th>
                                         <th scope="col">Vendor Name</th>
-                                        <th scope="col">action</th>
+                                      {{--  <th scope="col">action</th>--}}
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -132,6 +132,7 @@
                                         $subTotal = 0;
                                         $totalPoint = 0;
                                     @endphp
+
                                     @foreach(session('cart') as $cart)
                                         @php
                                             $subTotal += $cart['price'] * $cart['quantity'];
@@ -142,7 +143,7 @@
                                                 <h6>{{$loop->iteration}}</h6>
                                             </td>
                                             <td class="table-image">
-                                                <img src="{{asset('frontend/images/product/01.jpg')}}" alt="product">
+                                                <img src="{{'/storage/product/'.$cart['image']}}" alt="product">
                                             </td>
                                             <td class="table-name">
                                                 <h6>{{$cart['name']}}</h6>
@@ -160,12 +161,12 @@
                                             <td class="table-name">
                                                 <h6>{{$cart['vendor']}}</h6>
                                             </td>
-                                            <td class="table-action"><a class="view" href="#" title="Quick View"
+                                            {{--<td class="table-action"><a class="view" href="#" title="Quick View"
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#product-view"><i
                                                         class="fas fa-eye"></i></a><a class="trash" href="#"
                                                                                       title="Remove Wishlist"><i
-                                                        class="icofont-trash"></i></a></td>
+                                                        class="icofont-trash"></i></a></td>--}}
                                         </tr>
                                     @endforeach
 
@@ -182,9 +183,9 @@
                                 <ul>
                                     <li><span>Sub total</span><span>TK. {{number_format($subTotal,2)}}</span></li>
                                     <li><span>Total Point </span><span>{{$totalPoint}}</span></li>
-                                    <li><span>delivery fee</span><span>TK. 10.00</span></li>
+                                    {{--<li><span>delivery fee</span><span>TK. 10.00</span></li>
                                     <li><span>discount</span><span>TK. 00.00</span></li>
-                                    <li><span>discount</span><span>TK. 00.00</span></li>
+                                    <li><span>discount</span><span>TK. 00.00</span></li>--}}
                                     <li>
                                         <span>Total<small>(Incl. VAT)</small></span><span>TK. {{number_format($subTotal,2)}}</span>
                                     </li>

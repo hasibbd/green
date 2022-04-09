@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\PointWallet;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\VendorProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
@@ -22,10 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::where('status', 1)->get();
-        $brands = Brand::with('product')->where('status', 1)->get();
-        $categories = Category::with('product','product.vendor_product')->where('status', 1)->get();
-        $articles = Article::with('creator')->where('status', 1)->get();
+        $sliders = Slider::where('status', 1)->orderBy('sort','ASC')->get();
+        $brands = Brand::with('product')->orderBy('sort','ASC')->where('status', 1)->get();
+        $categories = Category::with('product','product.vendor_product')->orderBy('sort','ASC')->where('status', 1)->get();
+        $articles = Article::with('creator')->where('status', 1)->orderBy('sort','ASC')->get();
         return view('frontend.pages.home.index', compact('sliders','brands','categories','articles'));
     }
     public function productData(Request $request)
@@ -216,8 +218,19 @@ class HomeController extends Controller
     {
         //
     }
-    public function profile(){
-        return view('frontend.pages.profile.index');
+    public function profile(Request $request){
+        $wallet = PointWallet::where('user_id', Auth::user()->id)->get();
+        if ($request->ajax()) {
+            $data = $wallet;
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    return 1;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('frontend.pages.profile.index', compact('wallet'));
     }
     public function changePass(){
         return view('frontend.pages.profile.passchange');

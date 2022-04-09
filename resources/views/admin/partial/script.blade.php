@@ -62,7 +62,11 @@
     @case('store-user-list')
     <script src="{{asset('custom/js/store-user.js')}}"></script> @break
 @endswitch
-
+<script>
+    $(function () {
+        $('.data_table').DataTable();
+    });
+</script>
 @switch(Request::segment(1))
     @case('sliders')
     <script>
@@ -308,6 +312,34 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('order-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'customer_name', name: 'customer_name'},
+                    {data: 'vendor_name', name: 'vendor_name'},
+                    {data: 'order_id', name: 'order_id'},
+                    {data: 'is_paid', name: 'is_paid'},
+                    {data: 'total_price', name: 'total_price'},
+                    {data: 'total_qty', name: 'total_qty'},
+                    {data: 'total_point', name: 'total_point'},
+                    {data: 'status', name: 'status'},
+                    {data: 'date', name: 'date'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+    @case('order-details')
+    <script>
+        $(function () {
+            $("#order_details").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('order-details.index') }}",
+                    data: function (d) {
+                        d.param = window.location.href.replace(/.*\/(\w+)\/?$/, '$1')
+                    }
+                },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'customer_name', name: 'customer_name'},

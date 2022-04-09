@@ -538,4 +538,7 @@ class UserController extends Controller
         }
 
     }
+    public function userRegistration(){
+        return view('frontend.pages.profile.registration');
+    }
 }

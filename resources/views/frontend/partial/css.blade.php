@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="{{asset('frontend/css/user-auth.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/blog-details.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/blog-grid.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/css/invoice.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/css/orderlist.css')}}">
 <!-- Data Table -->
 {{--    <link rel="stylesheet" href="{{asset('back/plugin/dudatepicker/duDatepicker.css')}}">--}}
 <link rel="stylesheet" href="{{asset('plugins/dt/datatables/css/dataTables.bootstrap4.min.css')}}">

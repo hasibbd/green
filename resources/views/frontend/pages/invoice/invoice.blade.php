@@ -8,21 +8,7 @@
     @include('frontend.partial.side-nav')
     @include('frontend.partial.mobile')
 
-    <section class="inner-section single-banner"
-             style="background: url(/frontend/images/single-banner.jpg) no-repeat center;">
-        <div class="container">
-            <h2>Order invoice</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">product list</a></li>
-                <li class="breadcrumb-item"><a href="#">product details</a></li>
-                <li class="breadcrumb-item"><a href="#">checkout</a></li>
-                <li class="breadcrumb-item active" aria-current="page">invoice</li>
-            </ol>
-        </div>
-    </section>
-
-    <section class="inner-section invoice-part">
+    <section class="inner-section invoice-part pt-3">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

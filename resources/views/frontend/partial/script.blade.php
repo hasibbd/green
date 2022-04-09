@@ -90,8 +90,8 @@
              ],
              "language": {
                  "paginate": {
-                     "next": ">",
-                     "previous": "<"
+                     "next": '<i class="fas fa-long-arrow-alt-right"></i>',
+                     "previous": '<i class="fas fa-long-arrow-alt-left"></i>'
                  }
              }
          });
@@ -122,6 +122,31 @@
                  "paginate": {
                      "next": ">",
                      "previous": "<"
+                 }
+             }
+         });
+     });
+ </script>
+ @break
+ @case('my-profile')
+ <script>
+     $(function () {
+         $("#point_list").DataTable({
+             processing: true,
+             serverSide: true,
+             ajax: {
+                 url: "{{ route('my-profile.index') }}"
+             },
+             columns: [
+                 {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
+                 {data: 'created_at', name: 'created_at', class: 'table-name'},
+                 {data: 'generate_from', name: 'generate_from', class: 'table-name'},
+                 {data: 'point', name: 'point', class: 'table-shop'},
+             ],
+             "language": {
+                 "paginate": {
+                     "next": '<i class="fas fa-long-arrow-alt-right"></i>',
+                     "previous": '<i class="fas fa-long-arrow-alt-left"></i>'
                  }
              }
          });

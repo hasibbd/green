@@ -11,6 +11,10 @@
         <form class="coupon-form"><input type="text" placeholder="Enter your coupon code">
             <button type="submit"><span>apply</span></button>
         </form>--}}
-        <a class="cart-checkout-btn" href="{{url('check-out')}}"><span class="checkout-label">Proceed to Checkout</span><span
-                class="checkout-price"></span></a></div>
+        <a class="cart-checkout-btn" href="{{url('check-out')}}">
+            <span class="checkout-label">Proceed to Checkout</span>
+            <span class="checkout-price "></span>
+            <span class="checkout-point "></span>
+        </a>
+    </div>
 </aside>

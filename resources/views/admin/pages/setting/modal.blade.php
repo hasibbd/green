@@ -13,7 +13,7 @@
                     <input type="hidden" name="id" id="id">
                         <div class="form-group ">
                             <label for="sort">Point Rate</label>
-                            <input type="number" min="1" class="form-control" id="point_rate" name="point_rate" placeholder="Point Rate" required>
+                            <input type="number" step=0.01 class="form-control" id="point_rate" name="point_rate" placeholder="Point Rate" required>
                         </div>
                 </div>
                 <div class="modal-footer">

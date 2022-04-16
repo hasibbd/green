@@ -85,8 +85,9 @@ class VendorProductController extends Controller
                 'message' => 'This Product Already Added'
             ], 404);
         }
+        $r_rate = Setting::find(1)->point_rate;
         $profit = $request->sell_price - $request->vendor_price;
-        $g_point = $profit - ($profit*(Setting::find(1)->point_rate)/100);
+        $g_point = ($profit-($profit*($r_rate/100)))*Setting::find(2)->point_rate;
         $check = Product::find($request->products)->is_reserve_point;
         if ($check == 1){
             $point = $g_point;
@@ -116,10 +117,20 @@ class VendorProductController extends Controller
     }
     public function price(Request $request)
     {
+        $target =  VendorProduct::where('id', $request->id)->first();
+        $r_rate = Setting::find(1)->point_rate;
+        $profit = $request->sell_price - $request->vendor_price;
+        $g_point = ($profit-($profit*($r_rate/100)))*Setting::find(2)->point_rate;
+        $check = Product::find($target->product)->is_reserve_point;
+        if ($check == 1){
+            $point = $g_point;
+        }else{
+            $point = $profit;
+        }
        $st = VendorProduct::where('id', $request->id)->update([
             'vendor_price' => $request->vendor_price,
             'sell_price' => $request->sell_price,
-            'point' => $request->sell_price - $request->vendor_price,
+            'point' => $point
         ]);
 
         return response()->json([

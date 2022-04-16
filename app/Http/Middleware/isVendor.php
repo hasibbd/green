@@ -17,6 +17,14 @@ class isVendor
      */
     public function handle(Request $request, Closure $next)
     {
+        if(!Auth::user()){
+            Auth::logout();
+            session()->flush();
+            return redirect()->route('/')->withErrors(['msg'=>'<div class="alert alert-warning" id="alert">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <strong>Sorry! </strong> Please Login First!
+                        </div>']);
+        }
         if (Auth::user()->role == CONST_ROLE_VENDOR){
             return $next($request);
         }

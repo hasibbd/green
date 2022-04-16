@@ -47,6 +47,36 @@ $(document).ready(function () {
             }
         });
     });
+    $('#store_app_submit').submit(function (e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        e.preventDefault();
+        loading('on','Wait...')
+        let formData = new FormData(this);
+        let  my_url = base + "/store-application-store";
+        $.ajax({
+            type: 'post',
+            url: my_url,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+              //  $('.table').DataTable().ajax.reload();
+                loading('off','Submit')
+                toastr.success(data.message)
+                location.reload()
+            },
+            error: function (data) {
+                loading('off','Submit')
+                toastr.error(data.responseJSON.message)
+
+            }
+        });
+    });
     $('#pass_change').submit(function (e) {
         $.ajaxSetup({
             headers: {
@@ -177,4 +207,41 @@ function previewFile(input){
 
         reader.readAsDataURL(file);
     }
+}
+function Accept(id) {
+    swal({
+        title: "Are you sure?",
+        text: "Once Cancel, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                let  my_url = base + "/product-accept/" + id;
+                $.ajax({
+                    type: 'get',
+                    url: my_url,
+                    success: (data) => {
+                       // $("#AllATble").load(location.href + " #AllATble");
+                        swal("Poof! Your imaginary file has been canceled!", {
+                            icon: "success",
+                        });
+                        location.reload()
+                    },
+                    error: function (data) {
+                        toastr.error(data.responseJSON.message)
+
+                    }
+                });
+
+            } else {
+                swal("Your imaginary file is safe!");
+            }
+        });
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserInformation;
 use App\Notifications\NewUser;
 use App\Notifications\PasswordChanged;
 use App\Notifications\PasswordRecover;
@@ -17,6 +18,36 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+    public function RegStore(Request $request){
+     $st =  UserInformation::create([
+              "user_id" => Auth::user()->id,
+              "b_date" => $request->b_date,
+              "f_name" =>  $request->f_name,
+              "m_name" =>  $request->m_name,
+              "gender" =>  $request->gender,
+              "l_license" =>  $request->l_license,
+              "l_date" =>  $request->l_date,
+              "district" =>  $request->district,
+              "p_station" =>  $request->p_station,
+              "p_code" =>  $request->p_code,
+              "occupation" =>  $request->occupation,
+              "qualification" =>  $request->qualification,
+              "n_name" =>  $request->n_name,
+              "n_b_date" =>  $request->n_b_date,
+              "relation" =>  $request->relation,
+              "n_nid" =>  $request->n_nid,
+              "r_name" =>  $request->r_name,
+              "r_code" =>  $request->r_code,
+              "a_name" =>  $request->a_name,
+              "b_name" =>  $request->b_name,
+              "branch" =>  $request->branch,
+              "acc" =>  $request->acc,
+              "created_by" => Auth::user()->id
+       ]);
+        return response()->json([
+            'message' => 'Registration done'
+        ],200);
+    }
     public function findex(Request $request){
         if ($request->ajax()) {
             $data = User::where('role', 0)->get();

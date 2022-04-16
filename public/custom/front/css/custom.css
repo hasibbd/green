@@ -1,0 +1,14 @@
+.checkout-point {
+    padding: 0px 25px;
+    letter-spacing: 0.3px;
+    color: var(--white);
+    border-left: 1px solid var(--border);
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}

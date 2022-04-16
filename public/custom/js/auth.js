@@ -91,6 +91,34 @@ $(document).ready(function () {
            toastr.error('Password did not match')
        }
     });
+    $('#user_reg_submit').submit(function (e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        e.preventDefault();
+        let formData = new FormData(this);
+        let  my_url = base + "/user-reg-create";
+        $.ajax({
+            type: 'post',
+            url: my_url,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                loading('off','Submit')
+                toastr.success(data.message)
+                formReset();
+            },
+            error: function (data) {
+                loading('off','Submit')
+                toastr.error(data.responseJSON.message)
+
+            }
+        });
+    });
     $('#user_forget').submit(function (e) {
         $.ajaxSetup({
             headers: {

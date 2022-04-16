@@ -48,6 +48,7 @@ function AddToCart(id){
             $('.t_cart_item').text(data.data.length+'+')
             let total = 0;
             let sub = 0
+            let sub_p = 0
             $('.cart-list').empty();
             data.data.forEach((element, index) => {
                 total += element.price * element.quantity
@@ -63,16 +64,18 @@ function AddToCart(id){
                     '                <div class="cart-action-group">\n' +
                     '                    <div class="product-action">\n' +
                     '                        <button class="action-minus" onclick="DecreaseToCart('+element.id+')" title="Quantity Minus"><i class="icofont-minus"></i></button>\n' +
-                    '                        <input class="action-input" title="Quantity Number" type="text" name="quantity" value="'+element.quantity+'">\n' +
+                    '                        <input class="action-input t_va'+element.id+'" oninput="UpdateQty('+element.id+')" title="Quantity Number" type="number" min="1" name="quantity" value="'+element.quantity+'">\n' +
                     '                        <button class="action-plus" onclick="AddToCart('+element.id+')" title="Quantity Plus"><i class="icofont-plus"></i></button>\n' +
                     '                    </div>\n' +
-                    '                     <h6>'+element.price * element.quantity+' Tk</h6></div>\n' +
+                    '                       <h6>'+element.price * element.quantity+' Tk <br> '+ element.quantity * element.point +' Points</h6></div>\n' +
                     '            </div>\n' +
                     '        </li>')
                 sub += element.price * element.quantity
+                sub_p += element.point * element.quantity
             })
             $('#t_cart_price').text(total+' Tk')
             $('.checkout-price').text(sub+' Tk')
+            $('.checkout-point').text(sub_p+' Points')
             //toastr.success(data.message)
         },
         error: function (data) {
@@ -95,6 +98,7 @@ function DecreaseToCart(id){
             $('.t_cart_item').text(data.data.length+'+')
             let total = 0;
             let sub = 0
+            let sub_p = 0
             $('.cart-list').empty();
             data.data.forEach((element, index) => {
                 total += element.price * element.quantity
@@ -110,16 +114,18 @@ function DecreaseToCart(id){
                     '                <div class="cart-action-group">\n' +
                     '                    <div class="product-action">\n' +
                     '                        <button class="action-minus" onclick="DecreaseToCart('+element.id+')" title="Quantity Minus"><i class="icofont-minus"></i></button>\n' +
-                    '                        <input class="action-input" title="Quantity Number" type="text" name="quantity" value="'+element.quantity+'">\n' +
+                    '                        <input class="action-input t_va'+element.id+'" oninput="UpdateQty('+element.id+')" title="Quantity Number" type="number" min="1" name="quantity" value="'+element.quantity+'">\n' +
                     '                        <button class="action-plus" onclick="AddToCart('+element.id+')" title="Quantity Plus"><i class="icofont-plus"></i></button>\n' +
                     '                    </div>\n' +
-                    '                    <h6>'+element.price * element.quantity+' Tk</h6></div>\n' +
+                    '                    <h6>'+element.price * element.quantity+' Tk <br> '+ element.quantity * element.point +' Points</h6></div>\n' +
                     '            </div>\n' +
                     '        </li>')
                 sub += element.price * element.quantity
+                sub_p += element.point * element.quantity
             })
             $('#t_cart_price').text(total+' Tk')
             $('.checkout-price').text(sub+' Tk')
+            $('.checkout-point').text(sub_p+' Points')
           //  toastr.success(data.message)
         },
         error: function (data) {
@@ -127,6 +133,65 @@ function DecreaseToCart(id){
 
         }
     });
+}
+function UpdateQty(id){
+    setTimeout(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        if ($('.t_va'+id).val() == 0){
+            $('.t_va'+id).val(1)
+        }
+        let  my_url = base + "/update-qty";
+        $.ajax({
+            type: 'get',
+            data: {
+                qty : $('.t_va'+id).val(),
+                id : id
+            },
+            url: my_url,
+            success: (data) => {
+                $('.t_cart_item').text(data.data.length+'+')
+                let total = 0;
+                let sub = 0
+                let sub_p = 0
+                $('.cart-list').empty();
+                data.data.forEach((element, index) => {
+                    total += element.price * element.quantity
+                    $('.cart-list').append(' <li class="cart-item">\n' +
+                        '            <div class="cart-media"><a href="javascript:void(0)" ><img src="'+element.image+'" alt="product"></a>\n' +
+                        '                <button class="cart-delete" onclick="RemoveToCart('+element.id+')"><i class="far fa-trash-alt"></i></button>\n' +
+                        '            </div>\n' +
+                        '            <div class="cart-info-group">\n' +
+                        '                <div class="cart-info"><h6><a href="product-single.html">'+element.name+'</a></h6>\n' +
+                        '                    <p>Unit Price - '+element.price+' Tk</p>' +
+                        '                    <p>Unit Point - '+element.point+' Point</p>' +
+                        '                 </div>\n' +
+                        '                <div class="cart-action-group">\n' +
+                        '                    <div class="product-action">\n' +
+                        '                        <button class="action-minus" onclick="DecreaseToCart('+element.id+')" title="Quantity Minus"><i class="icofont-minus"></i></button>\n' +
+                        '                        <input class="action-input t_va'+element.id+'" oninput="UpdateQty('+element.id+')" title="Quantity Number" type="number" min="1" name="quantity" value="'+element.quantity+'">\n' +
+                        '                        <button class="action-plus" onclick="AddToCart('+element.id+')" title="Quantity Plus"><i class="icofont-plus"></i></button>\n' +
+                        '                    </div>\n' +
+                        '                    <h6>'+element.price * element.quantity+' Tk <br> '+ element.quantity * element.point +' Points</h6></div>\n' +
+                        '            </div>\n' +
+                        '        </li>')
+                    sub += element.price * element.quantity
+                    sub_p += element.point * element.quantity
+                })
+                $('#t_cart_price').text(total+' Tk')
+                $('.checkout-price').text(sub+' Tk')
+                $('.checkout-point').text(sub_p+' Points')
+                //  toastr.success(data.message)
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.message)
+
+            }
+        });
+    }, 3000);
 }
 function RemoveToCart(id){
     $.ajaxSetup({
@@ -142,6 +207,7 @@ function RemoveToCart(id){
             $('.t_cart_item').text(data.data.length+'+')
             let total = 0;
             let sub = 0
+            let sub_p = 0
             $('.cart-list').empty();
             data.data.forEach((element, index) => {
                 total += element.price * element.quantity
@@ -157,16 +223,18 @@ function RemoveToCart(id){
                     '                <div class="cart-action-group">\n' +
                     '                    <div class="product-action">\n' +
                     '                        <button class="action-minus" onclick="DecreaseToCart('+element.id+')" title="Quantity Minus"><i class="icofont-minus"></i></button>\n' +
-                    '                        <input class="action-input" title="Quantity Number" type="text" name="quantity" value="'+element.quantity+'">\n' +
+                    '                        <input class="action-input t_va'+element.id+'" oninput="UpdateQty('+element.id+')" title="Quantity Number" type="number" min="1" name="quantity" value="'+element.quantity+'">\n' +
                     '                        <button class="action-plus" onclick="AddToCart('+element.id+')" title="Quantity Plus"><i class="icofont-plus"></i></button>\n' +
                     '                    </div>\n' +
-                    '                    <h6>'+element.price * element.quantity+' Tk</h6></div>\n' +
+                    '                        <h6>'+element.price * element.quantity+' Tk <br> '+ element.quantity * element.point +' Points</h6></div>\n' +
                     '            </div>\n' +
                     '        </li>')
                 sub += element.price * element.quantity
+                sub_p += element.point * element.quantity
             })
             $('#t_cart_price').text(total+' Tk')
             $('.checkout-price').text(sub+' Tk')
+            $('.checkout-point').text(sub_p+' Points')
            // toastr.success(data.message)
         },
         error: function (data) {
@@ -189,6 +257,7 @@ function GetCart(){
             $('.t_cart_item').text(data.data.length+'+')
             let total = 0;
             let sub = 0
+            let sub_p = 0
             $('.cart-list').empty();
             data.data.forEach((element, index) => {
                 total += element.price * element.quantity
@@ -204,16 +273,18 @@ function GetCart(){
                     '                <div class="cart-action-group">\n' +
                     '                    <div class="product-action">\n' +
                     '                        <button class="action-minus" onclick="DecreaseToCart('+element.id+')" title="Quantity Minus"><i class="icofont-minus"></i></button>\n' +
-                    '                        <input class="action-input" title="Quantity Number" type="text" name="quantity" value="'+element.quantity+'">\n' +
+                    '                        <input class="action-input t_va'+element.id+'" oninput="UpdateQty('+element.id+')" title="Quantity Number" type="number" min="1" name="quantity" value="'+element.quantity+'">\n' +
                     '                        <button class="action-plus" onclick="AddToCart('+element.id+')" title="Quantity Plus"><i class="icofont-plus"></i></button>\n' +
                     '                    </div>\n' +
-                    '                    <h6>'+element.price * element.quantity+' Tk</h6></div>\n' +
+                    '                        <h6>'+element.price * element.quantity+' Tk <br> '+ element.quantity * element.point +' Points</h6></div>\n' +
                     '            </div>\n' +
                     '        </li>')
                 sub += element.price * element.quantity
+                sub_p += element.point * element.quantity
             })
             $('#t_cart_price').text(total+' Tk')
             $('.checkout-price').text(sub+' Tk')
+            $('.checkout-point').text(sub_p+' Points')
         },
         error: function (data) {
             toastr.error(data.responseJSON.message)

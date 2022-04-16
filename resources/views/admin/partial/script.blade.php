@@ -61,6 +61,12 @@
     <script src="{{asset('custom/js/user.js')}}"></script> @break
     @case('store-user-list')
     <script src="{{asset('custom/js/store-user.js')}}"></script> @break
+    @case('user-application-list')
+    <script src="{{asset('custom/js/user-application.js')}}"></script> @break
+    @case('store-application-list')
+    <script src="{{asset('custom/js/store-application.js')}}"></script> @break
+    @case('seller-order-list')
+    <script src="{{asset('custom/js/seller-order.js')}}"></script> @break
 @endswitch
 <script>
     $(function () {
@@ -367,6 +373,44 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'title', name: 'ttile'},
                     {data: 'point_rate', name: 'point_rate'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+    @case('user-application-list')
+    <script>
+        $(function () {
+            $("#user_application_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('user-application-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'photo', name: 'photo'},
+                    {data: 'user.name', name: 'name'},
+                    {data: 'user.email', name: 'email'},
+                    {data: 'user.phone', name: 'phone'},
+                    {data: 'status', name: 'status'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+    @case('store-application-list')
+    <script>
+        $(function () {
+            $("#store_application_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('store-application-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'photo', name: 'photo'},
+                    {data: 'user.name', name: 'name'},
+                    {data: 'user.email', name: 'email'},
+                    {data: 'user.phone', name: 'phone'},
+                    {data: 'status', name: 'status'},
                     {data: 'action', name: 'action'},
                 ]
             });

@@ -125,7 +125,35 @@
                 </li>
             </ul>
         </li>
-
+        <li class="nav-item
+        {{ Request::segment(1) == 'user-application-list'  ? 'menu-open' : ''}}
+        {{ Request::segment(1) == 'store-application-list'  ? 'menu-open' : ''}}
+            ">
+            <a href="#" class="nav-link
+            {{ Request::segment(1) == 'user-application-list'  ? 'active' : ''}}
+            {{ Request::segment(1) == 'store-application-list'  ? 'active' : ''}}
+                ">
+                <i class="nav-icon fas fa-tablet-alt"></i>
+                <p>
+                    Application Control
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview small">
+                <li class="nav-item">
+                    <a href="{{url('user-application-list')}}" class="nav-link {{ Request::segment(1) == 'user-application-list'  ? 'active' : ''}}">
+                        <i class="nav-icon far fa-address-card"></i>
+                        <p>User Application</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('store-application-list')}}" class="nav-link {{ Request::segment(1) == 'store-application-list'  ? 'active' : ''}}">
+                        <i class="nav-icon fas fa-store-alt"></i>
+                        <p>Store Manager Application</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="nav-item
         {{ Request::segment(1) == 'order-list'  ? 'menu-open' : ''}}
             ">

@@ -25,6 +25,9 @@
                                   <h6>Name: {{Auth::user()->name}}</h6>
                                     <h6>Email: {{Auth::user()->email}}</h6>
                                     <h6>Phone: {{Auth::user()->phone}}</h6>
+                                    @if(Auth::user()->user_id)
+                                    <h6>User ID: {{Auth::user()->user_id}}</h6>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 col-lg-4">
 
@@ -62,17 +65,13 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <button class="modal-close" data-bs-dismiss="modal"><i class="icofont-close"></i></button>
-                <form class="modal-form" id="basic_submit">
-                    <div class="form-title"><h3>edit profile info</h3></div>
+                <form class="modal-form" id="store_app_submit">
+                    <div class="form-title"><h3>Application For Store Manager</h3></div>
                     <div class="form-group">
-                        <label class="form-label">profile image</label>
-                        <input name="photo" id="photo" class="form-control" type="file">
+                        <label class="form-label">Type 'Yes' for submit application</label>
+                        <input class="form-control" type="text" name="check_yes" required>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">name</label>
-                        <input class="form-control" type="text" name="name" value="{{Auth()->user()->name}}">
-                    </div>
-                    <button class="form-btn" type="submit">save profile info</button>
+                    <button class="form-btn" type="submit">Submit Application</button>
                 </form>
             </div>
         </div>
@@ -94,9 +93,15 @@
             </div>
             <div class="col-lg-6">
                 <div class="account-card"><h3 class="account-title">Options</h3>
+                    @if($is_app)
                     <a href="{{url('user-application')}}" style="margin-bottom: 5px; color: white !important;" class="form-btn" type="submit">Apply for registered user</a>
-                    <button data-bs-toggle="modal" data-bs-target="#apply_for_store_manager" style="margin-bottom: 5px" class="form-btn " type="button">Apply for store manager</button>
-                    <a href="{{url('user-dashboard')}}" style="margin-bottom: 5px; color: white !important;" class="form-btn" type="submit">Go To Dashboard</a>
+                    @endif
+                    @if(Auth::user()->is_registered && !Auth::user()->is_store_manager)
+                        @if(!$is_store_manager)
+                        <button data-bs-toggle="modal" data-bs-target="#apply_for_store_manager" style="margin-bottom: 5px" class="form-btn " type="button">Apply for store manager</button>
+                        @endif
+                    @endif
+                        <a href="{{url('user-dashboard')}}" style="margin-bottom: 5px; color: white !important;" class="form-btn" type="submit">Go To Dashboard</a>
                     <a href="{{url('order-show')}}" style="margin-bottom: 5px; color: white !important;" class="form-btn" type="submit">Order Details</a>
                 </div>
             </div>

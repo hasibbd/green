@@ -71,7 +71,7 @@
                                             </td>
                                             <td>{{$order->created_at}}</td>
                                             <td>
-                                                <a href="{{url('seller-order-list-details/'.$order->id)}}" class="btn btn-success">View</a>
+                                               <button onclick="Details({{$order->id}})" class="btn btn-success">View</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -85,5 +85,5 @@
         </section>
         <!-- /.content -->
     </div>
-
+    @include('admin.pages.vendor.order-list.modal')
 @endsection

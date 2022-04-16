@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Setting;
+use App\Models\VendorProduct;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -46,13 +48,31 @@ class SettingController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         Setting::find($request->id)->update([
             'point_rate' => $request->point_rate
         ]);
+        if ($request->id == 2 || $request->id == 1){
+            $allProducts = VendorProduct::all();
+            $r_rate = Setting::find(1)->point_rate;
+            foreach ($allProducts as $p){
+                $profit = $p->sell_price - $p->vendor_price;
+                $g_point =($profit-($profit*($r_rate/100)))*Setting::find(2)->point_rate;
+                $check = Product::find($p->product)->is_reserve_point;
+                if ($check == 1){
+                    $point = $g_point;
+                }else{
+                    $point = $profit;
+                }
+                 VendorProduct::where('id', $p->id)->update([
+                    'point' => $point
+                ]);
+            }
+        }
+
         return response()->json([
             'message' => "Setting Updated"
         ], 200);

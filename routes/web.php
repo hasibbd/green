@@ -14,8 +14,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\StoreAppController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\UserAppController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorOrderListController;
 use App\Http\Controllers\VendorProductController;
@@ -48,6 +50,17 @@ Route::middleware(['admin'])->group(function () {
     Route::get('slider-show/{id}', [SliderController::class, 'edit']);
     Route::get('slider-status/{id}', [SliderController::class, 'status']);
     Route::delete('slider-delete/{id}', [SliderController::class, 'destroy']);
+
+    Route::get('user-application-list', [UserAppController::class, 'index'])->name('user-application-list.index');
+    Route::get('user-application-list-show/{id}', [UserAppController::class, 'edit']);
+    Route::get('user-application-list-status/{id}', [UserAppController::class, 'status']);
+    Route::delete('user-application-list-delete/{id}', [UserAppController::class, 'destroy']);
+
+
+    Route::get('store-application-list', [StoreAppController::class, 'index'])->name('store-application-list.index');
+    Route::get('store-application-list-show/{id}', [StoreAppController::class, 'edit']);
+    Route::get('store-application-list-status/{id}', [StoreAppController::class, 'status']);
+    Route::delete('store-application-list-delete/{id}', [StoreAppController::class, 'destroy']);
 
     Route::get('category', [CategoryController::class, 'index'])->name('category.index');
     Route::post('category-store', [CategoryController::class, 'store']);
@@ -103,6 +116,9 @@ Route::middleware(['user'])->group(function () {
     Route::get('invoice-show', [InvoiceController::class, 'invoiceShow'])->name('invoice.show');
     Route::get('order-show', [InvoiceController::class, 'orderShow'])->name('order.show');
     Route::get('user-application', [UserController::class, 'userRegistration']);
+    Route::post('user-reg-create', [UserController::class, 'RegStore']);
+    Route::post('store-application-store', [StoreAppController::class, 'store']);
+    Route::get('product-accept/{id}', [VendorOrderListController::class, 'ProductAccept']);
 });
 
 Route::get('login', [AuthController::class, 'login'])->name('/');
@@ -130,6 +146,7 @@ Route::get('article-list', [HomeController::class, 'Allread']);
 
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
 Route::get('decrease/{id}', [CartController::class, 'decreseCart'])->name('decrease.to.cart');
+Route::get('update-qty', [CartController::class, 'updateQtyCart'])->name('update-qty.to.cart');
 Route::get('get-cart', [CartController::class, 'getCart'])->name('get.cart');
 Route::get('remove/{id}', [CartController::class, 'remove'])->name('remove.cart');
 Route::get('check-out', [CheckoutController::class, 'checkOut'])->name('check-out');
@@ -167,4 +184,6 @@ Route::middleware(['vendor'])->group(function () {
     // order list
     Route::get('seller-order-list', [VendorOrderListController::class, 'showSellerOrderList']);
     Route::get('seller-order-list-details/{id}', [VendorOrderListController::class, 'showSellerOrderDetailsList']);
+    Route::get('product-deliver/{id}', [VendorOrderListController::class, 'ProductDeliver']);
+    Route::get('product-cancel/{id}', [VendorOrderListController::class, 'ProductCancel']);
 });

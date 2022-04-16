@@ -22,14 +22,14 @@
 <section class="user-form-part">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-6">
+            <div class="col-md-6 col-sm-12">
                 <div class="user-form-logo"><a href="{{url('/')}}"><img
                             src="{{asset('frontend/images/logo.png')}}" alt="logo"></a></div>
                 <div class="user-form-card">
                     <div class="user-form-title"><h2>welcome!</h2>
                         <p>Use your credentials to access</p></div>
 
-                       <div class="col-8 offset-2">
+                       <div class="col-md-8 offset-md-2 col-sm-12">
                            @if($errors->any())
                                <input type="hidden" value="@if($errors->first()) 1 @else 0 @endif" id="check">
                            @endif

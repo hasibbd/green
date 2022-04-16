@@ -35,14 +35,25 @@
                             <div class="col-lg-12">
                                 <div class="order-track">
                                     <ul class="order-track-list">
-                                        <li class="order-track-item active"><i class="icofont-check"></i><span>order recieved</span>
+                                        <li class="order-track-item active">
+                                            <i class="icofont-check"></i>
+                                            <span>order processing</span>
                                         </li>
-                                        <li class="order-track-item"><i
-                                                class="icofont-close"></i><span>order processed</span></li>
-                                        <li class="order-track-item"><i
-                                                class="icofont-close"></i><span>order shipped</span></li>
-                                        <li class="order-track-item"><i
-                                                class="icofont-close"></i><span>order delivered</span></li>
+                                        <li class="order-track-item  @if(($o->details->where('status', -1)->count() + $o->details->where('status', -1)->count()) > 0 && $o->details->where('status', 3)->count() == 0)
+                                        active
+                                        @endif">
+                                            @if(($o->details->where('status', -1)->count() + $o->details->where('status', -1)->count()) > 0 && $o->details->where('status', 3)->count() == 0)
+                                                <i class="icofont-check"></i>
+                                            @else
+                                                <i class="icofont-close"></i>
+                                            @endif
+
+                                            <span>order shipped</span>
+                                        </li>
+                                        <li class="order-track-item">
+                                            <i class="icofont-close"></i>
+                                            <span>order delivered</span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -74,9 +85,9 @@
                                         <p>{{$o->is_paid}}</p></li>
                                 </ul>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12"  >
                                 <div class="table-scroll">
-                                    <table class="table-list">
+                                    <table class="table-list" id="AllATble">
                                         <thead>
                                         <tr>
                                             <th scope="col">Serial</th>
@@ -86,6 +97,7 @@
                                             <th scope="col">point</th>
                                             <th scope="col">brand</th>
                                             <th scope="col">quantity</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -98,6 +110,19 @@
                                             <td class="table-brand"><h6>{{$d->point}}</h6></td>
                                             <td class="table-brand"><h6>{{$d->vendor_details->product_details->brand_details->title}}</h6></td>
                                             <td class="table-quantity"><h6>{{$d->qty}}</h6></td>
+                                            <td class="table-quantity">
+                                                @if($d->status == 1)
+                                                <button class="btn btn-sm btn-success" onclick="Accept({{$d->id}})">Accept Delivery</button>
+                                                @elseif($d->status == -1)
+                                                <button class="btn btn-sm btn-warning" onclick="Accept({{$d->id}})">Appect Cancelation</button>
+                                                @elseif($d->status == -2)
+                                                    <button class="btn btn-sm btn-danger">Canceled</button>
+                                                @elseif($d->status == 2)
+                                                    <button class="btn btn-sm btn-primary">Acceted</button>
+                                                @else
+                                                    <button class="btn btn-sm btn-primary">Pending</button>
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                         </tbody>

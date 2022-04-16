@@ -111,6 +111,36 @@ class CartController extends Controller
            'message' => 'Product Added'
        ]);
     }
+    public function updateQtyCart(Request $request)
+    {
+       $id = $request->id;
+        $target = VendorProduct::with('product_details','vendor','product_details.unit_details','product_details.brand_details','product_details.category_details')->where('id', $id)->first();
+        $cart = session()->get('cart', []);
+
+        if(isset($cart[$id])) {
+            $cart[$id]['quantity'] = $request->qty;
+            session()->put('cart', $cart);
+        }
+
+
+        $allCart = [];
+       foreach (session('cart') as $c){
+            array_push($allCart,[
+                "id" => $c['id'],
+                "name" => $c['name'],
+                "quantity" => $c['quantity'],
+                "price" => $c['price'],
+                "point" => $c['point'],
+                "vendor" => $c['vendor'],
+                "vendor_id" => $c['vendor_id'],
+                "image" => "/storage/product/".$c['image']
+            ]);
+        }
+       return response()->json([
+          'data' =>  $allCart,
+           'message' => 'Product Added'
+       ]);
+    }
 
     /**
      * Write code on Method
@@ -125,6 +155,10 @@ class CartController extends Controller
             if ($cart[$id]['quantity'] > 0){
                 $cart[$id]['quantity'] --;
             }
+        }
+
+        if ($cart[$id]['quantity'] == 0){
+            unset($cart[$id]);
         }
         session()->put('cart', $cart);
         $allCart = [];

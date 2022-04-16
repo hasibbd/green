@@ -8,7 +8,10 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\PointWallet;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\Slider;
+use App\Models\StoreManagerApplication;
+use App\Models\UserInformation;
 use App\Models\VendorProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -218,8 +221,26 @@ class HomeController extends Controller
     {
         //
     }
+    public function AppApprove($point){
+        $user = UserInformation::where('user_id', Auth::user()->id)->first();
+        $setting = Setting::find(3);
+        $app = false;
+        if ($user){
+            $app = false;
+        } else{
+            if ($point >= $setting->point_rate){
+                $app = true;
+            }else{
+                $app = false;
+            }
+        }
+
+        return $app;
+    }
     public function profile(Request $request){
         $wallet = PointWallet::where('user_id', Auth::user()->id)->get();
+        $is_app = $this->AppApprove($wallet->sum('point'));
+        $is_store_manager = StoreManagerApplication::where('user_id', Auth::user()->id)->first();
         if ($request->ajax()) {
             $data = $wallet;
             return Datatables::of($data)
@@ -230,7 +251,7 @@ class HomeController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('frontend.pages.profile.index', compact('wallet'));
+        return view('frontend.pages.profile.index', compact('wallet','is_app','is_store_manager'));
     }
     public function changePass(){
         return view('frontend.pages.profile.passchange');

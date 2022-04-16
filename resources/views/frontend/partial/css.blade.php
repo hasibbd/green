@@ -18,7 +18,7 @@
 <!-- Data Table -->
 {{--    <link rel="stylesheet" href="{{asset('back/plugin/dudatepicker/duDatepicker.css')}}">--}}
 <link rel="stylesheet" href="{{asset('plugins/dt/datatables/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('custom/front/plugin/xzoom.css')}}">
+<link rel="stylesheet" href="{{asset('custom/front/css/custom.css')}}">
 
 <!--Toaster-->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">

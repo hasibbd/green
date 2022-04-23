@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="alert-info">
-                        <p>Thank you! We have recieved your order.</p>
+                        <p>Thank you! We have received your order.</p>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -23,15 +23,16 @@
                         </div>
                         <div class="account-content">
                             <div class="invoice-recieved">
-                                <h6>order number <span>1665</span></h6>
-                                <h6>order date <span>february 02, 2021</span></h6>
-                                <h6>total amount <span>$24,176.00</span></h6>
-                                <h6>payment method <span>Cash on delivery</span></h6>
+                                <h6>order number <span> {{$orders->order_id}}</span></h6>
+                                <h6>order date <span>{{$orders->created_at}}</span></h6>
+                                <h6>total amount <span> {{$orders->total_price * $orders->total_qty}}</span></h6>
+                                <h6>Total Point <span>{{$orders->total_point * $orders->total_qty}}</span></h6>
+                                <h6>Total Items <span>{{$orders->details->count()}}</span></h6>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+            {{--    <div class="col-lg-6">
                     <div class="account-card">
                         <div class="account-title">
                             <h4>Order Details</h4>
@@ -84,7 +85,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div>--}}
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center mt-5"><a class="btn btn-inline" href="#"><i

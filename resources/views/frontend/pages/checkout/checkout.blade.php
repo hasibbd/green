@@ -136,7 +136,7 @@
                                     @foreach(session('cart') as $cart)
                                         @php
                                             $subTotal += $cart['price'] * $cart['quantity'];
-                                            $totalPoint += $cart['point'];
+                                            $totalPoint += $cart['point'] * $cart['quantity'];
                                         @endphp
                                         <tr>
                                             <td class="table-serial">
@@ -173,12 +173,12 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="chekout-coupon">
+                          {{--  <div class="chekout-coupon">
                                 <button class="coupon-btn">Do you have a coupon code?</button>
                                 <form class="coupon-form"><input type="text" placeholder="Enter your coupon code">
                                     <button type="submit"><span>apply</span></button>
                                 </form>
-                            </div>
+                            </div>--}}
                             <div class="checkout-charge">
                                 <ul>
                                     <li><span>Sub total</span><span>TK. {{number_format($subTotal,2)}}</span></li>

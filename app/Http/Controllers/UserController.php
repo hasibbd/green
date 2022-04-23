@@ -19,6 +19,13 @@ use Yajra\DataTables\Facades\DataTables;
 class UserController extends Controller
 {
     public function RegStore(Request $request){
+        $check = User::where('user_id',$request->r_code)->first();
+        if (!$check){
+            return response()->json([
+                'message' => 'Refer code is not found',
+                'data' => []
+            ],404);
+        }
      $st =  UserInformation::create([
               "user_id" => Auth::user()->id,
               "b_date" => $request->b_date,
@@ -44,9 +51,15 @@ class UserController extends Controller
               "acc" =>  $request->acc,
               "created_by" => Auth::user()->id
        ]);
-        return response()->json([
-            'message' => 'Registration done'
-        ],200);
+        if ($st){
+            return response()->json([
+                'message' => 'Registration done'
+            ],200);
+        }else{
+            return response()->json([
+                'message' => 'Registration failed, please check the data'
+            ],404);
+        }
     }
     public function findex(Request $request){
         if ($request->ajax()) {
@@ -214,6 +227,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $check = User::where('phone', $request->phone)->orWhere('email', $request->email)->first();
+        if ($check){
+            return response()->json([
+                'message' => 'Registration failed, Email/Phone already used'
+            ],404);
+        }
+        $check = User::where('user_id',$request->ref_user)->first();
+        if (!$check){
+            return response()->json([
+                'message' => 'Refer code is not found',
+                'data' => []
+            ],404);
+        }
         if ($request->type){
             $role = 2;
             $ref = $request->ref_user;
@@ -419,7 +445,7 @@ class UserController extends Controller
                         'password' => Hash::make($request->r_pass),
                     ]);
                 (new User)->forceFill([
-                    'email' => auth()->user()->id->email,
+                    'email' => auth()->user()->email,
                 ])->notify(new PasswordChanged());
                 return response()->json([
                     'message' => 'Password Changed'
@@ -571,5 +597,20 @@ class UserController extends Controller
     }
     public function userRegistration(){
         return view('frontend.pages.profile.registration');
+    }
+    public function CodeCheck($code){
+        $check = User::where('user_id',$code)->first();
+        if ($check){
+            return response()->json([
+                'message' => 'Data found',
+                'data' =>$check
+            ],200);
+        }else{
+            return response()->json([
+                'message' => 'Refer code is not found',
+                'data' => []
+            ],404);
+        }
+
     }
 }

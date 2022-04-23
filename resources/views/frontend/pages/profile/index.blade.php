@@ -46,7 +46,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <button class="modal-close" data-bs-dismiss="modal"><i class="icofont-close"></i></button>
-                <form class="modal-form" id="basic_submit">
+                <form class="modal-form" id="basic_submit" action="{{'/basic-update'}}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-title"><h3>edit profile info</h3></div>
                     <div class="form-group">
                         <label class="form-label">profile image</label>

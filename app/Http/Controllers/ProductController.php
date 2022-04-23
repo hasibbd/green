@@ -110,6 +110,7 @@ class ProductController extends Controller
                     'brand' => $request->brand,
                     'unit' => $request->unit,
                     'is_reserve_point' => $r,
+                    'reserve_point_amount' => $request->r_amount,
                     'status' => 1,
                 ]);
         }else{
@@ -130,6 +131,7 @@ class ProductController extends Controller
                     'brand' => $request->brand,
                     'unit' => $request->unit,
                     'is_reserve_point' => $r,
+                    'reserve_point_amount' => $request->r_amount,
                     'status' => 1,
                 ]);
         }
@@ -138,15 +140,16 @@ class ProductController extends Controller
             $m = 'Product Updated';
             $t_vendor = VendorProduct::where('product', $request->id)->get();
             foreach ($t_vendor as $t){
+                $point_rate = Setting::find(2)->point_rate;
                 $profit = $t->sell_price - $t->vendor_price;
-                $g_point = $profit - ($profit*(Setting::find(1)->point_rate)/100);
+                $g_point = $profit - (($profit*$request->r_amount)/100);
                 if ($r == 1){
                     VendorProduct::where('id', $t->id)->update([
-                        'point' => $g_point
+                        'point' => $g_point*$point_rate
                     ]);
                 }else{
                     VendorProduct::where('id', $t->id)->update([
-                        'point' => $profit
+                        'point' => $profit*$point_rate
                     ]);
                 }
             }

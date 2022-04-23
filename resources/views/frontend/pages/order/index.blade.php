@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                @foreach($orders as $o)
+                @foreach($orders->reverse() as $o)
                 <div class="orderlist">
                     <div class="orderlist-head"><h5>order#{{$o->order_id}}</h5><h5>order recieved</h5></div>
                     <div class="orderlist-body">

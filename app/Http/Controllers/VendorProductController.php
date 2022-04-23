@@ -85,14 +85,20 @@ class VendorProductController extends Controller
                 'message' => 'This Product Already Added'
             ], 404);
         }
-        $r_rate = Setting::find(1)->point_rate;
+        $target_product = Product::find($request->products);
+        if (!$target_product){
+            return response()->json([
+                'data' => $check,
+                'message' => 'Product Not Found'
+            ], 404);
+        }
         $profit = $request->sell_price - $request->vendor_price;
-        $g_point = ($profit-($profit*($r_rate/100)))*Setting::find(2)->point_rate;
-        $check = Product::find($request->products)->is_reserve_point;
-        if ($check == 1){
-            $point = $g_point;
+        $point_rate = Setting::find(2)->point_rate;
+        if ($target_product->is_reserve_point == 1){
+            $g_point = $profit - (($profit*$target_product->reserve_point_amount)/100);
+            $point = $g_point*$point_rate;
         }else{
-            $point = $profit;
+            $point = $profit*$point_rate;
         }
 
        $st = VendorProduct::create([
@@ -118,14 +124,14 @@ class VendorProductController extends Controller
     public function price(Request $request)
     {
         $target =  VendorProduct::where('id', $request->id)->first();
-        $r_rate = Setting::find(1)->point_rate;
+        $target_product = Product::find($target->product);
         $profit = $request->sell_price - $request->vendor_price;
-        $g_point = ($profit-($profit*($r_rate/100)))*Setting::find(2)->point_rate;
-        $check = Product::find($target->product)->is_reserve_point;
-        if ($check == 1){
-            $point = $g_point;
+        $point_rate = Setting::find(2)->point_rate;
+        if ($target_product->is_reserve_point == 1){
+            $g_point = $profit - (($profit*$target_product->reserve_point_amount)/100);
+            $point = $g_point*$point_rate;
         }else{
-            $point = $profit;
+            $point = $profit*$point_rate;
         }
        $st = VendorProduct::where('id', $request->id)->update([
             'vendor_price' => $request->vendor_price,

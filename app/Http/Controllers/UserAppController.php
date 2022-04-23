@@ -166,6 +166,7 @@ class UserAppController extends Controller
             if ($target->user_id){
                 User::where('id', $data->user_id)->update([
                     'is_registered' => true,
+                    'reffer_by' => $data->r_code,
                 ]);
             }else{
                 User::where('id', $data->user_id)->update([

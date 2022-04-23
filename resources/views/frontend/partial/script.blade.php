@@ -47,7 +47,7 @@
              columns: [
                  {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
                  {data: 'photo', name: 'photo', class: 'table-image'},
-                 {data: 'product_details.name', name: 'product_details.name', class: 'table-name'},
+                 {data: 'product_name', name: 'product_name', class: 'table-name'},
                  {data: 'product_details.category_details.title', name: 'product_details.category_details.title', class: 'table-shop'},
                  {data: 'brand', name: 'brand', class: 'table-shop'},
                  {data: 'price', name: 'price', class: 'table-price'},
@@ -80,7 +80,7 @@
              columns: [
                  {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
                  {data: 'photo', name: 'photo', class: 'table-image'},
-                 {data: 'product_details.name', name: 'product_details.name', class: 'table-name'},
+                 {data: 'product_name', name: 'product_name', class: 'table-name'},
                  {data: 'product_details.category_details.title', name: 'product_details.category_details.title', class: 'table-shop'},
                  {data: 'brand', name: 'brand', class: 'table-shop'},
                  {data: 'price', name: 'price', class: 'table-price'},

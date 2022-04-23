@@ -141,21 +141,25 @@
                         </div>
                         <div class="user-form-group">
                             <div class="user-form-social">
-                                <div class="form-group">
+                           {{--     <div class="form-group">
                                     <label for="">Full Name</label>
                                     <input type="text"  class="form-control" placeholder="Enter full name" id="r_name" name="r_name" required>
-                                </div>
+                                </div>--}}
                                 <div class="form-group">
                                     <label for="">Reference (Corporate) ID</label>
-                                    <input type="text" class="form-control" placeholder="Enter Reference (Corporate) ID" id="r_code" name="r_code" required>
+                                    <input type="text" class="form-control" placeholder="Enter Reference (Corporate) ID" onkeyup="CheckUser()" id="r_code" name="r_code" required>
                                 </div>
                             </div>
                             <div class="user-form-divider">{{--<p>or</p>--}}</div>
                             <div class="user-form-social">
-                                <div class="form-group">
+                              <div class="form-group">
+                                    <label for="">Full Name</label>
+                                    <input type="text"  class="form-control" placeholder="Enter full name" id="r_name" name="r_name" required disabled>
+                                </div>
+                               {{-- <div class="form-group">
                                     <label for="">NID/Birthday Certificate No.</label>
                                     <input type="number" class="form-control" placeholder="Enter NID/birthday certificate no. number" id="r_nid" name="n_nid">
-                                </div>
+                                </div>--}}
                             </div>
                         </div>
                         <div class="user-form-title">
@@ -218,5 +222,6 @@
 <!--Toaster-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{asset('custom/js/auth.js')}}"></script>
+<script src="{{asset('custom/front/js/my-profile.js')}}"></script>
 </body>
 </html>

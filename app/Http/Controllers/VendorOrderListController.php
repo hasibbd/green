@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OrderDetail;
 use App\Models\PointWallet;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,11 @@ class VendorOrderListController extends Controller
        OrderDetail::find($id)->update([
             'status' => 1
         ]);
+       Stock::create([
+           'vendor_product' => $target->vendor_product,
+           'created_by' => Auth::user()->id,
+           'qty' => $target->qty
+       ]);
         $info = OrderDetail::with('vendor_details.product_details','vendor_details.product_details.brand','vendor_details.stock_details')->where('order_main_id', $target->order_main_id)->get();
 
         return response()->json([

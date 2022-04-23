@@ -18,7 +18,7 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Setting::all();
+            $data = Setting::where('id','!=', 1)->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -57,18 +57,17 @@ class SettingController extends Controller
         ]);
         if ($request->id == 2 || $request->id == 1){
             $allProducts = VendorProduct::all();
-            $r_rate = Setting::find(1)->point_rate;
+            $point_rate = Setting::find(2)->point_rate;
             foreach ($allProducts as $p){
                 $profit = $p->sell_price - $p->vendor_price;
-                $g_point =($profit-($profit*($r_rate/100)))*Setting::find(2)->point_rate;
-                $check = Product::find($p->product)->is_reserve_point;
-                if ($check == 1){
-                    $point = $g_point;
+                $check = Product::find($p->product);
+                if ($check->is_reserve_point == 1){
+                    $point = $profit - ($profit*($check->reserve_point_amount/100));
                 }else{
                     $point = $profit;
                 }
                  VendorProduct::where('id', $p->id)->update([
-                    'point' => $point
+                    'point' => $point*$point_rate
                 ]);
             }
         }

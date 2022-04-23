@@ -54,14 +54,17 @@ class HomeController extends Controller
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img href="javascript:void(0)" style="width: 100px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
+                    return '<img href="javascript:void(0)" style="width: 70px; height: 70px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
                 })
                 ->addColumn('brand', function($row){
                     return $row->product_details->brand_details->title;
                 })
+                ->addColumn('product_name', function($row){
+                    return mb_strimwidth(preg_replace('/[-_]/', ' ', $row->product_details->name), 0, 15, "...");
+                })
                 ->addColumn('vendor', function($row){
                     $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
-                    return $t->vendor->name;
+                    return mb_strimwidth(preg_replace('/[-_]/', ' ', $t->vendor->name), 0, 13, "...");
                 })->addColumn('points', function($row){
                     $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
                     return $t->point;
@@ -70,7 +73,7 @@ class HomeController extends Controller
                     $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
                     return $t->sell_price.' Tk';
                 })
-                ->rawColumns(['action', 'photo', 'vendor', 'brand', 'points', 'price'])
+                ->rawColumns(['action', 'photo', 'vendor', 'brand', 'points', 'price','product_name'])
                 ->make(true);
         }
         return view('frontend.pages.product-list.index');
@@ -93,20 +96,23 @@ class HomeController extends Controller
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img href="javascript:void(0)" style="width: 100px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
+                    return '<img href="javascript:void(0)" style="width: 70px; height: 70px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
+                })
+                ->addColumn('product_name', function($row){
+                    return mb_strimwidth(preg_replace('/[-_]/', ' ', $row->product_details->name), 0, 15, "...");
                 })
                 ->addColumn('brand', function($row){
                     return $row->product_details->brand_details->title;
                 })
                 ->addColumn('vendor', function($row){
-                    return $row->vendor->name;
+                    return mb_strimwidth(preg_replace('/[-_]/', ' ', $row->vendor->name), 0, 13, "...");
                 })->addColumn('points', function($row){
                     return $row->point;
                 })
                 ->addColumn('price', function($row){
                     return $row->sell_price;
                 })
-                ->rawColumns(['action', 'photo', 'vendor', 'brand', 'points', 'price'])
+                ->rawColumns(['action', 'photo', 'vendor', 'brand', 'points', 'price','product_name'])
                 ->make(true);
         }
         return view('frontend.pages.sim-product-list.index');
@@ -137,7 +143,7 @@ class HomeController extends Controller
                     return $btn;
                 })
                 ->addColumn('photo', function($row){
-                    return '<img style="width: 100px; border-radius: 50%" src="/storage/product/'.$row->photo .'">';
+                    return '<img style="width: 70px; height: 70px; border-radius: 50%" src="/storage/product/'.$row->photo .'">';
                 })
                 ->rawColumns(['action', 'photo'])
                 ->make(true);

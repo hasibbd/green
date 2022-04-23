@@ -125,6 +125,13 @@ function Show(id) {
             $('#brand').val(data.data.brand);
             $('#r_wallet').prop('checked', data.data.is_reserve_point)
             $('#previewImg').attr('src', '/storage/product/'+data.data.photo);
+            if (data.data.is_reserve_point){
+                $('#d_check').removeClass('d-none').addClass('d-block')
+                $('#r_amount').val(data.data.reserve_point_amount)
+            }else{
+                $('#d_check').removeClass('d-block').addClass('d-none')
+                $('#r_amount').val(data.data.reserve_point_amount)
+            }
             $('#add_modal').modal('show');
         },
         error: function (data) {
@@ -145,5 +152,14 @@ function previewFile(input){
         }
 
         reader.readAsDataURL(file);
+    }
+}
+function IsChecked() {
+  let c = $('#r_wallet').is( ":checked" )
+    if (c){
+       $('#d_check').removeClass('d-none').addClass('d-block')
+    }else{
+        $('#d_check').removeClass('d-block').addClass('d-none')
+        $('#r_amount').val(0)
     }
 }

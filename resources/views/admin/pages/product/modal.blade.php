@@ -51,11 +51,15 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <div class="custom-control custom-checkbox mr-sm-2">
-                                <input type="checkbox" class="custom-control-input" name="r_wallet" id="r_wallet" value="1">
-                                <label class="custom-control-label" for="r_wallet">Reserve Wallet</label>
+                                <input type="checkbox" class="custom-control-input" name="r_wallet" id="r_wallet" onclick="IsChecked()" value="1">
+                                <label class="custom-control-label" for="r_wallet">Apply Reserve Wallet</label>
                             </div>
+                        </div>
+                        <div class="form-group col-md-6 d-none" id="d_check">
+                            <label for="title">Reserve Point Amount (%)</label>
+                            <input type="text" class="form-control" id="r_amount" name="r_amount" placeholder="Reserve Point Amount (%)">
                         </div>
                         <div class="form-group col-md-12">
                             <label for="short_detail">Sort Details</label>

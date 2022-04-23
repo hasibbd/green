@@ -119,6 +119,7 @@ Route::middleware(['user'])->group(function () {
     Route::post('user-reg-create', [UserController::class, 'RegStore']);
     Route::post('store-application-store', [StoreAppController::class, 'store']);
     Route::get('product-accept/{id}', [VendorOrderListController::class, 'ProductAccept']);
+    Route::get('check-code/{code}', [UserController::class, 'CodeCheck']);
 });
 
 Route::get('login', [AuthController::class, 'login'])->name('/');

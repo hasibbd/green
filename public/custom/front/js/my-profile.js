@@ -134,6 +134,30 @@ function Status(id) {
         }
     });
 }
+function CheckUser() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    let code = $('#r_code').val();
+    if (code.length > 5){
+        let  my_url = base + "/check-code/" + code;
+        $.ajax({
+            type: 'get',
+            url: my_url,
+            success: (data) => {
+                $('#r_name').val(data.name)
+               // toastr.success(data.message)
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.message)
+
+            }
+        });
+    }
+
+}
 function Delete(id) {
     swal({
         title: "Are you sure?",

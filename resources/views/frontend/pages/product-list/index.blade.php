@@ -18,15 +18,15 @@
                     <table class="table-list" id="product_list">
                         <thead>
                         <tr>
-                            <th scope="col">Serial</th>
-                            <th scope="col">Product</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Brand</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Point</th>
-                            <th scope="col">vendor</th>
-                            <th scope="col">action</th>
+                            <th style="width: 7%" scope="col">Serial</th>
+                            <th style="width: 10%" scope="col">Product</th>
+                            <th style="width: 17%" scope="col">Name</th>
+                            <th style="width: 13%" scope="col">Category</th>
+                            <th style="width: 10%" scope="col">Brand</th>
+                            <th style="width: 8%" scope="col">Price</th>
+                            <th style="width: 8%" scope="col">Point</th>
+                            <th style="width: 10%" scope="col">vendor</th>
+                            <th style="width: 10%" scope="col">action</th>
                         </tr>
                         </thead>
                         <tbody>

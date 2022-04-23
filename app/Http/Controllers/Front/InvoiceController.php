@@ -15,16 +15,8 @@ class InvoiceController extends Controller
         if (auth()->user()) {
 
             $user_id = Auth::user()->id;
-
-//            $query = "SELECT b.name AS customer_name, a.* FROM `order_mains` a
-//                LEFT JOIN `users` b ON a.created_by = b.id WHERE a.created_by =".$user_id;
-//
-//            $order_lists = DB::select($query);
-            $orders = DB::table('order_mains')->where('created_by',$user_id)->get();
-
-//            dd($orders);
-
-            return view('frontend.pages.invoice.invoice');
+            $orders =OrderMain::with('details','vendor','product_details')->latest()->first();
+            return view('frontend.pages.invoice.invoice', compact('orders'));
         } else {
             return redirect()->route('/');
         }

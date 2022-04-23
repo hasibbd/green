@@ -253,6 +253,8 @@ class HomeController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     return 1;
+                }) ->addColumn('date', function($row){
+                    return date("F j, Y, g:i a", strtotime($row->created_at));
                 })
                 ->rawColumns(['action'])
                 ->make(true);

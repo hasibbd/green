@@ -64,7 +64,7 @@
                                    {{-- <li><h6>Total Item</h6>
                                         <p>{{$o->details->count()}}</p></li>--}}
                                     <li><h6>Order Time</h6>
-                                        <p>{{$o->created_at}}</p></li>
+                                        <p>{{date("F j, Y, g:i a", strtotime($o->created_at))}}</p></li>
                                    {{-- <li><h6>Delivery Time</h6>
                                         <p>12th February 2021</p></li>--}}
                                 </ul>
@@ -72,9 +72,19 @@
                             <div class="col-lg-4">
                                 <ul class="orderlist-details">
                                     <li><h6>Total Point</h6>
-                                        <p>{{$o->details->sum('point')}}</p></li>
+                                        <p>
+                                            <?php
+                                            $to = 0;
+                                            $price = 0;
+                                            foreach ($o->details as $d){
+                                                $to += $d->point*$d->qty;
+                                                $price += $d->price*$d->qty;
+                                            }
+                                            echo $to;
+                                            ?>
+                                        </p></li>
                                     <li><h6>Total Price</h6>
-                                        <p>{{$o->details->sum('price')}}</p></li>
+                                        <p>{{$price}}</p></li>
                                 </ul>
                             </div>
                             <div class="col-lg-4">
@@ -94,7 +104,8 @@
                                             <th scope="col">Product</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">point</th>
+                                            <th scope="col">Total Price</th>
+                                            <th scope="col">Total Point</th>
                                             <th scope="col">brand</th>
                                             <th scope="col">quantity</th>
                                             <th scope="col">Action</th>
@@ -107,7 +118,8 @@
                                             <td class="table-image"><img src="storage/product/{{$d->vendor_details->product_details->photo}}" alt="product"></td>
                                             <td class="table-name"><h6>{{$d->vendor_details->product_details->name}}</h6></td>
                                             <td class="table-price"><h6>{{$d->price}}<small>/{{$d->vendor_details->product_details->unit_details->name}}</small></h6></td>
-                                            <td class="table-brand"><h6>{{$d->point}}</h6></td>
+                                            <td class="table-price"><h6>{{$d->price*$d->qty}}</h6></td>
+                                            <td class="table-brand"><h6>{{$d->point*$d->qty}}</h6></td>
                                             <td class="table-brand"><h6>{{$d->vendor_details->product_details->brand_details->title}}</h6></td>
                                             <td class="table-quantity"><h6>{{$d->qty}}</h6></td>
                                             <td class="table-quantity">

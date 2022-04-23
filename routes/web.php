@@ -183,7 +183,7 @@ Route::middleware(['vendor'])->group(function () {
 
 
     // order list
-    Route::get('seller-order-list', [VendorOrderListController::class, 'showSellerOrderList']);
+    Route::get('seller-order-list', [VendorOrderListController::class, 'showSellerOrderList'])->name('seller-order-list.index');
     Route::get('seller-order-list-details/{id}', [VendorOrderListController::class, 'showSellerOrderDetailsList']);
     Route::get('product-deliver/{id}', [VendorOrderListController::class, 'ProductDeliver']);
     Route::get('product-cancel/{id}', [VendorOrderListController::class, 'ProductCancel']);

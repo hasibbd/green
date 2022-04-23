@@ -120,8 +120,8 @@
              ],
              "language": {
                  "paginate": {
-                     "next": ">",
-                     "previous": "<"
+                     "next": '<i class="fas fa-long-arrow-alt-right"></i>',
+                     "previous": '<i class="fas fa-long-arrow-alt-left"></i>'
                  }
              }
          });
@@ -139,7 +139,7 @@
              },
              columns: [
                  {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
-                 {data: 'created_at', name: 'created_at', class: 'table-name'},
+                 {data: 'date', name: 'date', class: 'table-name'},
                  {data: 'generate_from', name: 'generate_from', class: 'table-name'},
                  {data: 'point', name: 'point', class: 'table-shop'},
              ],

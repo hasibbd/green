@@ -30,10 +30,16 @@ class CheckoutController extends Controller
                 DB::beginTransaction();
 
                 foreach (collect($cartData)->unique('vendor_id') as $c) {
+                    $order_id_check = OrderMain::latest()->first();
+                    if ($order_id_check){
+                        $order_id = $order_id_check->order_id + 1;
+                    }else{
+                        $order_id = 100000;
+                    }
                     $st = OrderMain::create([
                         'created_by' => auth()->user()->id,
                         'vendor_id' => $c['vendor_id'],
-                        'order_id' => Str::random(10),
+                        'order_id' => $order_id,
                         'status' => 0
                     ]);
                     if ($st) {

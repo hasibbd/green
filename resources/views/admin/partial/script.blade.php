@@ -415,6 +415,27 @@
                 ]
             });
         });
+    </script> @break .
+    @case('seller-order-list')
+    <script>
+        $(function () {
+            $("#seller-order-list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('seller-order-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'customer', name: 'customer'},
+                    {data: 'order_id', name: 'order_id'},
+                    {data: 'total_price', name: 'total_price'},
+                    {data: 'total_qty', name: 'total_qty'},
+                    {data: 'total_point', name: 'total_point'},
+                    {data: 'status', name: 'status'},
+                    {data: 'date', name: 'date'},
+                    {data: 'action', name: 'action'},
+                ]
+            });
+        });
     </script> @break
 
 @endswitch

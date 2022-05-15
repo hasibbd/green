@@ -272,7 +272,6 @@
                     {data: 'type', name: 'type'},
                     {data: 'limit', name: 'limit'},
                     {data: 'status', name: 'status'},
-                    {data: 'point', name: 'point'},
                     {data: 'action', name: 'action'},
                 ]
             });
@@ -292,6 +291,7 @@
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
+                    {data: 'point', name: 'point'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action'},
                 ]

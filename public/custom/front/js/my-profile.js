@@ -140,6 +140,7 @@ function CheckUser() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $('#r_name').val(null)
     let code = $('#r_code').val();
     if (code.length > 5){
         let  my_url = base + "/check-code/" + code;
@@ -147,7 +148,7 @@ function CheckUser() {
             type: 'get',
             url: my_url,
             success: (data) => {
-                $('#r_name').val(data.name)
+                $('#r_name').val(data.data.name)
                // toastr.success(data.message)
             },
             error: function (data) {

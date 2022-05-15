@@ -113,15 +113,15 @@
              columns: [
                  {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
                  {data: 'photo', name: 'photo', class: 'table-image'},
-                 {data: 'name', name: 'name', class: 'table-name'},
+                 {data: 'product', name: 'product', class: 'table-name'},
                  {data: 'category_details.title', name: 'category_details.title', class: 'table-shop'},
                  {data: 'brand_details.title', name: 'brand_details.title', class: 'table-shop'},
                  {data: 'action', name: 'action', class: 'table-action'},
              ],
              "language": {
                  "paginate": {
-                     "next": ">",
-                     "previous": "<"
+                     "next": '<i class="fas fa-long-arrow-alt-right"></i>',
+                     "previous": '<i class="fas fa-long-arrow-alt-left"></i>'
                  }
              }
          });
@@ -139,7 +139,7 @@
              },
              columns: [
                  {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
-                 {data: 'created_at', name: 'created_at', class: 'table-name'},
+                 {data: 'date', name: 'date', class: 'table-name'},
                  {data: 'generate_from', name: 'generate_from', class: 'table-name'},
                  {data: 'point', name: 'point', class: 'table-shop'},
              ],

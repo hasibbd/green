@@ -20,4 +20,8 @@ class OrderMain extends Model
     {
         return $this->hasOne(User::class, 'id', 'vendor_id');
     }
+    public function customer()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 }

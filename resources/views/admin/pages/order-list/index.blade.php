@@ -40,7 +40,7 @@
                                         <th>Order Number</th>
                                         <th>Payment Status</th>
                                         <th>Total Amount</th>
-                                        <th>Total Quantity</th>
+                                        <th>Total Product Qty.</th>
                                         <th>Total Point</th>
                                         <th>Order Status</th>
                                         <th>Date</th>

@@ -17,7 +17,7 @@
                                                                                          alt="blog"></a>
                     <div class="blog-details-content">
                         <ul class="blog-details-meta">
-                            <li><i class="icofont-ui-calendar"></i><span>{{$article->created_at}}</span></li>
+                            <li><i class="icofont-ui-calendar"></i><span>{{date("F j, Y, g:i a", strtotime($article->created_at))}}</span></li>
                             <li><i class="icofont-user-alt-3"></i><span>{{$article->creator->name}}</span></li>
                           {{--  <li><i class="icofont-speech-comments"></i><span>25 comments</span></li>
                             <li><i class="icofont-share-boxed"></i><span>34 share</span></li>--}}

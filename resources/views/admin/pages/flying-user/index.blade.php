@@ -44,6 +44,7 @@
                                      <th>Name</th>
                                      <th>Email</th>
                                      <th>Phone</th>
+                                     <th>Point</th>
                                      <th>Status</th>
                                      <th width="150px">Action</th>
                                  </tr>

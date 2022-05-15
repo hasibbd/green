@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderMain;
+use App\Models\VendorLimit;
+use App\Models\VendorProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -18,7 +22,10 @@ class DashboardController extends Controller
 
     public function vendorIndex()
     {
-        return view('admin.pages.dashboard.vendor_dashboard');
+        $limit = VendorLimit::where('user_id', Auth::user()->id)->sum('limit');
+        $order = OrderMain::where('vendor_id', Auth::user()->id)->get();
+        $product = VendorProduct::where('created_by', Auth::user()->id)->get();
+        return view('admin.pages.dashboard.vendor_dashboard', compact('limit','order','product'));
     }
 
     /**

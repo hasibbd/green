@@ -45,6 +45,7 @@
                                      <th>Email</th>
                                      <th>Phone</th>
                                      <th>Shop Type</th>
+                                     <th>Sales Limit</th>
                                      <th>Status</th>
                                      <th width="150px">Action</th>
                                  </tr>
@@ -61,4 +62,5 @@
         <!-- /.content -->
     </div>
     @include('admin.pages.store-user.modal')
+    @include('admin.pages.store-user.limit-modal')
 @endsection

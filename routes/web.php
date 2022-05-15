@@ -9,6 +9,7 @@ use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\InvoiceController;
+use App\Http\Controllers\LimitController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -42,8 +43,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin-user-list', [UserController::class, 'aindex'])->name('admin-user-list.index');
     Route::get('store-user-list', [UserController::class, 'sindex'])->name('store-user-list.index');
     Route::get('user-list', [UserController::class, 'uindex'])->name('user-list.index');
-    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
-    Route::post('profile-info-change', [ProfileController::class, 'update']);
 
     Route::get('sliders', [SliderController::class, 'index'])->name('sliders.index');
     Route::post('slider-store', [SliderController::class, 'store']);
@@ -100,11 +99,15 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('product-delete/{id}', [ProductController::class, 'destroy']);
 
     // order list
-    Route::get('order-list', [OrderController::class, 'showOrderList'])->name('order-list.index');
+   // Route::get('order-list', [OrderController::class, 'showOrderList'])->name('order-list.index');
+    Route::get('order-list', [VendorOrderListController::class, 'showSellerOrderList'])->name('order-list.index');
+    Route::get('admin-seller-order-list-details/{id}', [VendorOrderListController::class, 'showSellerOrderDetailsList']);
     //Setting
     Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
     Route::get('setting-show/{id}', [SettingController::class, 'edit']);
     Route::post('setting-store', [SettingController::class, 'store']);
+
+    Route::post('add-limit', [LimitController::class, 'store']);
 });
 
 Route::middleware(['user'])->group(function () {
@@ -143,7 +146,7 @@ Route::get('brand-data', [HomeController::class, 'brandData'])->name('brand-prod
 Route::get('product-view/{id}', [HomeController::class, 'productDetails']);
 Route::get('read/{id}', [HomeController::class, 'read']);
 Route::get('article-list', [HomeController::class, 'Allread']);
-
+Route::get('terms', [HomeController::class, 'terms']);
 
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
 Route::get('decrease/{id}', [CartController::class, 'decreseCart'])->name('decrease.to.cart');
@@ -183,8 +186,13 @@ Route::middleware(['vendor'])->group(function () {
 
 
     // order list
-    Route::get('seller-order-list', [VendorOrderListController::class, 'showSellerOrderList']);
+    Route::get('seller-order-list', [VendorOrderListController::class, 'showSellerOrderList'])->name('seller-order-list.index');
     Route::get('seller-order-list-details/{id}', [VendorOrderListController::class, 'showSellerOrderDetailsList']);
     Route::get('product-deliver/{id}', [VendorOrderListController::class, 'ProductDeliver']);
     Route::get('product-cancel/{id}', [VendorOrderListController::class, 'ProductCancel']);
+
+    Route::get('limit-list', [LimitController::class, 'index'])->name('limit-list.index');
 });
+Route::get('try', [HomeController::class, 'userCreate']);
+Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+Route::post('profile-info-change', [ProfileController::class, 'update']);

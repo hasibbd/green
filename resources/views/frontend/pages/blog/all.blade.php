@@ -48,7 +48,7 @@
                                 <div class="blog-content">
                                     <ul class="blog-meta">
                                         <li><i class="fas fa-user"></i><span>{{$a->creator->name}}</span></li>
-                                        <li><i class="fas fa-calendar-alt"></i><span>{{$a->created_at}}</span></li>
+                                        <li><i class="fas fa-calendar-alt"></i><span>{{date("F j, Y, g:i a", strtotime($a->created_at))}}</span></li>
                                     </ul>
                                     <h4 class="blog-title"><a href="{{url('read/'.$a->id)}}">{{$a->title}}</a></h4>
                                     <p class="blog-desc">{{mb_strimwidth($a->details, 0, 200, "...")}}</p><a class="blog-btn"
@@ -84,7 +84,7 @@
                                     <img src="{{asset('/storage/article/'.$a->photo)}}" alt="blog-widget">
                                 </a><h6 class="blog-widget-text">
                                     <a href="{{url('read/'.$a->id)}}">{{$a->title}}</a>
-                                    <span>{{$a->created_at}}</span>
+                                    <span>{{date("F j, Y, g:i a", strtotime($a->created_at))}}</span>
                                 </h6>
                             </li>
                             @endforeach

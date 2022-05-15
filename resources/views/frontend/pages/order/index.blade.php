@@ -64,7 +64,7 @@
                                    {{-- <li><h6>Total Item</h6>
                                         <p>{{$o->details->count()}}</p></li>--}}
                                     <li><h6>Order Time</h6>
-                                        <p>{{$o->created_at}}</p></li>
+                                        <p>{{date("F j, Y, g:i a", strtotime($o->created_at))}}</p></li>
                                    {{-- <li><h6>Delivery Time</h6>
                                         <p>12th February 2021</p></li>--}}
                                 </ul>
@@ -72,9 +72,19 @@
                             <div class="col-lg-4">
                                 <ul class="orderlist-details">
                                     <li><h6>Total Point</h6>
-                                        <p>{{$o->details->sum('point')}}</p></li>
+                                        <p>
+                                            <?php
+                                            $to = 0;
+                                            $price = 0;
+                                            foreach ($o->details as $d){
+                                                $to += $d->point*$d->qty;
+                                                $price += $d->price*$d->qty;
+                                            }
+                                            echo $to;
+                                            ?>
+                                        </p></li>
                                     <li><h6>Total Price</h6>
-                                        <p>{{$o->details->sum('price')}}</p></li>
+                                        <p>{{$price}}</p></li>
                                 </ul>
                             </div>
                             <div class="col-lg-4">
@@ -90,11 +100,12 @@
                                     <table class="table-list" id="AllATble">
                                         <thead>
                                         <tr>
-                                            <th scope="col">Serial</th>
+                                            <th scope="col">Sl.</th>
                                             <th scope="col">Product</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">point</th>
+                                            <th scope="col">Total Price</th>
+                                            <th scope="col">Total Point</th>
                                             <th scope="col">brand</th>
                                             <th scope="col">quantity</th>
                                             <th scope="col">Action</th>
@@ -103,24 +114,25 @@
                                         <tbody>
                                         @foreach($o->details as $d)
                                         <tr>
-                                            <td class="table-serial"><h6>1</h6></td>
-                                            <td class="table-image"><img src="storage/product/{{$d->vendor_details->product_details->photo}}" alt="product"></td>
-                                            <td class="table-name"><h6>{{$d->vendor_details->product_details->name}}</h6></td>
-                                            <td class="table-price"><h6>{{$d->price}}<small>/{{$d->vendor_details->product_details->unit_details->name}}</small></h6></td>
-                                            <td class="table-brand"><h6>{{$d->point}}</h6></td>
-                                            <td class="table-brand"><h6>{{$d->vendor_details->product_details->brand_details->title}}</h6></td>
-                                            <td class="table-quantity"><h6>{{$d->qty}}</h6></td>
+                                            <td class="table-serial"><span class="small">{{$loop->iteration}}</span></td>
+                                            <td class="table-image"><img style="width: 40px; height: 40px" src="storage/product/{{$d->vendor_details->product_details->photo}}" alt="product"></td>
+                                            <td class=""><span class="small">{!! nl2br($d->vendor_details->product_details->name) !!}</span></td>
+                                            <td class="table-price"><span class="small">{{$d->price}}<small>/{{$d->vendor_details->product_details->unit_details->name}}</small></span></td>
+                                            <td class="table-price"><span class="small">{{$d->price*$d->qty}}</span></td>
+                                            <td class="table-brand"><span class="small">{{$d->point*$d->qty}}</span></td>
+                                            <td class="table-brand"><span class="small">{{$d->vendor_details->product_details->brand_details->title}}</span></td>
+                                            <td class="table-quantity"><span class="small">{{$d->qty}}</span></td>
                                             <td class="table-quantity">
                                                 @if($d->status == 1)
-                                                <button class="btn btn-sm btn-success" onclick="Accept({{$d->id}})">Accept Delivery</button>
+                                                <button style="padding: 0px !important;" class="btn btn-sm btn-success" onclick="Accept({{$d->id}})">Accept Delivery</button>
                                                 @elseif($d->status == -1)
-                                                <button class="btn btn-sm btn-warning" onclick="Accept({{$d->id}})">Appect Cancelation</button>
+                                                <button style="padding: 0px !important;" class="btn btn-sm btn-warning" onclick="Accept({{$d->id}})">Accept Cancellation</button>
                                                 @elseif($d->status == -2)
-                                                    <button class="btn btn-sm btn-danger">Canceled</button>
+                                                    <button style="padding: 0px !important;" class="btn btn-sm btn-danger">Canceled</button>
                                                 @elseif($d->status == 2)
-                                                    <button class="btn btn-sm btn-primary">Acceted</button>
+                                                    <button style="padding: 0px !important;" class="btn btn-sm btn-primary">Accepted</button>
                                                 @else
-                                                    <button class="btn btn-sm btn-primary">Pending</button>
+                                                    <button style="padding: 0px !important;" class="btn btn-sm btn-primary">Pending</button>
                                                 @endif
                                             </td>
                                         </tr>

@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -73,14 +76,25 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         if ($request->password == $request->c_password){
+            if($request->hasfile('profile')) {
+                $file = $request->file('profile');
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename = time() . Str::random(5) . '.' . $extension;
+                $resize = Image::make($file)->resize(300, 300)->encode($extension);
+                $save = Storage::put("public/user/" . $filename, $resize->__toString());
+            }else{
+                $filename = Auth::user()->photo;
+            }
             if ($request->password){
               $data = [
+                  'photo' => $filename,
                   'name' => $request->name,
                   'email' => $request->email,
                   'password' => Hash::make($request->password)
               ];
             }else{
                 $data = [
+                    'photo' => $filename,
                     'name' => $request->name,
                     'email' => $request->email
                 ];
@@ -89,7 +103,8 @@ class ProfileController extends Controller
             User::find(auth()->user()->id)->update($data);
            // Auth::attempt(array('email' => $request->email, 'password' =>$request->password), true);
             return response()->json([
-                'message' => 'Profile information changed'
+                'message' => 'Profile information changed',
+                'data' => $data
             ],200);
 
         }else{

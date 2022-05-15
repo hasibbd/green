@@ -59,6 +59,37 @@ $(document).ready(function () {
             }
         });
     });
+    $('#limit_submit').submit(function (e) {
+        e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        let formData = new FormData(this);
+        let  my_url = base + "/add-limit";
+        $.ajax({
+            type: 'post',
+            url: my_url,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: (data) => {
+                loading('off', 'Submit')
+                toastr.success(data.message)
+                $('.table').DataTable().ajax.reload();
+                $('#user_id_limit').val(null);
+                $('#limit').val(0);
+                $('#limit_modal').modal('hide');
+            },
+            error: function (data) {
+                loading('off', 'Submit')
+                toastr.error(data.responseJSON.message)
+
+            }
+        });
+    });
 })
 var base = window.location.origin;
 function Status(id) {
@@ -142,6 +173,11 @@ function Show(id) {
 
         }
     });
+}
+function AddLimit(id) {
+    $('#user_id_limit').val(id);
+    $('#limit').val(0);
+    $('#limit_modal').modal('show');
 }
 function previewFile(input){
     var file = $("input[type=file]").get(0).files[0];

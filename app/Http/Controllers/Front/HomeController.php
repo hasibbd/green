@@ -16,10 +16,56 @@ use App\Models\VendorProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
 class HomeController extends Controller
 {
+    public function userCreate(){
+        $request = [];
+        $users = [];
+        $name = 'Green';
+        for ($i = 1; $i <= 100; $i++){
+            $users[] = [
+                'name' => $name.$i,
+                "user_id" => 1000000,
+                'user_name' =>substr(str_replace(' ', '', strtolower($name.$i)), 0, 5),
+                'photo' => 'default.png',
+                'email' => strtolower($name.$i.'@email.com'),
+                'phone' => '01737724850',
+                'role' => 0,
+                'reffer_by' => null,
+                'password' => Hash::make(20220515)
+            ];
+
+            $st =  UserInformation::create([
+                "user_id" => Auth::user()->id,
+                "b_date" => $request->b_date,
+                "f_name" =>  $request->f_name,
+                "m_name" =>  $request->m_name,
+                "gender" =>  $request->gender,
+                "l_license" =>  $request->l_license,
+                "l_date" =>  $request->l_date,
+                "district" =>  $request->district,
+                "p_station" =>  $request->p_station,
+                "p_code" =>  $request->p_code,
+                "occupation" =>  $request->occupation,
+                "qualification" =>  $request->qualification,
+                "n_name" =>  $request->n_name,
+                "n_b_date" =>  $request->n_b_date,
+                "relation" =>  $request->relation,
+                "n_nid" =>  $request->n_nid,
+                "r_name" =>  $request->r_name,
+                "r_code" =>  $request->r_code,
+                "a_name" =>  $request->a_name,
+                "b_name" =>  $request->b_name,
+                "branch" =>  $request->branch,
+                "acc" =>  $request->acc,
+                "created_by" => Auth::user()->id
+            ]);
+        }
+     dd($users);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -60,7 +106,8 @@ class HomeController extends Controller
                     return $row->product_details->brand_details->title;
                 })
                 ->addColumn('product_name', function($row){
-                    return mb_strimwidth(preg_replace('/[-_]/', ' ', $row->product_details->name), 0, 15, "...");
+                    return wordwrap(str_replace( array( '\'', '_', '-'), ' ', $row->product_details->name), 15, "<br />\n");
+                 //   return mb_strimwidth(preg_replace('/[-_]/', ' ', $row->product_details->name), 0, 15, "...");
                 })
                 ->addColumn('vendor', function($row){
                     $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
@@ -99,7 +146,8 @@ class HomeController extends Controller
                     return '<img href="javascript:void(0)" style="width: 70px; height: 70px; border-radius: 50%" src="/storage/product/'.$row->product_details->photo .'">';
                 })
                 ->addColumn('product_name', function($row){
-                    return mb_strimwidth(preg_replace('/[-_]/', ' ', $row->product_details->name), 0, 15, "...");
+                    return wordwrap(str_replace( array( '\'', '_', '-'), ' ', $row->product_details->name), 15, "<br />\n");
+                  //  return mb_strimwidth(preg_replace('/[-_]/', ' ', $row->product_details->name), 0, 15, "...");
                 })
                 ->addColumn('brand', function($row){
                     return $row->product_details->brand_details->title;
@@ -145,7 +193,11 @@ class HomeController extends Controller
                 ->addColumn('photo', function($row){
                     return '<img style="width: 70px; height: 70px; border-radius: 50%" src="/storage/product/'.$row->photo .'">';
                 })
-                ->rawColumns(['action', 'photo'])
+                ->addColumn('product', function($row){
+                    return wordwrap(str_replace( array( '\'', '_', '-'), ' ', $row->name), 20, "<br />\n");
+                    //  return mb_strimwidth(preg_replace('/[-_]/', ' ', $row->product_details->name), 0, 15, "...");
+                })
+                ->rawColumns(['action', 'photo','product'])
                 ->make(true);
         }
         return view('frontend.pages.brand-list.index');
@@ -253,6 +305,8 @@ class HomeController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     return 1;
+                }) ->addColumn('date', function($row){
+                    return date("F j, Y, g:i a", strtotime($row->created_at));
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -271,5 +325,8 @@ class HomeController extends Controller
     public function Allread(){
         $article = Article::latest()->paginate();
         return view('frontend.pages.blog.all', compact('article'));
+    }
+    public function terms(){
+        return view('frontend.pages.term.index');
     }
 }

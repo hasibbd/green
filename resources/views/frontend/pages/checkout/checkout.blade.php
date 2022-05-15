@@ -193,7 +193,7 @@
                             </div>
                             <div class="checkout-check"><input type="checkbox" id="checkout-check"><label
                                     for="checkout-check">By
-                                    making this purchase you agree to our <a href="#">Terms and Conditions</a>.</label>
+                                    making this purchase you agree to our <a href="{{url('terms')}}">Terms and Conditions</a>.</label>
                             </div>
                             <form action="{{ route('store.order') }}" method="post">
                                 @csrf

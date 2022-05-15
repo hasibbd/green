@@ -13,6 +13,7 @@ use App\Models\Slider;
 use App\Models\StoreManagerApplication;
 use App\Models\UserInformation;
 use App\Models\VendorProduct;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,23 +25,23 @@ class HomeController extends Controller
     public function userCreate(){
         $request = [];
         $users = [];
-        $name = 'Green';
+        $name = 'ShoppingBook';
         for ($i = 1; $i <= 100; $i++){
             $users[] = [
-                'name' => $name.$i,
+                'name' => $name.' ltd. '.$i,
                 "user_id" => 1000000,
-                'user_name' =>substr(str_replace(' ', '', strtolower($name.$i)), 0, 5),
+                'user_name' =>substr(str_replace(' ', '', strtolower($name.$i)), 0, 12),
                 'photo' => 'default.png',
                 'email' => strtolower($name.$i.'@email.com'),
-                'phone' => '01737724850',
+                'phone' => '01100000',
                 'role' => 0,
                 'reffer_by' => null,
                 'password' => Hash::make(20220515)
             ];
 
             $st =  UserInformation::create([
-                "user_id" => Auth::user()->id,
-                "b_date" => $request->b_date,
+                "user_id" => 22,
+                "b_date" => Carbon::createFromFormat('01/02/1984'),
                 "f_name" =>  $request->f_name,
                 "m_name" =>  $request->m_name,
                 "gender" =>  $request->gender,
@@ -83,11 +84,20 @@ class HomeController extends Controller
     {
         if ($request->ajax()) {
             $search = $request->param;
-            $data = VendorProduct::with('product_details','product_details.brand_details','product_details.category_details')
-                ->whereHas('product_details', function($q) use($search){
-                $q->where('category', '=', $search);
-            })->get()->unique('product');
-            return Datatables::of($data)
+            $data = VendorProduct::with('stock_details','product_details','product_details.brand_details','product_details.category_details')
+                   ->whereHas('product_details', function($q) use($search){
+                    $q->where('category', '=', $search);
+                 })
+                ->get()
+                ->unique('product');
+            $info = [];
+            foreach ($data as $d){
+               if ($d->stock_details->sum('qty') > 0){
+                   $d->stock = $d->stock_details->sum('qty');
+                     array_push($info,$d);
+                }
+            }
+            return Datatables::of($info)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
@@ -129,9 +139,16 @@ class HomeController extends Controller
     {
         if ($request->ajax()) {
             $search = $request->param;
-            $data = VendorProduct::with('vendor','product_details','product_details.brand_details','product_details.category_details')
+            $data = VendorProduct::with('stock_details','vendor','product_details','product_details.brand_details','product_details.category_details')
                 ->where('product', $search)->get();
-            return Datatables::of($data)
+            $info = [];
+            foreach ($data as $d){
+                if ($d->stock_details->sum('qty') > 0){
+                    $d->stock = $d->stock_details->sum('qty');
+                    array_push($info,$d);
+                }
+            }
+            return Datatables::of($info)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
 

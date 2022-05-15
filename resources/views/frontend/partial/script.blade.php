@@ -113,7 +113,7 @@
              columns: [
                  {data: 'DT_RowIndex', name: 'DT_RowIndex', class: 'table-serial'},
                  {data: 'photo', name: 'photo', class: 'table-image'},
-                 {data: 'name', name: 'name', class: 'table-name'},
+                 {data: 'product', name: 'product', class: 'table-name'},
                  {data: 'category_details.title', name: 'category_details.title', class: 'table-shop'},
                  {data: 'brand_details.title', name: 'brand_details.title', class: 'table-shop'},
                  {data: 'action', name: 'action', class: 'table-action'},

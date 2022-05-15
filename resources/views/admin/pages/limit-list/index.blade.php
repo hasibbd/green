@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">User</h1>
+                        <h1 class="m-0">Limit</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{'dashboard'}}">Home</a></li>
-                            <li class="breadcrumb-item active">User v1</li>
+                            <li class="breadcrumb-item active">Limit v1</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -28,25 +28,18 @@
                          <div class="card-header">
                              <div class="row">
                                  <div class="col"><div class="card-title">
-                                         User
+                                         Sales Limit
                                      </div></div>
-                                 <div class="col text-right">
-                                     <button onclick="$('#add_modal').modal('show')" class="btn btn-sm btn-primary">Add New</button>
-                                 </div>
                              </div>
                          </div>
                          <div class="card-body">
-                             <table class="table table-bordered table-responsive-sm w-100 table-sm" id="user_list">
+                             <table class="table table-bordered table-responsive-sm w-100 table-sm" id="limit-list">
                                  <thead>
                                  <tr>
                                      <th style="width: 5%">No</th>
-                                     <th>Image</th>
-                                     <th>Name</th>
-                                     <th>Email</th>
-                                     <th>Phone</th>
-                                     <th>Point</th>
-                                     <th>Status</th>
-                                     <th width="150px">Action</th>
+                                     <th>From</th>
+                                     <th>Sales Limit</th>
+                                     <th>Date</th>
                                  </tr>
                                  </thead>
                                  <tbody>
@@ -60,5 +53,4 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('admin.pages.user.modal')
 @endsection

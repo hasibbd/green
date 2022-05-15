@@ -2,30 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderMain;
+use App\Models\User;
 use App\Models\VendorLimit;
-use App\Models\VendorProduct;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class LimitController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.pages.dashboard.dashboard');
-    }
+        if ($request->ajax()) {
+            $data = VendorLimit::where('user_id', Auth::user()->id)->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('user', function($row){
+                    if ($row->created_by == 1){
+                        return 'Point Purchased';
+                    }else{
+                        return 'Products Sell';
+                    }
 
-    public function vendorIndex()
-    {
-        $limit = VendorLimit::where('user_id', Auth::user()->id)->sum('limit');
-        $order = OrderMain::where('vendor_id', Auth::user()->id)->get();
-        $product = VendorProduct::where('created_by', Auth::user()->id)->get();
-        return view('admin.pages.dashboard.vendor_dashboard', compact('limit','order','product'));
+                })
+                ->addColumn('date', function($row){
+                    return date("F j, Y, g:i a", strtotime($row->created_at));
+                })
+                ->rawColumns(['date','user'])
+                ->make(true);
+        }
+        return view('admin.pages.limit-list.index');
     }
 
     /**
@@ -42,11 +52,26 @@ class DashboardController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+     $st = VendorLimit::create([
+           'user_id' => $request->id,
+           'limit' => $request->limit,
+           'created_by' => Auth::user()->id,
+       ]);
+     if ($st){
+         return response()->json([
+             'message' => 'Limit updated',
+             'data' => $st
+         ],200);
+     }else{
+         return response()->json([
+             'message' => 'Failed',
+             'data' => []
+         ],404);
+     }
     }
 
     /**

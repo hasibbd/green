@@ -57,6 +57,8 @@
     <script src="{{asset('custom/js/setting.js')}}"></script> @break
     @case('flying-user-list')
     <script src="{{asset('custom/js/user.js')}}"></script> @break
+    @case('user-list')
+    <script src="{{asset('custom/js/user.js')}}"></script> @break
     @case('admin-user-list')
     <script src="{{asset('custom/js/user.js')}}"></script> @break
     @case('store-user-list')
@@ -67,6 +69,8 @@
     <script src="{{asset('custom/js/store-application.js')}}"></script> @break
     @case('seller-order-list')
     <script src="{{asset('custom/js/seller-order.js')}}"></script> @break
+    @case('limit-list')
+    <script src="{{asset('custom/js/limit-list.js')}}"></script> @break
 @endswitch
 <script>
     $(function () {
@@ -244,6 +248,7 @@
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
+                    {data: 'point', name: 'point'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action'},
                 ]
@@ -265,7 +270,9 @@
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
                     {data: 'type', name: 'type'},
+                    {data: 'limit', name: 'limit'},
                     {data: 'status', name: 'status'},
+                    {data: 'point', name: 'point'},
                     {data: 'action', name: 'action'},
                 ]
             });
@@ -313,7 +320,7 @@
     </script> @break
     @case('order-list')
     <script>
-        $(function () {
+       /* $(function () {
             $("#order_list").DataTable({
                 processing: true,
                 serverSide: true,
@@ -332,7 +339,26 @@
                     {data: 'action', name: 'action'},
                 ]
             });
-        });
+        });*/
+       $(function () {
+           $("#seller-order-list").DataTable({
+               processing: true,
+               serverSide: true,
+               ajax: "{{ route('order-list.index') }}",
+               columns: [
+                   {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                   {data: 'vendor', name: 'vendor'},
+                   {data: 'customer', name: 'customer'},
+                   {data: 'order_id', name: 'order_id'},
+                   {data: 'total_price', name: 'total_price'},
+                   {data: 'total_qty', name: 'total_qty'},
+                   {data: 'total_point', name: 'total_point'},
+                   {data: 'status', name: 'status'},
+                   {data: 'date', name: 'date'},
+                   {data: 'action', name: 'action'},
+               ]
+           });
+       });
     </script> @break
     @case('order-details')
     <script>
@@ -415,7 +441,7 @@
                 ]
             });
         });
-    </script> @break .
+    </script> @break
     @case('seller-order-list')
     <script>
         $(function () {
@@ -425,6 +451,7 @@
                 ajax: "{{ route('seller-order-list.index') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'vendor', name: 'vendor'},
                     {data: 'customer', name: 'customer'},
                     {data: 'order_id', name: 'order_id'},
                     {data: 'total_price', name: 'total_price'},
@@ -433,6 +460,22 @@
                     {data: 'status', name: 'status'},
                     {data: 'date', name: 'date'},
                     {data: 'action', name: 'action'},
+                ]
+            });
+        });
+    </script> @break
+    @case('limit-list')
+    <script>
+        $(function () {
+            $("#limit-list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('limit-list.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'user', name: 'user'},
+                    {data: 'limit', name: 'limit'},
+                    {data: 'date', name: 'date'},
                 ]
             });
         });

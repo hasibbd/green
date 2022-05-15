@@ -28,21 +28,22 @@
                         <div class="card card-primary card-outline pro_info">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle"
-                                         src="../../dist/img/user4-128x128.jpg"
-                                         alt="User profile picture">
+                                    <div class="image">
+                                        <img src="storage/user/{{Auth::user()->photo}}" class="profile-user-img img-fluid img-circle" id="p_image" alt="User Image">
+                                    </div>
                                 </div>
 
-                                <h3 class="profile-username text-center">{{auth()->user()->name}}</h3>
+                                <h3 class="profile-username text-center" id="p_name">{{auth()->user()->name}}</h3>
 
-                                <p class="text-muted text-center">{{auth()->user()->email}}</p>
+                                <p class="text-muted text-center" id="p_email">{{auth()->user()->email}}</p>
 
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
                                         <b>Role</b> <a class="float-right">
                                             @switch(auth()->user()->role)
                                                 @case(1) Admin @break
-                                                @case(2) User @break
+                                                @case(2) Store/Vendor @break
+                                                @case(0) User @break
                                             @endswitch
                                         </a>
                                     </li>
@@ -65,7 +66,13 @@
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="active tab-pane" id="settings">
-                                        <form class="form-horizontal pro_info2" id="profile_info_change">
+                                        <form class="form-horizontal pro_info2" enctype="multipart/form-data" id="profile_info_change">
+                                            <div class="form-group row">
+                                                <label for="inputEmail" class="col-sm-4 col-form-label">Profile Photo</label>
+                                                <div class="col-sm-8">
+                                                    <input type="file" name="profile" id="profile">
+                                                </div>
+                                            </div>
                                             <div class="form-group row">
                                                 <label for="inputName" class="col-sm-4 col-form-label">Name</label>
                                                 <div class="col-sm-8">

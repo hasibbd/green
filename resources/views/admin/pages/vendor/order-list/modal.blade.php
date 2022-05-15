@@ -10,7 +10,7 @@
             </div>
                 <div class="modal-body">
                         <input type="hidden" name="id" id="id">
-                   <table class="table table-bordered data_table" id="seller_order">
+                   <table class="table table-bordered " id="seller_order">
                        <thead>
                           <tr>
                               <th>Name</th>
@@ -18,7 +18,9 @@
                               <th>Price</th>
                               <th>Stock</th>
                               <th>Order Qty</th>
+                              @if(Auth::user()->role == 2)
                               <th>Action</th>
+                                  @endif
                           </tr>
                        </thead>
 

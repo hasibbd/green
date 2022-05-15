@@ -31,12 +31,13 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered table-responsive-sm w-100 table-sm " id="seller-order-list">
+                                <table class="table table-sm small table-bordered table-responsive-sm w-100 table-sm " id="seller-order-list">
                                     <thead>
                                     <tr class="text-center">
                                         <th>No</th>
-                                        <th>User Name</th>
-                                      <th>Order Number</th>
+                                        <th>Vendor</th>
+                                        <th>Buyer</th>
+                                        <th>Order Number</th>
                                        {{-- <th>Payment Status</th>--}}
                                         <th>Total Amount</th>
                                         <th>Total Items</th>

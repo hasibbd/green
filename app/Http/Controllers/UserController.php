@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PointWallet;
 use App\Models\User;
 use App\Models\UserInformation;
+use App\Models\VendorLimit;
 use App\Notifications\NewUser;
 use App\Notifications\PasswordChanged;
 use App\Notifications\PasswordRecover;
@@ -63,7 +65,7 @@ class UserController extends Controller
     }
     public function findex(Request $request){
         if ($request->ajax()) {
-            $data = User::where('role', 0)->get();
+            $data = User::where('role', 0)->where('is_registered', false)->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -84,10 +86,13 @@ class UserController extends Controller
                     }
                     return $btn;
                 })
+                ->addColumn('point', function($row){
+                    return PointWallet::where('user_id',$row->id)->sum('point');
+                })
                 ->addColumn('photo', function($row){
                     return '<img style="width: 50px" src="storage/user/'.$row->photo.'">';
                 })
-                ->rawColumns(['action', 'status', 'photo'])
+                ->rawColumns(['action', 'status', 'photo','point'])
                 ->make(true);
         }
         return view('admin.pages.flying-user.index');
@@ -101,6 +106,7 @@ class UserController extends Controller
 
                     $btn = '<button class="btn btn-primary btn-sm" onclick="Status('.$row->id.')"><i class="fas fa-sync-alt"></i></button>
                             <button class="btn btn-warning btn-sm" onclick="Show('.$row->id.')"><i class="fas fa-pen-square"></i></button>
+                            <button class="btn btn-success btn-sm" onclick="AddLimit('.$row->id.')"><i class="fas fa-dollar-sign"></i></button>
                             <button class="btn btn-danger btn-sm" onclick="Delete('.$row->id.')"><i class="fas fa-trash"></i></button>';
 
                     return $btn;
@@ -114,6 +120,14 @@ class UserController extends Controller
 
                     }
                     return $btn;
+                })
+                ->addColumn('limit', function($row){
+                    $limit =VendorLimit::where('user_id', $row->id)->get();
+                    if ($limit){
+                        return $limit->sum('limit');
+                    }else{
+                        return 0;
+                    }
                 })
                 ->addColumn('type', function($row){
                     if ($row->is_mobile_store == 1){
@@ -128,7 +142,7 @@ class UserController extends Controller
                 ->addColumn('photo', function($row){
                     return '<img style="width: 50px" src="storage/user/'.$row->photo.'">';
                 })
-                ->rawColumns(['action', 'status', 'photo','type'])
+                ->rawColumns(['action', 'status', 'photo','type','limit'])
                 ->make(true);
         }
         $st_user = User::where('role', 1)->where('is_store_manager', 1)->where('is_store_manager', 1)->where('is_registered', 1)->get();
@@ -136,7 +150,7 @@ class UserController extends Controller
     }
     public function uindex(Request $request){
         if ($request->ajax()) {
-            $data = User::where('role', 3)->get();
+            $data = User::where('role', 0)->where('is_registered', true)->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -160,7 +174,10 @@ class UserController extends Controller
                 ->addColumn('photo', function($row){
                     return '<img style="width: 50px" src="storage/user/'.$row->photo.'">';
                 })
-                ->rawColumns(['action', 'status', 'photo'])
+                ->addColumn('point', function($row){
+                   return PointWallet::where('user_id',$row->id)->sum('point');
+                })
+                ->rawColumns(['action', 'status', 'photo', 'point'])
                 ->make(true);
         }
         return view('admin.pages.user.index');

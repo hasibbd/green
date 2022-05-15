@@ -82,11 +82,11 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="account-card"><h3 class="account-title">My Wallet</h3>
-                    <div class="my-wallet"><p>current Point</p>
+                    <div class="my-wallet"><p>Available Point</p>
                         <h3>{{$wallet->where('point','>', 0)->sum('point')}}</h3></div>
                     <div class="wallet-card-group">
                         <div class="wallet-card"><p>total Point</p>
-                            <h3>{{$wallet->sum('point')}}</h3></div>
+                            <h3>{{$wallet->where('point','>=', 0)->sum('point')}}</h3></div>
                         <div class="wallet-card"><p>total Withdraw</p>
                             <h3>{{$wallet->where('point','<', 0)->sum('point')}}</h3></div>
                     </div>

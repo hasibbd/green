@@ -14,16 +14,23 @@
         <li class="nav-item">
             <a href="{{url('vendor-product-list')}}"
                class="nav-link {{ Request::segment(1) == 'vendor-product-list'  ? 'active' : ''}}">
-                <i class="nav-icon far fa-circle text-info"></i>
+                <i class="fas fa-tags nav-icon"></i>
                 <p>Product List</p>
             </a>
         </li>
 
         <li class="nav-item">
             <a href="{{url('seller-order-list')}}"
-               class="nav-link {{ request()->is() == 'seller-order-list'  ? 'active' : ''}}">
-                <i class="nav-icon far fa-circle text-info"></i>
+               class="nav-link {{  Request::segment(1) == 'seller-order-list'  ? 'active' : ''}}">
+                <i class="fas fa-baby-carriage nav-icon"></i>
                 <p>Order List</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url('limit-list')}}"
+               class="nav-link {{  Request::segment(1) == 'limit-list'  ? 'active' : ''}}">
+                <i class="fas fa-dollar-sign nav-icon"></i>
+                <p>Sales Limit</p>
             </a>
         </li>
 

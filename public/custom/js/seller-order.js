@@ -222,6 +222,13 @@ function LoadDetails(data) {
                 btn = '<button class="btn btn-sm btn-success mr-2">Wait for Confirmation</button>'
             }
         }
+        if (element.vendor_details.stock_details.reduce((accumulator, object) => {
+            return accumulator + object.qty;
+        }, 0) >= element.qty){
+
+        }else{
+            btn = ''
+        }
         $('#seller_order tbody').append('<tr>' +
             '<td>'+element.vendor_details.product_details.name+'</td>' +
             '<td>'+element.vendor_details.product_details.brand.title+'</td>' +

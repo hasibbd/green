@@ -83,7 +83,7 @@
             <div class="col-lg-6">
                 <div class="account-card"><h3 class="account-title">My Wallet</h3>
                     <div class="my-wallet"><p>Available Point</p>
-                        <h3>{{$wallet->where('point','>', 0)->sum('point')}}</h3></div>
+                        <h3>{{$wallet->where('point','>=', 0)->sum('point') + $wallet->where('point','<=', 0)->sum('point')}}</h3></div>
                     <div class="wallet-card-group">
                         <div class="wallet-card"><p>total Point</p>
                             <h3>{{$wallet->where('point','>=', 0)->sum('point')}}</h3></div>
@@ -101,6 +101,9 @@
                         @if(!$is_store_manager)
                         <button data-bs-toggle="modal" data-bs-target="#apply_for_store_manager" style="margin-bottom: 5px" class="form-btn " type="button">Apply for store manager</button>
                         @endif
+                    @endif
+                    @if(Auth::user()->is_registered)
+                        <a href="{{url('user-generation/1/1')}}" style="margin-bottom: 5px; color: white !important;" class="form-btn" type="submit">Generations</a>
                     @endif
                         <a href="{{url('user-dashboard')}}" style="margin-bottom: 5px; color: white !important;" class="form-btn" type="submit">Go To Dashboard</a>
                     <a href="{{url('order-show')}}" style="margin-bottom: 5px; color: white !important;" class="form-btn" type="submit">Order Details</a>

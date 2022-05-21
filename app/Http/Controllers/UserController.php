@@ -28,6 +28,13 @@ class UserController extends Controller
                 'data' => []
             ],404);
         }
+        $user_check = UserInformation::where('user_id',Auth::user()->id)->first();
+        if ($user_check){
+            return response()->json([
+                'message' => 'Already applied, we will review your request',
+                'data' => []
+            ],404);
+        }
      $st =  UserInformation::create([
               "user_id" => Auth::user()->id,
               "b_date" => $request->b_date,
@@ -45,7 +52,6 @@ class UserController extends Controller
               "n_b_date" =>  $request->n_b_date,
               "relation" =>  $request->relation,
               "n_nid" =>  $request->n_nid,
-              "r_name" =>  $request->r_name,
               "r_code" =>  $request->r_code,
               "a_name" =>  $request->a_name,
               "b_name" =>  $request->b_name,
@@ -65,7 +71,7 @@ class UserController extends Controller
     }
     public function findex(Request $request){
         if ($request->ajax()) {
-            $data = User::where('role', 0)->where('is_registered', false)->get();
+            $data = User::where('role', 0)->where('is_registered', false)->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -99,7 +105,7 @@ class UserController extends Controller
     }
     public function sindex(Request $request){
         if ($request->ajax()) {
-            $data = User::where('role', 2)->get();
+            $data = User::where('role', 2)->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -150,7 +156,7 @@ class UserController extends Controller
     }
     public function uindex(Request $request){
         if ($request->ajax()) {
-            $data = User::where('role', 0)->where('is_registered', true)->get();
+            $data = User::where('role', 0)->where('is_registered', true)->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -184,7 +190,7 @@ class UserController extends Controller
     }
     public function aindex(Request $request){
         if ($request->ajax()) {
-            $data = User::where('role', 1)->get();
+            $data = User::where('role', 1)->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

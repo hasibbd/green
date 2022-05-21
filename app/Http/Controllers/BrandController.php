@@ -19,7 +19,7 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Brand::all();
+            $data = Brand::latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

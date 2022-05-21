@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\OrderDetail;
 use App\Models\OrderMain;
 use App\Models\PointWallet;
+use App\Models\Setting;
 use App\Models\Stock;
 use App\Models\User;
 use App\Models\VendorLimit;
@@ -31,7 +32,7 @@ class VendorOrderListController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
 
-                    $btn = '<button  onclick="Details('.$row->id.')" class="btn btn-sm btn-success">View</button>';
+                    $btn = '<button data-order="'.$row.'"  onclick="Details('.$row->id.')" class="btn btn-sm btn-success">View</button>';
 
                     return $btn;
                 })
@@ -94,8 +95,10 @@ class VendorOrderListController extends Controller
     }
     public function ProductDeliver($id){
         $target = OrderDetail::find($id);
+        $point_rate = Setting::find(2)->point_rate;
         $check_limit = VendorLimit::where('user_id', Auth::user()->id)->sum('limit');
-        if ($check_limit <= 0){
+        $limit = $target->point/$point_rate;
+        if ($check_limit < $limit){
             return response()->json([
                 'message' => 'Sales limit exceeded ',
                 'data' => $check_limit
@@ -111,7 +114,7 @@ class VendorOrderListController extends Controller
        ]);
        VendorLimit::create([
             'user_id' => Auth::user()->id,
-            'limit' => -$target->price,
+            'limit' => -$limit,
             'created_by' => Auth::user()->id,
         ]);
         $info = OrderDetail::with('vendor_details.product_details','vendor_details.product_details.brand','vendor_details.stock_details')->where('order_main_id', $target->order_main_id)->get();
@@ -119,6 +122,42 @@ class VendorOrderListController extends Controller
         return response()->json([
             'message' => 'Product Delivered',
             'data' => $info
+        ],200);
+    }
+    public function ProductDeliverAll($id){
+        $target = OrderDetail::where('order_main_id', $id)->where('status', 0)->get();
+        $point_rate = Setting::find(2)->point_rate;
+        $msg = "Product Delivered";
+        $icon = "success";
+        foreach ($target as $t){
+            $check_limit = VendorLimit::where('user_id', Auth::user()->id)->sum('limit');
+            $limit = $t->point/$point_rate;
+            if ($check_limit < $limit){
+                $msg = "Sales limit exceeded";
+                $icon = "error";
+                break;
+            }
+            OrderDetail::find($t->id)->update([
+                'status' => 1
+            ]);
+            Stock::create([
+                'vendor_product' => $t->vendor_product,
+                'created_by' => Auth::user()->id,
+                'qty' => -$t->qty
+            ]);
+            VendorLimit::create([
+                'user_id' => Auth::user()->id,
+                'limit' => -$limit,
+                'created_by' => Auth::user()->id,
+            ]);
+        }
+
+        $info = OrderDetail::with('vendor_details.product_details','vendor_details.product_details.brand','vendor_details.stock_details')->where('order_main_id', $id)->get();
+
+        return response()->json([
+            'message' => $msg,
+            'data' => $info,
+            'icon' => $icon
         ],200);
     }
     public function ProductCancel($id){
@@ -160,6 +199,54 @@ class VendorOrderListController extends Controller
         }
         return response()->json([
             'message' => 'Product Status Accepted',
+        ],200);
+    }
+    public function ProductAcceptAll($id){
+        $target = OrderDetail::where('order_main_id', $id)->where('status', 1)->get();
+        foreach ($target as $t){
+            OrderDetail::where('id', $t->id)->update([
+                'status' =>  2
+            ]);
+            PointWallet::create([
+                'user_id' => Auth::user()->id,
+                'point' => $t->point * $t->qty,
+                'generate_from' => 'Product Purchase',
+                'data' => 'Order ID: '.$t->id
+            ]);
+        }
+        $t_check = OrderDetail::where('order_main_id', $id)->get();
+        if (($t_check->where('status', 2)->count() + $t_check->where('status', -2)->count()) == $t_check->count()){
+            OrderMain::where('id', $id)->update([
+                'status' => 1
+            ]);
+        }
+        return response()->json([
+            'message' => 'Product Status Accepted',
+            'icon' => 'success',
+        ],200);
+    }
+    public function ProductAcceptAllCan($id){
+        $target = OrderDetail::where('order_main_id', $id)->where('status', -1)->get();
+        foreach ($target as $t){
+            OrderDetail::where('id', $t->id)->update([
+                'status' =>  -2
+            ]);
+            PointWallet::create([
+                'user_id' => Auth::user()->id,
+                'point' => $t->point * $t->qty,
+                'generate_from' => 'Product Purchase',
+                'data' => 'Order ID: '.$t->id
+            ]);
+        }
+        $t_check = OrderDetail::where('order_main_id', $id)->get();
+        if (($t_check->where('status', 2)->count() + $t_check->where('status', -2)->count()) == $t_check->count()){
+            OrderMain::where('id', $id)->update([
+                'status' => 1
+            ]);
+        }
+        return response()->json([
+            'message' => 'Product Status Accepted',
+            'icon' => 'success',
         ],200);
     }
 }

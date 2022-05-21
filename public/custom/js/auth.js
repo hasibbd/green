@@ -62,7 +62,7 @@ $(document).ready(function () {
                        });
                    },
                    error: function (data) {
-                       toastr.error('Please check the referral user id')
+                       toastr.error(data.responseJSON.message)
                    }
                });
            }else{

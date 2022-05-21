@@ -10,29 +10,36 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function checkRef(Request $request){
+        if ($request->user_id == null){
+            return response()->json([
+                'message' => 'Please add referral user id',
+                'data' => []
+            ],404);
+        }
         $check = User::where('user_id', $request->user_id)->get();
         if (count($check) > 0){
-            if ($check->is_store_manager == 1){
-                if ($check->is_registered){
+            if ($check[0]->is_store_manager == 1){
+                if ($check[0]->is_registered){
                     return response()->json([
-                        'message' => 'User Found',
+                        'message' => 'Referral user is found',
                         'data' => $check
                     ],200);
                 }else{
                     return response()->json([
-                        'message' => 'User is not a registered user',
+                        'message' => 'Referral user is not a registered user',
                         'data' => $check
                     ],404);
                 }
             }else{
                 return response()->json([
-                    'message' => 'User is not a store manager',
+                    'message' => 'Referral user is not a store manager',
                     'data' => $check
                 ],404);
             }
         }else{
             return response()->json([
-                'message' => 'Not Found'
+                'message' => 'Not Found',
+                 'data' => []
             ],404);
         }
     }

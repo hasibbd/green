@@ -20,7 +20,7 @@ class UserAppController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = UserInformation::with('user')->get();
+            $data = UserInformation::with('user')->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

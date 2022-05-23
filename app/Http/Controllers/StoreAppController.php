@@ -18,7 +18,7 @@ class StoreAppController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = StoreManagerApplication::with('user')->get();
+            $data = StoreManagerApplication::with('user')->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -67,7 +67,7 @@ class StoreAppController extends Controller
     public function store(Request $request)
     {
         $tar = User::find(Auth::user()->id);
-        if ($request->check_yes != 'Yes'){
+        if (strtolower($request->check_yes) != 'yes'){
             return response()->json([
                 'message' => 'Please type "Yes" in the input filed',
             ],404);

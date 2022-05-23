@@ -270,3 +270,75 @@ function Accept(id) {
             }
         });
 }
+function AcceptAll(id) {
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                let  my_url = base + "/product-accept-all/" + id;
+                $.ajax({
+                    type: 'get',
+                    url: my_url,
+                    success: (data) => {
+                        swal(data.message, {
+                            icon: data.icon,
+                        });
+                        location.reload()
+                    },
+                    error: function (data) {
+                        toastr.error(data.responseJSON.message)
+
+                    }
+                });
+
+            } else {
+                swal("Your imaginary file is safe!");
+            }
+        });
+}
+function AcceptAllCan(id) {
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                let  my_url = base + "/product-accept-all-can/" + id;
+                $.ajax({
+                    type: 'get',
+                    url: my_url,
+                    success: (data) => {
+                        swal(data.message, {
+                            icon: data.icon,
+                        });
+                        location.reload()
+                    },
+                    error: function (data) {
+                        toastr.error(data.responseJSON.message)
+
+                    }
+                });
+
+            } else {
+                swal("Your imaginary file is safe!");
+            }
+        });
+}

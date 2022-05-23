@@ -9,25 +9,35 @@
                 </button>
             </div>
                 <div class="modal-body">
-                        <input type="hidden" name="id" id="id">
-                   <table class="table table-bordered " id="seller_order">
-                       <thead>
-                          <tr>
-                              <th>Name</th>
-                              <th>Brand</th>
-                              <th>Price</th>
-                              <th>Stock</th>
-                              <th>Order Qty</th>
-                              @if(Auth::user()->role == 2)
-                              <th>Action</th>
-                                  @endif
-                          </tr>
-                       </thead>
+                       <div class="card">
+                           <div class="card-header text-right">
+                               @if(Auth::user()->role == 2)
+                                   <input type="hidden" name="order_no" id="o_no">
+                                   <button class="btn btn-sm btn-primary" onclick="DeliverAll()">Deliver All</button>
+                               @endif
+                           </div>
+                           <div class="card-body">
+                               <input type="hidden" name="id" id="id">
+                               <table class="table table-bordered " id="seller_order">
+                                   <thead>
+                                   <tr>
+                                       <th>Name</th>
+                                       <th>Brand</th>
+                                       <th>Price</th>
+                                       <th>Stock</th>
+                                       <th>Order Qty</th>
+                                       @if(Auth::user()->role == 2)
+                                           <th>Action</th>
+                                       @endif
+                                   </tr>
+                                   </thead>
 
-                       <tbody>
+                                   <tbody>
 
-                       </tbody>
-                   </table>
+                                   </tbody>
+                               </table>
+                           </div>
+                       </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

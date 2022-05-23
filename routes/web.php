@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\Front\GenerationController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\LimitController;
@@ -122,7 +123,10 @@ Route::middleware(['user'])->group(function () {
     Route::post('user-reg-create', [UserController::class, 'RegStore']);
     Route::post('store-application-store', [StoreAppController::class, 'store']);
     Route::get('product-accept/{id}', [VendorOrderListController::class, 'ProductAccept']);
+    Route::get('product-accept-all/{id}', [VendorOrderListController::class, 'ProductAcceptAll']);
+    Route::get('product-accept-all-can/{id}', [VendorOrderListController::class, 'ProductAcceptAllCan']);
     Route::get('check-code/{code}', [UserController::class, 'CodeCheck']);
+    Route::get('user-generation/{gen}/{user}', [GenerationController::class, 'index']);
 });
 
 Route::get('login', [AuthController::class, 'login'])->name('/');
@@ -189,6 +193,7 @@ Route::middleware(['vendor'])->group(function () {
     Route::get('seller-order-list', [VendorOrderListController::class, 'showSellerOrderList'])->name('seller-order-list.index');
     Route::get('seller-order-list-details/{id}', [VendorOrderListController::class, 'showSellerOrderDetailsList']);
     Route::get('product-deliver/{id}', [VendorOrderListController::class, 'ProductDeliver']);
+    Route::get('product-deliver-all/{id}', [VendorOrderListController::class, 'ProductDeliverAll']);
     Route::get('product-cancel/{id}', [VendorOrderListController::class, 'ProductCancel']);
 
     Route::get('limit-list', [LimitController::class, 'index'])->name('limit-list.index');

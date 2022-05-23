@@ -18,7 +18,7 @@ class LimitController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = VendorLimit::where('user_id', Auth::user()->id)->get();
+            $data = VendorLimit::where('user_id', Auth::user()->id)->latest()->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('user', function($row){

@@ -96,6 +96,10 @@
                                 </ul>
                             </div>
                             <div class="col-lg-12"  >
+                                <div>
+                                        <button style="padding: 0px !important;" class="btn btn-sm btn-success" onclick="AcceptAll({{$o->id}})">Accept All Delivery</button>
+                                        <button style="padding: 0px !important;" class="btn btn-sm btn-success" onclick="AcceptAllCan({{$o->id}})">Accept All Cancellation</button>
+                                </div>
                                 <div class="table-scroll">
                                     <table class="table-list" id="AllATble">
                                         <thead>

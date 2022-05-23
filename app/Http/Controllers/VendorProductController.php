@@ -26,8 +26,15 @@ class VendorProductController extends Controller
             $data->where('category', $request->category);
         }
         $info = $data->get();
+        $my_product = [];
+        foreach ($info as $i){
+            $my = VendorProduct::where('created_by', auth()->user()->id)->where('product', $i->id)->first();
+            if (!$my){
+                array_push($my_product, $i);
+            }
+        }
         return response()->json([
-            'data' => $info
+            'data' => $my_product
         ], 200);
     }
     public function show($id){

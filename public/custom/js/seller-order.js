@@ -115,6 +115,7 @@ function Details(id) {
         type: 'get',
         url: my_url,
         success: (data) => {
+            $('#o_no').val(data.data[0].order_main_id)
             LoadDetails(data.data)
             $('#add_modal').modal('show');
         },
@@ -137,6 +138,43 @@ function previewFile(input){
 
         reader.readAsDataURL(file);
     }
+}
+function DeliverAll() {
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                const id = $('#o_no').val();
+                let  my_url = base + "/product-deliver-all/" + id;
+                $.ajax({
+                    type: 'get',
+                    url: my_url,
+                    success: (data) => {
+                        LoadDetails(data.data)
+                        swal(data.message, {
+                            icon: data.icon,
+                        });
+                    },
+                    error: function (data) {
+                        toastr.error(data.responseJSON.message)
+
+                    }
+                });
+
+            } else {
+                swal("Your imaginary file is safe!");
+            }
+        });
 }
 function Deliver(id) {
     swal({

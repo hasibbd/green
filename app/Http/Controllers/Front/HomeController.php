@@ -11,8 +11,10 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\StoreManagerApplication;
+use App\Models\User;
 use App\Models\UserInformation;
 use App\Models\VendorProduct;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,47 +26,66 @@ class HomeController extends Controller
     public function userCreate(){
         $request = [];
         $users = [];
-        $name = 'Green';
-        for ($i = 1; $i <= 100; $i++){
-            $users[] = [
-                'name' => $name.$i,
-                "user_id" => 1000000,
-                'user_name' =>substr(str_replace(' ', '', strtolower($name.$i)), 0, 5),
-                'photo' => 'default.png',
-                'email' => strtolower($name.$i.'@email.com'),
-                'phone' => '01737724850',
-                'role' => 0,
-                'reffer_by' => null,
-                'password' => Hash::make(20220515)
-            ];
+        $name = 'ShoppingBook';
+        for ($i = 1; $i <= 2; $i++){
+            $ref_id = '00000001';
+            $user_id = sprintf("%08d", $i);
+            if ((int)$user_id > 0){
+                $st = User::create([
+                    'name' => $name.' ltd. '.$i,
+                    "user_id" => $user_id,
+                    'user_name' =>substr(str_replace(' ', '', strtolower($name.$i)), 0, 12).$i,
+                    'photo' => 'default.png',
+                    'email' => strtolower($name.$i.'@email.com'),
+                    'phone' => '011900000'. sprintf("%03d", $i),
+                    'role' => 0,
+                    'reffer_by' => $ref_id,
+                    'is_registered' => 1,
+                    'password' => Hash::make(20220505)
+                ]);
 
-            $st =  UserInformation::create([
-                "user_id" => Auth::user()->id,
-                "b_date" => $request->b_date,
-                "f_name" =>  $request->f_name,
-                "m_name" =>  $request->m_name,
-                "gender" =>  $request->gender,
-                "l_license" =>  $request->l_license,
-                "l_date" =>  $request->l_date,
-                "district" =>  $request->district,
-                "p_station" =>  $request->p_station,
-                "p_code" =>  $request->p_code,
-                "occupation" =>  $request->occupation,
-                "qualification" =>  $request->qualification,
-                "n_name" =>  $request->n_name,
-                "n_b_date" =>  $request->n_b_date,
-                "relation" =>  $request->relation,
-                "n_nid" =>  $request->n_nid,
-                "r_name" =>  $request->r_name,
-                "r_code" =>  $request->r_code,
-                "a_name" =>  $request->a_name,
-                "b_name" =>  $request->b_name,
-                "branch" =>  $request->branch,
-                "acc" =>  $request->acc,
-                "created_by" => Auth::user()->id
-            ]);
+                UserInformation::create([
+                    "user_id" => $st->id,
+                    "b_date" => Carbon::create('01/02/1984'),
+                    "f_name" => 'Father Name',
+                    "m_name" =>  'Mother Name',
+                    "gender" =>  1,
+                    "l_license" =>  'Trad/Dscc/028841/202',
+                    "l_date" =>  Carbon::create('08/03/2022'),
+                    "district" =>  'Dhaka',
+                    "p_station" => 'Paltan',
+                    "p_code" =>  '1000',
+                    "occupation" =>  'Business',
+                    "qualification" =>  'Business Qualification',
+                    "n_name" =>  'MD. Shariful Islam + MD. Razib Hossain',
+                    "n_b_date" =>  Carbon::create('01/02/1984'),
+                    "relation" =>  'Business partner',
+                    "n_nid" =>  '2692619470923',
+                    "r_name" =>  $name.' ltd. 1',
+                    "r_code" =>  $ref_id,
+                    "a_name" =>  'Bank',
+                    "b_name" =>  'City Bank',
+                    "branch" =>  'Malibag',
+                    "acc" =>  '0000000000',
+                    'status'=> true,
+                    "created_by" => 1
+                ]);
+                PointWallet::create([
+                    "user_id" => $st->id,
+                    "point" => 100,
+                    "generate_from" => 'Admin Point'
+                ]);
+                PointWallet::create([
+                    "user_id" => $st->id,
+                    "point" => -100,
+                    "generate_from" => 'Application Fee'
+                    ]);
+                User::where('id', $st->id)->update([
+                    'is_registered' => true,
+                    'user_id' => $user_id
+                ]);
+            }
         }
-     dd($users);
     }
     /**
      * Display a listing of the resource.
@@ -83,11 +104,20 @@ class HomeController extends Controller
     {
         if ($request->ajax()) {
             $search = $request->param;
-            $data = VendorProduct::with('product_details','product_details.brand_details','product_details.category_details')
-                ->whereHas('product_details', function($q) use($search){
-                $q->where('category', '=', $search);
-            })->get()->unique('product');
-            return Datatables::of($data)
+            $data = VendorProduct::with('stock_details','product_details','product_details.brand_details','product_details.category_details')
+                   ->whereHas('product_details', function($q) use($search){
+                    $q->where('category', '=', $search);
+                 })
+                ->get()
+                ->unique('product');
+            $info = [];
+            foreach ($data as $d){
+               if ($d->stock_details->sum('qty') > 0){
+                   $d->stock = $d->stock_details->sum('qty');
+                     array_push($info,$d);
+                }
+            }
+            return Datatables::of($info)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $t = VendorProduct::with('vendor')->where('product', $row->product)->orderBy('point', 'desc')->first();
@@ -129,9 +159,16 @@ class HomeController extends Controller
     {
         if ($request->ajax()) {
             $search = $request->param;
-            $data = VendorProduct::with('vendor','product_details','product_details.brand_details','product_details.category_details')
+            $data = VendorProduct::with('stock_details','vendor','product_details','product_details.brand_details','product_details.category_details')
                 ->where('product', $search)->get();
-            return Datatables::of($data)
+            $info = [];
+            foreach ($data as $d){
+                if ($d->stock_details->sum('qty') > 0){
+                    $d->stock = $d->stock_details->sum('qty');
+                    array_push($info,$d);
+                }
+            }
+            return Datatables::of($info)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
 

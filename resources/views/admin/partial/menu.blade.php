@@ -178,9 +178,11 @@
 
         <li class="nav-item
         {{ Request::segment(1) == 'setting'  ? 'menu-open' : ''}}
+        {{ Request::segment(1) == 'generation-setting'  ? 'menu-open' : ''}}
             ">
             <a href="#" class="nav-link
             {{ Request::segment(1) == 'setting'  ? 'active' : ''}}
+            {{ Request::segment(1) == 'generation-setting'  ? 'active' : ''}}
                 ">
                 <i class="nav-icon fas fa-tools"></i>
                 <p>
@@ -193,6 +195,12 @@
                     <a href="{{url('setting')}}" class="nav-link {{ Request::segment(1) == 'setting'  ? 'active' : ''}}">
                         <i class="nav-icon fab fa-buffer"></i>
                         <p>Point Setting</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('generation-setting')}}" class="nav-link {{ Request::segment(1) == 'generation-setting'  ? 'active' : ''}}">
+                        <i class="nav-icon fab fa-buffer"></i>
+                        <p>Generation Setting</p>
                     </a>
                 </li>
             </ul>

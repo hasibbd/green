@@ -18,7 +18,7 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Setting::where('id','!=', 1)->get();
+            $data = Setting::all();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

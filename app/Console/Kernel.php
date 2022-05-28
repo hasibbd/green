@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\DistributionCron::class,
-        'App\Console\Commands\DistributionCron'
+        Commands\PointConversationCron::class,
+       // 'App\Console\Commands\DistributionCron'
     ];
 
     /**
@@ -26,7 +27,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('distribution:cron')
-            ->everyMinute();
+            ->dailyAt('06:30');
+        $schedule->command('conversation:cron')
+            ->dailyAt('06:00');
     }
 
     /**

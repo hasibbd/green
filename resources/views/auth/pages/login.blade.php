@@ -43,7 +43,7 @@
                         <form class="user-form" action="{{url('login-check')}}" method="post">
                             @csrf
                             <div class="form-group">
-                                <input type="email" name="email" class="form-control"
+                                <input type="text" name="email" class="form-control"
                                        placeholder="Enter your email">
                             </div>
 

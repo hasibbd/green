@@ -7,8 +7,10 @@ use App\Models\OrderMain;
 use App\Models\PointWallet;
 use App\Models\Setting;
 use App\Models\Stock;
+use App\Models\StoreManagerWallat;
 use App\Models\User;
 use App\Models\VendorLimit;
+use App\Models\VendorProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -95,9 +97,10 @@ class VendorOrderListController extends Controller
     }
     public function ProductDeliver($id){
         $target = OrderDetail::find($id);
-        $point_rate = Setting::find(2)->point_rate;
         $check_limit = VendorLimit::where('user_id', Auth::user()->id)->sum('limit');
-        $limit = $target->point/$point_rate;
+        $check_products = VendorProduct::find($target->vendor_product);
+        $profit = $check_products->sell_price - $check_products->vendor_price;
+        $limit = $profit * $target->qty;
         if ($check_limit < $limit){
             return response()->json([
                 'message' => 'Sales limit exceeded ',
@@ -126,12 +129,13 @@ class VendorOrderListController extends Controller
     }
     public function ProductDeliverAll($id){
         $target = OrderDetail::where('order_main_id', $id)->where('status', 0)->get();
-        $point_rate = Setting::find(2)->point_rate;
         $msg = "Product Delivered";
         $icon = "success";
         foreach ($target as $t){
             $check_limit = VendorLimit::where('user_id', Auth::user()->id)->sum('limit');
-            $limit = $t->point/$point_rate;
+            $check_products = VendorProduct::find($target->vendor_product);
+            $profit = $check_products->sell_price - $check_products->vendor_price;
+            $limit = $profit * $target->qty;
             if ($check_limit < $limit){
                 $msg = "Sales limit exceeded";
                 $icon = "error";
@@ -185,6 +189,7 @@ class VendorOrderListController extends Controller
                'generate_from' => 'Product Purchase',
                'data' => 'Order ID: '. $id
             ]);
+            $this->StoreManagerPoint($target);
         }
         if ($target->status == -1){
             OrderDetail::where('id', $id)->update([
@@ -201,6 +206,19 @@ class VendorOrderListController extends Controller
             'message' => 'Product Status Accepted',
         ],200);
     }
+    public function StoreManagerPoint($target){
+        $rate = Setting::find(1)->point_rate;
+        $check_products = VendorProduct::find($target->vendor_product);
+        $profit = $check_products->sell_price - $check_products->vendor_price;
+        $balance = (($profit*$rate)/100)*$target->qty;
+        StoreManagerWallat::create([
+            'vendor_id' => $target->vendor_id,
+            'order_id' => $target->order_main_id,
+            'balance' => $balance, //Balance need check
+            'created_by' => $target->vendor_id,
+            'target_id' => User::find($target->vendor_id)->reffer_by,
+        ]);
+    }
     public function ProductAcceptAll($id){
         $target = OrderDetail::where('order_main_id', $id)->where('status', 1)->get();
         foreach ($target as $t){
@@ -213,6 +231,7 @@ class VendorOrderListController extends Controller
                 'generate_from' => 'Product Purchase',
                 'data' => 'Order ID: '.$t->id
             ]);
+            $this->StoreManagerPoint($t);
         }
         $t_check = OrderDetail::where('order_main_id', $id)->get();
         if (($t_check->where('status', 2)->count() + $t_check->where('status', -2)->count()) == $t_check->count()){

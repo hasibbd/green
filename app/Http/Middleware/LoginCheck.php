@@ -20,8 +20,17 @@ class LoginCheck
     public function handle(Request $request, Closure $next)
     {
         $target = User::where('email',$request->email)->first();
-        $credentials = $request->only('email', 'password');
         if ($target){
+            $credentials = $request->only('email', 'password');
+        }else{
+            $target2 = User::where('phone',$request->email)->first();
+            if ($target2){
+                $request['email'] = $target2->email;
+                $credentials = $request->only('email', 'password');
+                $target = $target2;
+            }
+        }
+        if ($target || $target2){
             if (Auth::attempt($credentials)){
                 if ($target->status == CONST_STATUS_ENABLED){
                     switch ($target->role){

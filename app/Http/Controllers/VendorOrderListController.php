@@ -128,14 +128,15 @@ class VendorOrderListController extends Controller
         ],200);
     }
     public function ProductDeliverAll($id){
+
         $target = OrderDetail::where('order_main_id', $id)->where('status', 0)->get();
         $msg = "Product Delivered";
         $icon = "success";
         foreach ($target as $t){
             $check_limit = VendorLimit::where('user_id', Auth::user()->id)->sum('limit');
-            $check_products = VendorProduct::find($target->vendor_product);
+            $check_products = VendorProduct::find($t->vendor_product);
             $profit = $check_products->sell_price - $check_products->vendor_price;
-            $limit = $profit * $target->qty;
+            $limit = $profit * $t->qty;
             if ($check_limit < $limit){
                 $msg = "Sales limit exceeded";
                 $icon = "error";

@@ -146,15 +146,15 @@
                                     <input type="text"  class="form-control" placeholder="Enter full name" id="r_name" name="r_name" required>
                                 </div>--}}
                                 <div class="form-group">
-                                    <label for="">Reference (Corporate) ID</label>
-                                    <input type="text" class="form-control" placeholder="Enter Reference (Corporate) ID" onkeyup="CheckUser()" id="r_code" name="r_code" required>
+                                    <label for="">Reference (Generation) ID</label>
+                                    <input type="text" class="form-control" placeholder="Enter Reference (Generation) ID" onkeyup="CheckUser()" value="{{$reffer_id}}" id="r_code" name="r_code" required>
                                 </div>
                             </div>
                             <div class="user-form-divider">{{--<p>or</p>--}}</div>
                             <div class="user-form-social">
                               <div class="form-group">
                                     <label for="">Full Name</label>
-                                    <input type="text"  class="form-control" placeholder="Enter full name" id="r_name" name="r_name" required disabled>
+                                    <input type="text"  class="form-control" placeholder="Enter full name" id="r_name" name="r_name" value="{{$reffer_name}}" required disabled>
                                 </div>
                                {{-- <div class="form-group">
                                     <label for="">NID/Birthday Certificate No.</label>

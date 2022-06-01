@@ -42,9 +42,9 @@
                             <div class="form-group">
                                 <input type="number" class="form-control" placeholder="Enter your phone number" id="phone" name="phone" required>
                             </div>
-                      {{--      <div class="form-group">
+                            <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Enter your NID no">
-                            </div>--}}
+                            </div>
                         </div>
                         <div class="user-form-divider">{{--<p>or</p>--}}</div>
                         <div class="user-form-social">
@@ -56,13 +56,17 @@
                                                            placeholder="Enter your password" required></div>
                             <div class="form-group"><input type="password" class="form-control" id="c_password" name="c_password"
                                                            placeholder="Enter repeat password" required></div>
+                            <div class="form-group" >
+                                <input type="text" class="form-control" id="ref_user" name="ref_user" placeholder="Enter the HPA referral user ID">
+                            </div>
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="checkbox" value="1"
                                        id="type" name="type">
                                 <label class="form-check-label" for="type" >Register as a Store</label></div>
-                            <div class="form-group d-none" id="ref">
+                            {{--<div class="form-group d-none" id="ref">
                                 <input type="text" class="form-control" id="ref_user" name="ref_user" placeholder="Enter the referral user ID">
-                            </div>
+                            </div>--}}
+
                             <div class="form-check mb-3"><input class="form-check-input" type="checkbox" value=""
                                                                 id="check"><label class="form-check-label" for="check" required>Accept
                                     all the <a href="#">Terms & Conditions</a></label></div>

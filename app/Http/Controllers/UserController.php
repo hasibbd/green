@@ -265,10 +265,10 @@ class UserController extends Controller
         }
         if ($request->type){
             $role = 2;
-            $ref = $request->ref_user;
+            $ref = $check->id;
         }else{
             $role = 0;
-            $ref = null;
+            $ref = $check->id;
         }
         if($request->hasfile('photo')) {
             $file = $request->file('photo');
@@ -619,7 +619,15 @@ class UserController extends Controller
 
     }
     public function userRegistration(){
-        return view('frontend.pages.profile.registration');
+         $reffer = User::find(Auth::user()->reffer_by);
+         if ($reffer){
+              $reffer_name = $reffer->name;
+              $reffer_id = $reffer->id;
+         }else{
+             $reffer_name = null;
+             $reffer_id = null;
+         }
+        return view('frontend.pages.profile.registration',compact('reffer_id','reffer_name'));
     }
     public function CodeCheck($code){
         $check = User::where('user_id',$code)->first();

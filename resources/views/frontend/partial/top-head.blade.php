@@ -1,10 +1,10 @@
 <div class="header-top">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 col-lg-5">
+            <div class="col-md-8">
                 <div class="header-top-welcome"><p>Welcome to ShoppingBook!</p></div>
             </div>
-            <div class="col-md-5 col-lg-3">
+       {{--     <div class="col-md-5 col-lg-3">
                 <div class="header-top-select">
                     <div class="header-select"><i class="icofont-world"></i><select class="select">
                             <option value="english" selected="">english</option>
@@ -17,12 +17,14 @@
                             <option value="arabic">taka</option>
                         </select></div>
                 </div>
-            </div>
-            <div class="col-md-7 col-lg-4">
+            </div>--}}
+            <div class="col-md-4">
                 <ul class="header-top-list">
-                    <li><a href="offer.html">offers</a></li>
-                    <li><a href="faq.html">need help</a></li>
-                    <li><a href="contact.html">contact us</a></li>
+                    @if(!Auth::user())
+                    <li><a href="{{url('registration')}}">Registration</a></li>
+                    @else
+                    <li><a href="{{url('logout')}}">Logout</a></li>
+                    @endif
                 </ul>
             </div>
         </div>

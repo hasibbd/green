@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyWallet;
 use App\Models\User;
 use App\Models\VendorLimit;
 use Illuminate\Http\Request;
@@ -62,6 +63,14 @@ class LimitController extends Controller
            'created_by' => Auth::user()->id,
        ]);
      if ($st){
+         CompanyWallet::create([
+             'user_id' => $request->id,
+             'balance' => $request->limit,
+             'from' => 1,
+             'created_by' => Auth::user()->id,
+             'target_id' => $request->id,
+             'status' => 1,
+         ]);
          return response()->json([
              'message' => 'Limit updated',
              'data' => $st

@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\DistributionCron::class,
+        Commands\PointConversationCron::class,
+       // 'App\Console\Commands\DistributionCron'
     ];
 
     /**
@@ -24,7 +26,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('distribution:cron')
+            ->dailyAt('06:30');
+        $schedule->command('conversation:cron')
+            ->dailyAt('06:00');
     }
 
     /**

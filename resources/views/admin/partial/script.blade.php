@@ -71,6 +71,8 @@
     <script src="{{asset('custom/js/seller-order.js')}}"></script> @break
     @case('limit-list')
     <script src="{{asset('custom/js/limit-list.js')}}"></script> @break
+    @case('generation-setting')
+    <script src="{{asset('custom/js/generation-setting.js')}}"></script> @break
 @endswitch
 <script>
     $(function () {
@@ -476,6 +478,22 @@
                     {data: 'user', name: 'user'},
                     {data: 'limit', name: 'limit'},
                     {data: 'date', name: 'date'},
+                ]
+            });
+        });
+    </script> @break
+    @case('generation-setting')
+    <script>
+        $(function () {
+            $("#generation_setting").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('generation-setting.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'title', name: 'title'},
+                    {data: 'percentage', name: 'percentage'},
+                    {data: 'action', name: 'action'},
                 ]
             });
         });

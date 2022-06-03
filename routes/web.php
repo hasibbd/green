@@ -7,7 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
-use App\Http\Controllers\Front\GenerationController;
+use App\Http\Controllers\GenerationController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\InvoiceController;
 use App\Http\Controllers\LimitController;
@@ -107,6 +107,11 @@ Route::middleware(['admin'])->group(function () {
     Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
     Route::get('setting-show/{id}', [SettingController::class, 'edit']);
     Route::post('setting-store', [SettingController::class, 'store']);
+
+    //Generation Setting
+    Route::get('generation-setting', [GenerationController::class, 'index'])->name('generation-setting.index');
+    Route::get('generation-setting-show/{id}', [GenerationController::class, 'edit']);
+    Route::post('generation-setting-store', [GenerationController::class, 'store']);
 
     Route::post('add-limit', [LimitController::class, 'store']);
 });

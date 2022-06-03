@@ -21,5 +21,6 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
+            **/public/**
           local-dir: ./
           server-dir: /ecom.hellohasib.com/

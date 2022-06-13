@@ -23,7 +23,7 @@ class LimitController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('user', function($row){
-                    if ($row->created_by == 1){
+                    if ($row->created_by == CONST_ROLE_ADMIN){
                         return 'Point Purchased';
                     }else{
                         return 'Products Sell';
@@ -65,11 +65,11 @@ class LimitController extends Controller
      if ($st){
          CompanyWallet::create([
              'user_id' => $request->id,
-             'balance' => $request->limit,
-             'from' => 1,
+             'balance' => -$request->limit,
+             'remarks' => 'Store Limit',
              'created_by' => Auth::user()->id,
              'target_id' => $request->id,
-             'status' => 1,
+             'status' => CONST_DISTRIBUTE_PENDING,
          ]);
          return response()->json([
              'message' => 'Limit updated',

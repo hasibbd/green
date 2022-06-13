@@ -26,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'distribution_date'
     ];
 
     /**
@@ -46,4 +47,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function user_info()
+    {
+        return $this->hasOne(UserInformation::class, 'user_id','id');
+    }
+    public function order_details()
+    {
+        return $this->hasMany(OrderMain::class, 'created_by', 'id');
+    }
+    public function last_shop(){
+        return $this->hasOne(OrderMain::class, 'created_by', 'id')->latest();
+    }
 }

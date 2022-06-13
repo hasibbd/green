@@ -43,7 +43,7 @@
                                 <input type="number" class="form-control" placeholder="Enter your phone number" id="phone" name="phone" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Enter your NID no">
+                                <input type="text" class="form-control" placeholder="Enter your NID no (Optional)">
                             </div>
                         </div>
                         <div class="user-form-divider">{{--<p>or</p>--}}</div>
@@ -57,7 +57,7 @@
                             <div class="form-group"><input type="password" class="form-control" id="c_password" name="c_password"
                                                            placeholder="Enter repeat password" required></div>
                             <div class="form-group" >
-                                <input type="text" class="form-control" id="ref_user" name="ref_user" placeholder="Enter the HPA referral user ID">
+                                <input type="text" class="form-control" id="ref_user" name="ref_user" placeholder="Enter the HPA/Store Manager's user ID as referral">
                             </div>
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="checkbox" value="1"

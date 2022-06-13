@@ -17,12 +17,15 @@ class GenerationController extends Controller
     public function index($gen, $user)
     {
         if ($gen == 1){
-            $parent = User::find(Auth::user()->id);
+            $parent = User::with('user_info','last_shop')->find(Auth::user()->id);
         }else{
-            $parent = User::find($user);
+            $parent = User::with('user_info','last_shop')->find($user);
         }
         $gen++;
-        $child = User::where('reffer_by', $parent->user_id)->where('role', 0)->where('id','!=', $parent->id)->get();
+        $child = User::with('user_info','last_shop')->where('role', 0)
+            ->where('id','!=', $parent->id)
+            ->whereRelation('user_info','generatoion_reffer', $parent->user_id)
+            ->get();
         return view('frontend.pages.generation.index', compact('parent', 'child','gen'));
     }
 

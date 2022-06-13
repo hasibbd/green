@@ -208,16 +208,16 @@ class VendorOrderListController extends Controller
         ],200);
     }
     public function StoreManagerPoint($target){
-        $rate = Setting::find(1)->point_rate;
+        $rate = Setting::find(5)->point_rate;
         $check_products = VendorProduct::find($target->vendor_product);
         $profit = $check_products->sell_price - $check_products->vendor_price;
         $balance = (($profit*$rate)/100)*$target->qty;
         StoreManagerWallat::create([
             'vendor_id' => $target->vendor_id,
             'order_id' => $target->order_main_id,
-            'balance' => $balance, //Balance need check
+            'balance' => $balance,
             'created_by' => $target->vendor_id,
-            'target_id' => User::find($target->vendor_id)->reffer_by,
+            'user_id' => User::find($target->vendor_id)->reffer_by,
         ]);
     }
     public function ProductAcceptAll($id){

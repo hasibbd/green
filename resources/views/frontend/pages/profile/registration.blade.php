@@ -53,6 +53,10 @@
                                 <input type="date"  class="form-control" placeholder="Enter your birth date" id="b_date" name="b_date" required>
                             </div>
                             <div class="form-group">
+                                <label for="">NID</label>
+                                <input type="text" value="{{Auth::user()->nid}}" class="form-control" placeholder="Enter your nid" id="nid" name="nid" required @if(Auth::user()->nid) readonly @endif>
+                            </div>
+                            <div class="form-group">
                                 <label for="">Father's Name</label>
                                 <input type="text" class="form-control" placeholder="Enter your father's name" id="f_name" name="f_name" required>
                             </div>
@@ -141,25 +145,25 @@
                         </div>
                         <div class="user-form-group">
                             <div class="user-form-social">
-                           {{--     <div class="form-group">
-                                    <label for="">Full Name</label>
-                                    <input type="text"  class="form-control" placeholder="Enter full name" id="r_name" name="r_name" required>
-                                </div>--}}
+                                <div class="form-group">
+                                    <label for="">Reference (HPA) ID</label>
+                                    <input type="text" class="form-control" placeholder="Enter Reference (HPA) ID" onkeyup="CheckUser()" value="{{$reffer_id}}" id="r_code" name="r_code" required @if($reffer_id) readonly @endif>
+                                </div>
                                 <div class="form-group">
                                     <label for="">Reference (Generation) ID</label>
-                                    <input type="text" class="form-control" placeholder="Enter Reference (Generation) ID" onkeyup="CheckUser()" value="{{$reffer_id}}" id="r_code" name="r_code" required>
+                                    <input type="text" class="form-control" placeholder="Enter Reference (Generation) ID" onkeyup="CheckUser2()" value="{{$reffer_id}}" id="g_code" name="g_code" required >
                                 </div>
                             </div>
                             <div class="user-form-divider">{{--<p>or</p>--}}</div>
                             <div class="user-form-social">
                               <div class="form-group">
-                                    <label for="">Full Name</label>
-                                    <input type="text"  class="form-control" placeholder="Enter full name" id="r_name" name="r_name" value="{{$reffer_name}}" required disabled>
+                                    <label for="">Full Name (HPA)</label>
+                                    <input type="text"  class="form-control" placeholder="Full name" id="r_name" name="r_name" value="{{$reffer_name}}" required disabled>
                                 </div>
-                               {{-- <div class="form-group">
-                                    <label for="">NID/Birthday Certificate No.</label>
-                                    <input type="number" class="form-control" placeholder="Enter NID/birthday certificate no. number" id="r_nid" name="n_nid">
-                                </div>--}}
+                                <div class="form-group">
+                                    <label for="">Full Name (Generation)</label>
+                                    <input type="text"  class="form-control" placeholder="Full name" id="g_name" name="g_name" value="{{$reffer_name}}" required disabled>
+                                </div>
                             </div>
                         </div>
                         <div class="user-form-title">

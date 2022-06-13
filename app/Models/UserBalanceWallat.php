@@ -9,4 +9,8 @@ class UserBalanceWallat extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id','user_id');
+    }
 }

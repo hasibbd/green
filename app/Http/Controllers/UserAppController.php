@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyWallet;
 use App\Models\PointWallet;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\UserBalanceWallat;
 use App\Models\UserInformation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use function Symfony\Component\String\length;
 
@@ -143,54 +148,106 @@ class UserAppController extends Controller
     public function status($id)
     {
         $data = UserInformation::find($id);
-        if ($data->status == true){
-             UserInformation::where('id', $id)->update([
-                'status' => false
-            ]);
-            User::where('id', $data->user_id)->update([
-                'is_registered' => false
-            ]);
-            PointWallet::create([
-                'user_id' => $data->user_id,
-                'point' => Setting::find(3)->point_rate,
-                'generate_from' => 'Application Decline',
-            ]);
-            return response()->json([
-                'message' => 'Data status update to disabled',
-                'data' => $data
-            ],200);
-        }else{
-             UserInformation::where('id', $id)->update([
-                'status' => true
-            ]);
-            $check = User::max('user_id');
-            if ($check){
-                $nu = (int) $check;
-                $user_id = sprintf("%08d", $nu+1);
-            }else{
-                $user_id = '00000001';
-            }
-            $target = User::find( $data->user_id);
-            if ($target->user_id){
-                User::where('id', $data->user_id)->update([
-                    'is_registered' => true,
-                    'reffer_by' => $data->r_code,
+        DB::beginTransaction();
+
+        try {
+            if ($data->status == true){
+                UserInformation::where('id', $id)->update([
+                    'status' => false
                 ]);
-            }else{
                 User::where('id', $data->user_id)->update([
-                    'is_registered' => true,
-                    'user_id' => $user_id
+                    'is_registered' => false,
+                    'distribution_date' => null
                 ]);
+                PointWallet::create([
+                    'user_id' => $data->user_id,
+                    'point' => Setting::find(CONST_SETTING_USER_APPLICATION)->point_rate,
+                    'generate_from' => 'Application Decline',
+                    'status' => CONST_DISTRIBUTE_PENDING,
+                ]);
+                return response()->json([
+                    'message' => 'Data status update to disabled',
+                    'data' => $data
+                ],200);
             }
-            PointWallet::create([
-             'user_id' => $data->user_id,
-             'point' => -Setting::find(3)->point_rate,
-             'generate_from' => 'Application Fee',
-            ]);
+            else{
+                UserInformation::where('id', $id)->update([
+                    'status' => true
+                ]);
+                $check = User::max('user_id');
+                if ($check){
+                    $nu = (int) $check;
+                    $user_id = sprintf("%08d", $nu+1);
+                }else{
+                    $user_id = '00000001';
+                }
+                $target = User::find( $data->user_id);
+                if ($target->user_id){
+                    User::where('id', $data->user_id)->update([
+                        'is_registered' => true,
+                        'reffer_by' => $data->r_code,
+                    ]);
+                }else{
+                    User::where('id', $data->user_id)->update([
+                        'is_registered' => true,
+                        'user_id' => $user_id
+                    ]);
+                }
+                User::where('id', $data->user_id)->update([
+                    'distribution_date' => Carbon::today()->addDays(CONST_DISTRIBUTE_DATE)
+                ]);
+                PointWallet::create([
+                    'user_id' => $data->user_id,
+                    'point' => - Setting::find(CONST_SETTING_USER_APPLICATION)->point_rate,
+                    'generate_from' => 'Application Fee',
+                    'status' => CONST_DISTRIBUTE_DONE,
+                ]);
+                CompanyWallet::create([
+                    'user_id' => $data->user_id,
+                    'balance' => Setting::find(CONST_SETTING_USER_APPLICATION)->point_rate/Setting::find(CONST_SETTING_POINT_RATE)->point_rate,
+                    'remarks' => 'Application fee',
+                    'created_by' => Auth::user()->id,
+                    'target_id' => $data->user_id,
+                    'status' => CONST_DISTRIBUTE_DONE,
+                ]);
+                if ($data->is_paid_hpa == 0){
+                    $rate = Setting::find(CONST_SETTING_HPA_BONUS);
+                    $target_hpa = User::where('user_id', $data->hpa_reffer)->first();
+                    $user_wallet [] = [
+                     'user_id' => $target_hpa->id,
+                     'balance' => $rate->point_rate,
+                    'from' => 'HPA reference bonus',
+                    'created_by' => Auth::user()->id,
+                    'target_id' => $target_hpa->id,
+                    'status' => CONST_DISTRIBUTE_PENDING,
+                ];
+                    CompanyWallet::create([
+                        'user_id' => $target_hpa->id,
+                        'balance' => -$rate->point_rate,
+                        'remarks' => 'HPA reference bonus',
+                        'created_by' => Auth::user()->id,
+                        'target_id' => $data->user_id,
+                        'status' => CONST_DISTRIBUTE_DONE,
+                    ]);
+                    UserBalanceWallat::insert($user_wallet);
+                    UserInformation::where('id', $id)->update([
+                        'is_paid_hpa' => 1
+                    ]);
+                }
+                DB::commit();
+                return response()->json([
+                    'message' => 'Data status update to enable',
+                    'data' => $data
+                ],200);
+            }
+
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
             return response()->json([
-                'message' => 'Data status update to enable',
-                'data' => $data
-            ],200);
+                'message' => 'Failed'.$e,
+                'data' => []
+            ],404);
         }
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BrandController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StoreAppController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\UserAppController;
@@ -114,6 +116,12 @@ Route::middleware(['admin'])->group(function () {
     Route::post('generation-setting-store', [GenerationController::class, 'store']);
 
     Route::post('add-limit', [LimitController::class, 'store']);
+
+    Route::get('point-account', [AccountController::class, 'pointAccount'])->name('point-account.index');
+    Route::get('store-manager-account', [AccountController::class, 'storeManagerAccount'])->name('store-manager-account.index');
+    Route::get('user-account', [AccountController::class, 'userAccount'])->name('user-account.index');
+    Route::get('company-account', [AccountController::class, 'companyAccount'])->name('company-account.index');
+    Route::get('user-reserve-account', [AccountController::class, 'userReserve'])->name('user-reserve-account.index');
 });
 
 Route::middleware(['user'])->group(function () {
@@ -131,7 +139,7 @@ Route::middleware(['user'])->group(function () {
     Route::get('product-accept-all/{id}', [VendorOrderListController::class, 'ProductAcceptAll']);
     Route::get('product-accept-all-can/{id}', [VendorOrderListController::class, 'ProductAcceptAllCan']);
     Route::get('check-code/{code}', [UserController::class, 'CodeCheck']);
-    Route::get('user-generation/{gen}/{user}', [GenerationController::class, 'index']);
+    Route::get('user-generation/{gen}/{user}', [App\Http\Controllers\Front\GenerationController::class, 'index']);
 });
 
 Route::get('login', [AuthController::class, 'login'])->name('/');
@@ -206,3 +214,4 @@ Route::middleware(['vendor'])->group(function () {
 Route::get('try', [HomeController::class, 'userCreate']);
 Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('profile-info-change', [ProfileController::class, 'update']);
+Route::get('test', [TestController::class, 'index']);

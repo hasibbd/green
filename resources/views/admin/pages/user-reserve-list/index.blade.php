@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Setting</h1>
+                        <h1 class="m-0">User</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{'dashboard'}}">Home</a></li>
-                            <li class="breadcrumb-item active">Setting v1</li>
+                            <li class="breadcrumb-item active">User v1</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -28,7 +28,7 @@
                          <div class="card-header">
                              <div class="row">
                                  <div class="col"><div class="card-title">
-                                         Setting
+                                         User
                                      </div></div>
                                  <div class="col text-right">
                                      <button onclick="$('#add_modal').modal('show')" class="btn btn-sm btn-primary">Add New</button>
@@ -36,13 +36,16 @@
                              </div>
                          </div>
                          <div class="card-body">
-                             <table class="table table-bordered table-responsive-sm w-100 table-sm" id="point_rate">
+                             <table class="table table-bordered table-responsive-sm w-100 table-sm" id="user_reserve_list">
                                  <thead>
                                  <tr>
                                      <th style="width: 5%">No</th>
-                                     <th>Title</th>
-                                     <th>Point Rate/Taka</th>
-                                     <th width="150px">Action</th>
+                                     <th>User ID</th>
+                                     <th>User Name</th>
+                                     <th>Balance</th>
+                                     <th>Status</th>
+                                     <th>Date</th>
+                                    {{-- <th width="150px">Action</th>--}}
                                  </tr>
                                  </thead>
                                  <tbody>
@@ -56,5 +59,5 @@
         </section>
         <!-- /.content -->
     </div>
-    @include('admin.pages.setting.modal')
+    @include('admin.pages.user.modal')
 @endsection

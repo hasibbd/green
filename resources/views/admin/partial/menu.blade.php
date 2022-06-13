@@ -205,5 +205,57 @@
                 </li>
             </ul>
         </li>
+        <li class="nav-item
+        {{ Request::segment(1) == 'user-account'  ? 'menu-open' : ''}}
+        {{ Request::segment(1) == 'store-manager-account'  ? 'menu-open' : ''}}
+        {{ Request::segment(1) == 'point-account'  ? 'menu-open' : ''}}
+        {{ Request::segment(1) == 'company-account'  ? 'menu-open' : ''}}
+        {{ Request::segment(1) == 'user-reserve-account'  ? 'menu-open' : ''}}
+            ">
+            <a href="#" class="nav-link
+            {{ Request::segment(1) == 'user-account'  ? 'active' : ''}}
+            {{ Request::segment(1) == 'store-manager-account'  ? 'active' : ''}}
+            {{ Request::segment(1) == 'point-account'  ? 'active' : ''}}
+            {{ Request::segment(1) == 'company-account'  ? 'active' : ''}}
+            {{ Request::segment(1) == 'user-reserve-account'  ? 'active' : ''}}
+                ">
+                <i class="fas fa-boxes nav-icon"></i>
+                <p>
+                    Account Control
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview small">
+                <li class="nav-item">
+                    <a href="{{url('user-account')}}" class="nav-link {{ Request::segment(1) == 'user-account'  ? 'active' : ''}}">
+                        <i class="nav-icon fas fa-exchange-alt"></i>
+                        <p>User Account</p>
+                    </a>
+                </li>  <li class="nav-item">
+                    <a href="{{url('user-reserve-account')}}" class="nav-link {{ Request::segment(1) == 'user-reserve-account'  ? 'active' : ''}}">
+                        <i class="nav-icon fas fa-exchange-alt"></i>
+                        <p>User Reserve Account</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('store-manager-account')}}" class="nav-link {{ Request::segment(1) == 'store-manager-account'  ? 'active' : ''}}">
+                        <i class="nav-icon fas fa-exchange-alt"></i>
+                        <p>Store Manager Account</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('company-account')}}" class="nav-link {{ Request::segment(1) == 'company-account'  ? 'active' : ''}}">
+                        <i class="nav-icon fas fa-exchange-alt"></i>
+                        <p>Company Account</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('point-account')}}" class="nav-link {{ Request::segment(1) == 'point-account'  ? 'active' : ''}}">
+                        <i class="nav-icon fas fa-exchange-alt"></i>
+                        <p>Point Account</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </nav>

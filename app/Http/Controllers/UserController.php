@@ -52,7 +52,8 @@ class UserController extends Controller
               "n_b_date" =>  $request->n_b_date,
               "relation" =>  $request->relation,
               "n_nid" =>  $request->n_nid,
-              "r_code" =>  $request->r_code,
+              "hpa_reffer" =>  $request->r_code,
+              "generatoion_reffer" =>  $request->g_code,
               "a_name" =>  $request->a_name,
               "b_name" =>  $request->b_name,
               "branch" =>  $request->branch,
@@ -256,19 +257,30 @@ class UserController extends Controller
                 'message' => 'Registration failed, Email/Phone already used'
             ],404);
         }
-        $check = User::where('user_id',$request->ref_user)->first();
-        if (!$check){
-            return response()->json([
-                'message' => 'Refer code is not found',
-                'data' => []
-            ],404);
-        }
+
         if ($request->type){
+            $check = User::where('user_id',$request->ref_user)->first();
+            if (!$check){
+                return response()->json([
+                    'message' => 'Refer code is not found',
+                    'data' => []
+                ],404);
+            }
             $role = 2;
-            $ref = $check->id;
+            $ref = $check->user_id;
         }else{
+            $ref = null;
+            if ($request->ref_user){
+                $check = User::where('user_id',$request->ref_user)->first();
+                if (!$check){
+                    return response()->json([
+                        'message' => 'Refer code is not found',
+                        'data' => []
+                    ],404);
+                }
+                $ref = $check->user_id;
+            }
             $role = 0;
-            $ref = $check->id;
         }
         if($request->hasfile('photo')) {
             $file = $request->file('photo');
@@ -619,10 +631,9 @@ class UserController extends Controller
 
     }
     public function userRegistration(){
-         $reffer = User::find(Auth::user()->reffer_by);
-         if ($reffer){
-              $reffer_name = $reffer->name;
-              $reffer_id = $reffer->id;
+         if (isset(Auth::user()->reffer_by)){
+              $reffer_name = User::where('user_id', Auth::user()->reffer_by)->first()->name;
+              $reffer_id = Auth::user()->reffer_by;
          }else{
              $reffer_name = null;
              $reffer_id = null;

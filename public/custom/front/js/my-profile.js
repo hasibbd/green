@@ -142,13 +142,38 @@ function CheckUser() {
     });
     $('#r_name').val(null)
     let code = $('#r_code').val();
-    if (code.length > 5){
+    if (code.length > 7){
         let  my_url = base + "/check-code/" + code;
         $.ajax({
             type: 'get',
             url: my_url,
             success: (data) => {
                 $('#r_name').val(data.data.name)
+               // toastr.success(data.message)
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.message)
+
+            }
+        });
+    }
+
+}
+function CheckUser2() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#g_name').val(null)
+    let code = $('#g_code').val();
+    if (code.length > 7){
+        let  my_url = base + "/check-code/" + code;
+        $.ajax({
+            type: 'get',
+            url: my_url,
+            success: (data) => {
+                $('#g_name').val(data.data.name)
                // toastr.success(data.message)
             },
             error: function (data) {

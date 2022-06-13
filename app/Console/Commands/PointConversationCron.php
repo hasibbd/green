@@ -6,6 +6,8 @@ use App\Models\PointWallet;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserBalanceWallat;
+use App\Models\UserInformation;
+use App\Models\UserReserve;
 use Carbon\Carbon;
 use FontLib\Table\Type\post;
 use Illuminate\Console\Command;
@@ -43,31 +45,36 @@ class PointConversationCron extends Command
      */
     public function handle()
     {
-        $rate = Setting::find(2)->point_rate;
-        $date = Carbon::now()->subDays(1);
-        $users = PointWallet::where('created_at', '>=', $date)->get();
-        $user_wallet = [];
+        $rate = Setting::find(CONST_SETTING_POINT_RATE)->point_rate;
+        $today = Carbon::today()->toDateString();
+        $targets = UserInformation::with('user','last_shop')
+            ->withSum('point', 'point')
+            ->whereRelation('user','status', CONST_STATUS_ENABLED)
+            ->get();
         $point_wallet = [];
-        foreach ($users->unique('user_id') as $u){
-            $point = PointWallet::where('user_id', $u->user_id)->sum('point');
-            if ($point > 0){
-                $user_wallet [] = [
-                    'user_id' => $u->user_id,
-                    'balance' => $point/$rate,
-                    'from' => 1,
-                    'created_by' => 1,
-                    'target_id' => $u->user_id,
-                    'status' => 1,
-                ];
-                $point_wallet [] = [
-                    'user_id' => $u->user_id,
-                    'point' => -$point,
-                    'generate_from' => 'Point conversation',
-                ];
+        $reserve_wallet = [];
+        foreach ($targets as $t){
+            if ($t->point_sum_point >= 100){
+                if ($t->user->distribution_date == $today){
+                    $reserve_wallet [] = [
+                        'user_id' => $t->user_id,
+                        'balance' => 100/$rate,
+                        'status' => CONST_DISTRIBUTE_PENDING,
+                    ];
+                    $point_wallet [] = [
+                        'user_id' => $t->user_id,
+                        'point' => -100,
+                        'generate_from' => 'Point conversation',
+                        'status' => CONST_DISTRIBUTE_DONE,
+                    ];
+                    User::where('id', $t->user_id)->update([
+                        'distribution_date' => Carbon::today()->addDays(CONST_DISTRIBUTE_DATE)
+                    ]);
+                }
             }
         }
-       UserBalanceWallat::insert($user_wallet);
-       PointWallet::insert($point_wallet);
+         UserReserve::insert($reserve_wallet);
+         PointWallet::insert($point_wallet);
 
         \Log::info("Conversation Cron is working fine!");
     }

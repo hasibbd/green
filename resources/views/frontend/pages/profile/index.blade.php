@@ -87,8 +87,8 @@
                     <div class="wallet-card-group">
                         <div class="wallet-card"><p>total Point</p>
                             <h3>{{$wallet->where('point','>=', 0)->sum('point')}}</h3></div>
-                        <div class="wallet-card"><p>total Withdraw</p>
-                            <h3>{{$wallet->where('point','<', 0)->sum('point')}}</h3></div>
+                        <div class="wallet-card"><p>total Balance (Tk.)</p>
+                            <h3>{{$account->sum('balance')}}</h3></div>
                     </div>
                 </div>
             </div>

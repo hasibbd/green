@@ -12,6 +12,7 @@ use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\StoreManagerApplication;
 use App\Models\User;
+use App\Models\UserBalanceWallat;
 use App\Models\UserInformation;
 use App\Models\VendorProduct;
 use Carbon\Carbon;
@@ -334,6 +335,7 @@ class HomeController extends Controller
     }
     public function profile(Request $request){
         $wallet = PointWallet::where('user_id', Auth::user()->id)->get();
+        $account = UserBalanceWallat::where('user_id', Auth::user()->id)->get();
         $is_app = $this->AppApprove($wallet->sum('point'));
         $is_store_manager = StoreManagerApplication::where('user_id', Auth::user()->id)->first();
         if ($request->ajax()) {
@@ -348,7 +350,7 @@ class HomeController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('frontend.pages.profile.index', compact('wallet','is_app','is_store_manager'));
+        return view('frontend.pages.profile.index', compact('account','wallet','is_app','is_store_manager'));
     }
     public function changePass(){
         return view('frontend.pages.profile.passchange');

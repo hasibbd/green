@@ -498,6 +498,100 @@
             });
         });
     </script> @break
+    @case('point-account')
+    <script>
+        $(function () {
+            $("#point_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('point-account.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'user_name', name: 'user_name'},
+                    {data: 'point', name: 'point'},
+                    {data: 'remarks', name: 'remarks'},
+                    {data: 'status', name: 'status'},
+                    {data: 'date', name: 'date'},
+                ]
+            });
+        });
+    </script> @break
+    @case('store-manager-account')
+    <script>
+        $(function () {
+            $("#store_manager_account_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('store-manager-account.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'user_name', name: 'user_name'},
+                    {data: 'balance', name: 'balance'},
+                    {data: 'vendor', name: 'vendor'},
+                    {data: 'status', name: 'status'},
+                    {data: 'date', name: 'date'},
+                ]
+            });
+        });
+    </script> @break
+    @case('user-account')
+    <script>
+        $(function () {
+            $("#user_account_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('user-account.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'user_name', name: 'user_name'},
+                    {data: 'balance', name: 'balance'},
+                    {data: 'remarks', name: 'remarks'},
+                    {data: 'status', name: 'status'},
+                    {data: 'date', name: 'date'},
+                ]
+            });
+        });
+    </script> @break
+    @case('user-reserve-account')
+    <script>
+        $(function () {
+            $("#user_reserve_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('user-reserve-account.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'user_name', name: 'user_name'},
+                    {data: 'balance', name: 'balance'},
+                    {data: 'status', name: 'status'},
+                    {data: 'date', name: 'date'},
+                ]
+            });
+        });
+    </script> @break
+    @case('company-account')
+    <script>
+        $(function () {
+            $("#company_account_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('company-account.index') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'user_id', name: 'user_id'},
+                    {data: 'user_name', name: 'user_name'},
+                    {data: 'balance', name: 'balance'},
+                    {data: 'remarks', name: 'remarks'},
+                    {data: 'status', name: 'status'},
+                    {data: 'date', name: 'date'},
+                ]
+            });
+        });
+    </script> @break
 
 @endswitch
 
